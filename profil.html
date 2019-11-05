@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Mon profil - GoProject</title>
+  <link href="style.css" rel="stylesheet">
+  <script src="profil.js" defer></script>
+</head>
+
+
+
+<body>
+    <div class = "menuBar">
+        <span id="title">GoProject</span>
+        <div class="menuBar-right">
+            <a class = "disconnect">Se déconnecter</a>
+        </div>
+    </div>
+    <div class="pageName">
+        <p>Mon Profil</p>
+    </div>
+    <div class = "container-left">
+    <table class="floatLeft" id="projectsList">
+        <tr>
+            <td class="listTitle">Mes projets</td>
+        </tr>
+        <tr>
+            <td>
+                <span>Projet 1</span>
+                <br/>
+                <span class="creator">Pseudo du créateur</span>
+            </td>
+        </tr>
+        <tr><td></td></tr>
+        <tr><td></td></tr>
+    </table>
+    </div>
+
+    
+
+    <div class = "container-right">
+    <table class="floatRight" id="TasksList">
+        <tr>
+            <td class="listTitle">Mes tâches</td>
+        </tr>
+        <tr>
+            <td>
+                <span>T3 - Sprint1</span>
+                <br/>
+                <span class="creator">Nom du projet</span>
+                <br/>
+                <span class="time">Du 04/11/2019 au 11/11/2019</span>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+    </table>
+    </div>
+    <div class="form-project">
+        <form class="form-container">
+            <h1>Nouveau projet</h1>
+              
+            <label for="name"><b>Nom du projet :</b></label>
+            <input type="text" name="name" required id="projectName">
+            <br/><br/>
+            <button type="button" class="button">Créer</button>
+                
+            <button type="button" class="buttonCancel" id="closeForm">Annuler</button>
+        </form>
+    </div>
+</body>
+</html>
