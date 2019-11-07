@@ -1,3 +1,18 @@
+<?php
+ 
+    $dbserver ='localhost';
+    $dbuser = 'aouldamara';
+    $password = 'cdp';
+    $dbname = "aouldamara";
+  
+    $conn = new mysqli($dbserver, $dbuser, $password, $dbname);
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+    $query = "SELECT * FROM projet";
+    $result1 = mysqli_query($conn, $query);
+?>
 
 <!DOCTYPE html>
 <html>
@@ -26,15 +41,23 @@
         <tr>
             <td class="listTitle">Mes projets</td>
         </tr>
+        <?php $i = 0;
+         while($row1 = mysqli_fetch_row($result1)):;?>
         <tr>
             <td>
-                <span>Projet 1</span>
+                <span><?php echo $row1[1];?></span>
                 <br/>
-                <span class="subtitle">Pseudo du créateur</span>
+                <span class="subtitle"><?php echo $row1[2];?></span>
             </td>
         </tr>
-        <tr><td></td></tr>
-        <tr><td></td></tr>
+        <?php 
+            $i++;
+            endwhile;
+            while ($i<4){
+                echo '<tr><td></td></tr>';
+                $i++;
+            }
+            ?>
     </table>
     </div>
 
