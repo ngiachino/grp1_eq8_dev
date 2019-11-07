@@ -1,8 +1,8 @@
-/*function openForm(){
-    document.getElementById("myForm").style.display = "block";
+function openForm(){
+    document.getElementById("newProjectModal").style.display = "block";
 }
 function closeForm(){
-    document.getElementById("myForm").style.display = "none";
+    document.getElementById("newProjectModal").style.display = "none";
 }
 
 /*function fillTables(){
@@ -16,6 +16,7 @@ function closeForm(){
         rows++;
     }
 }
-document.onload = function(){fillTables()};
-document.getElementById("openForm").addEventListener("click", openForm);
-document.getElementById("closeForm").addEventListener("click", closeForm);*/
+document.onload = function(){fillTables()};*/
+
+document.getElementById("openNewProjectForm").addEventListener("click", openForm);
+document.getElementById("closeForm").addEventListener("click", closeForm);

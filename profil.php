@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -29,7 +30,7 @@
             <td>
                 <span>Projet 1</span>
                 <br/>
-                <span class="creator">Pseudo du créateur</span>
+                <span class="subtitle">Pseudo du créateur</span>
             </td>
         </tr>
         <tr><td></td></tr>
@@ -48,9 +49,9 @@
             <td>
                 <span>T3 - Sprint1</span>
                 <br/>
-                <span class="creator">Nom du projet</span>
+                <span class="subtitle">Nom du projet</span>
                 <br/>
-                <span class="time">Du 04/11/2019 au 11/11/2019</span>
+                <span class="subtitle">Du 04/11/2019 au 11/11/2019</span>
             </td>
         </tr>
         <tr>
@@ -64,17 +65,28 @@
         </tr>
     </table>
     </div>
-    <div class="form-project">
-        <form class="form-container">
-            <h1>Nouveau projet</h1>
-              
-            <label for="name"><b>Nom du projet :</b></label>
-            <input type="text" name="name" required id="projectName">
-            <br/><br/>
-            <button type="button" class="button">Créer</button>
-                
-            <button type="button" class="buttonCancel" id="closeForm">Annuler</button>
-        </form>
+    <div class="addButton" id="openNewProjectForm">
+        <h1>Nouveau projet</h1>
+        <p class = "subtitle">Créer un nouveau projet</p>
+    </div>
+    <div id="newProjectModal" class="modal">
+        <div class="modal-content">
+            <form class="form-container" action = "newProject.php" method = "POST">
+                <h1>Nouveau projet</h1>
+                      
+                <label for="name"><b>Nom du projet :</b></label>
+                <br/>
+                <input type="text" name="name" required id="projectName">
+                <br/><br/>
+                <label for="description"><b>Description :</b></label>
+                <br/>
+                <input type="text" name="description" id="projectDescription">
+                <br/><br/>
+                <input type="submit" name="submit" class="submit" value="Créer">
+                        
+                <button type="button" class="buttonCancel" id="closeForm">Annuler</button>
+            </form> 
+        </div>
     </div>
 </body>
 </html>
