@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   <title>Mon profil - GoProject</title>
-  <link href="style.css" rel="stylesheet">
+  <link href="profil.css" rel="stylesheet">
   <script src="profil.js" defer></script>
 </head>
 
