@@ -1,56 +1,93 @@
+*{
+    box-sizing: border-box;
+}
+
 body{
-    background-color:rgb(31,31,31);
-    color: whitesmoke;
-    font-family: Arial, Helvetica, sans-serif;;;
+    background-color: rgb(253,253,253);
+    color: rgb(51,51,51);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1{
+    text-align: center;
+    line-height: 0;
+    font-size: 60px;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+h2{
+    font-size: 2rem;
+}
+
+.supercontainer{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 1vw;
+    padding-right: 1vw;
 }
 
 .container{
-    overflow-y:auto;
-    height:70vh;
-    width:20%;
-    margin:auto;
+    overflow-y: auto;
+    height: 30vh;
+    width: 18vw;
     float: left;
-}
-
-table{
-    background-color: rgb(40,40,40);
-    list-style-type: none;
+    background-color: rgb(238,238,238);
+    font-weight: bold;
+    font-size: 2rem;
+    color: rgb(0, 0, 0);
+    text-align: center;
     border: 2px solid black;
-    margin-right : 10%;
-    margin-left: 10%;
-    font-size:24px;
+    border-radius: 3px;
 }
 
-table:hover {
-    background-color: red;
+.container:hover{
+    background-color: rgb(218,218,218);
     border: 2px solid red;
     cursor: pointer;
 }
 
-table td{
-    text-align: center;
-    padding:1px;
-    border: 1px solid black;
-    height:200px;
-    width:300px;
+#membersList{
+    padding-left: 25vw;
+    padding-right: 25vw;
+    padding-top: 4vh;
 }
 
-table td:not(.listTitle):hover{
-    background-color: rgb(50,50,50);
+#membersList .container{
+    width: 100%;
+    height: 41vh;
+    padding-top: 1vh;
+}
+
+ul{
+    list-style: none;
+    text-align: left;
+    font-size: 1.2rem;
+}
+
+ul a{
+    float: right;
+    margin-right: 5vw;
+}
+
+ul a:hover{
+    background-color: rgb(218,218,218);
     cursor: pointer;
 }
 
-.listTitle{
-    background-color: rgb(138, 138, 138);
-    font-weight: bold;
-    font-size:30px;
-    height:50vh;
-    color:rgb(0, 0, 0);
+button{
+
+}
+
+#membersList .container:hover{
+    background-color: rgb(238,238,238);
+    border: 2px solid black;
+    cursor: default;
 }
 
 .menuBar {
     overflow: hidden;
-    background-color: rgb(40, 40, 40);
+    background-color:  rgb(160,60,20);
     padding: 20px 30px;
     color: whitesmoke;
     font-size: 30px;
@@ -70,9 +107,5 @@ table td:not(.listTitle):hover{
 }
 .menuBar a:hover {
     color: rgb(126, 126, 126);
-}
-.pageName{
-    text-align: center;
-    font-size:60px;
-    line-height: 0%;
+    cursor: pointer;
 }

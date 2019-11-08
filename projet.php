@@ -1,5 +1,24 @@
+<?php
+
+$dbserver ='localhost';
+$dbuser = 'root';
+$password = '';
+$dbname = "cdp";
+
+$conn = new mysqli($dbserver, $dbuser, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$query = "SELECT * FROM membre WHERE ID_PROJET = 1";
+$result1 = mysqli_query($conn, $query);
+?>
+
+
+
+
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 
 <head>
     <meta charset="utf-8">
@@ -8,8 +27,6 @@
     <script src="profil.js" defer></script>
 </head>
 
-
-
 <body>
 <div class = "menuBar">
     <span id="title">GoProject</span>
@@ -17,48 +34,46 @@
         <a class = "disconnect">Se déconnecter</a>
     </div>
 </div>
-<div class="pageName">
-    <p>Nom du projet</p>
+
+<h1>Nom du projet</h1>
+
+<div class="supercontainer">
+
+    <div class="container">
+        <h2>Les issues</h2>
+    </div>
+
+    <div class="container">
+        <h2>Les tâches</h2>
+    </div>
+
+    <div class="container">
+        <h2>Les releases</h2>
+    </div>
+
+    <div class="container">
+        <h2>Les test</h2>
+    </div>
+
+    <div class="container">
+        <h2>La doc</h2>
+    </div>
+
 </div>
 
-<div class = "container">
-    <table class="a" id="issuesList">
-        <tr>
-            <td class="listTitle">Les issues</td>
-        </tr>
-    </table>
+<div id="membersList">
+    <div class="container">
+        <button type="submit">Inviter membre</button>
+        Liste des membres
+
+        <ul>
+            <?php while($member = mysqli_fetch_row($result1)) { ?>
+                <li><?php echo $member[2] ?><a>&#x274C;</a></li>
+            <?php } ?>
+        </ul>
+
+    </div>
 </div>
 
-<div class = "container">
-    <table class="b" id="TasksList">
-        <tr>
-            <td class="listTitle">Les tâches</td>
-        </tr>
-    </table>
-</div>
-
-<div class = "container">
-    <table class="c" id="releasesList">
-        <tr>
-            <td class="listTitle">Les releases</td>
-        </tr>
-    </table>
-</div>
-
-<div class = "container">
-    <table class="d" id="testsList">
-        <tr>
-            <td class="listTitle">Les test</td>
-        </tr>
-    </table>
-</div>
-
-<div class = "container">
-    <table class="e" id="docsList">
-        <tr>
-            <td class="listTitle">La doc</td>
-        </tr>
-    </table>
-</div>
 </body>
 </html>
