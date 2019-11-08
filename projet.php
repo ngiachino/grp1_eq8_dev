@@ -11,7 +11,9 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 $query = "SELECT * FROM membre WHERE ID_PROJET = 1";
+$query2 = "SELECT * FROM projet WHERE ID_PROJET = 1";
 $result1 = mysqli_query($conn, $query);
+$result2 = mysqli_query($conn, $query2);
 ?>
 
 
@@ -29,34 +31,48 @@ $result1 = mysqli_query($conn, $query);
 
 <body>
 <div class = "menuBar">
-    <span id="title">GoProject</span>
+    <div class="menuBar-left">
+        <a href="profil.php">GoProject</a>
+    </div>
     <div class="menuBar-right">
-        <a class = "disconnect">Se déconnecter</a>
+        <a href="#">Se déconnecter</a>
     </div>
 </div>
 
-<h1>Nom du projet</h1>
+<h1>
+    <?php echo mysqli_fetch_row($result2)[1]?>
+</h1>
 
 <div class="supercontainer">
 
     <div class="container">
-        <h2>Les issues</h2>
+        <a class="pageLink" href="#">
+            <h2>Les issues</h2>
+        </a>
     </div>
 
     <div class="container">
-        <h2>Les tâches</h2>
+        <a class="pageLink" href="#">
+            <h2>Les tâches</h2>
+        </a>
     </div>
 
     <div class="container">
-        <h2>Les releases</h2>
+        <a class="pageLink" href="#">
+            <h2>Les releases</h2>
+        </a>
     </div>
 
     <div class="container">
-        <h2>Les test</h2>
+        <a class="pageLink" href="#">
+            <h2>Les test</h2>
+        </a>
     </div>
 
     <div class="container">
-        <h2>La doc</h2>
+        <a class="pageLink" href="#">
+            <h2>La doc</h2>
+        </a>
     </div>
 
 </div>
