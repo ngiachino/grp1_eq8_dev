@@ -1,11 +1,7 @@
 <?php
 
-$dbserver ='localhost';
-$dbuser = 'aouldamara';
-$password = 'cdp';
-$dbname = "aouldamara";
-
-$conn = new mysqli($dbserver, $dbuser, $password, $dbname);
+include 'database/DBconnect.php';
+$conn = connect();
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
