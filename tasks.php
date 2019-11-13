@@ -3,10 +3,9 @@
 <html lang="fr">
 
 <head>
-    <meta charset="utf-8">
-    <title>Mon profil - GoProject</title>
+    <?php include './defaultHead.php'; ?>
+    <title>Tasks - GoProject</title>
     <link href="projet.css" rel="stylesheet">
-    <script src="profil.js" defer></script>
 </head>
 
 <body>

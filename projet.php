@@ -13,20 +13,17 @@ if ($conn->connect_error) {
 $query = "SELECT * FROM membre WHERE ID_PROJET = 1";
 $query2 = "SELECT * FROM projet WHERE ID_PROJET = 1";
 $result1 = mysqli_query($conn, $query);
-$result2 = mysqli_query($conn, $query2);
+$result2 = mysqli_fetch_row(mysqli_query($conn, $query2));
 ?>
-
-
 
 
 <!DOCTYPE html>
 <html lang="fr">
 
 <head>
-    <meta charset="utf-8">
-    <title>Mon profil - GoProject</title>
+    <?php include './defaultHead.php'; ?>
+    <title>Projet : <?php echo $result2[1]?> - GoProject</title>
     <link href="projet.css" rel="stylesheet">
-    <script src="profil.js" defer></script>
 </head>
 
 <body>
@@ -40,7 +37,7 @@ $result2 = mysqli_query($conn, $query2);
 </div>
 
 <h1>
-    <?php echo mysqli_fetch_row($result2)[1]?>
+    <?php echo $result2[1]?>
 </h1>
 
 <div class="supercontainer">

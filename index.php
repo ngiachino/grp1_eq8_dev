@@ -2,7 +2,7 @@
 <html lang="fr">
 
 <head>
-    <meta charset="utf-8">
+    <?php include './defaultHead.php'; ?>
     <title>Mon profil - GoProject</title>
     <link href="index.css" rel="stylesheet">
     <script src="profil.js" defer></script>
