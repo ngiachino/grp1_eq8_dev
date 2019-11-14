@@ -2,7 +2,6 @@
 
 include 'database/DBconnect.php';
 $conn = connect();
-//$conn = new mysqli($dbserver, $dbuser, $password, $dbname);
 
 // Check connection
 if ($conn->connect_error) {

@@ -77,11 +77,11 @@ if ($conn->connect_error) {
 
         //test que tous les champs sont remplis
         if(empty($pseudoInsc) || empty($mailInsc) || empty($pswdInsc) || empty($pswdConfirmInsc)){
-            echo("Vous devez remplir tous les champs");
+            echo "Vous devez remplir tous les champs";
         }
         //test que les deux mots de passe sont identiques
         else if($pswdInsc != $pswdConfirmInsc){
-            echo("Les mots de passe ne sont pas identiques");
+            echo "Les mots de passe ne sont pas identiques";
         }
         else{
 
@@ -94,17 +94,17 @@ if ($conn->connect_error) {
             $result2 = $conn->query($sqlTest2);
 
             if(empty($pseudoInsc) || empty($mailInsc) || empty($pswdInsc) || empty($pswdConfirmInsc)){
-                echo("Vous devez remplir tous les champs");
+                echo "Vous devez remplir tous les champs";
             }
             //test que les deux mots de passe sont identiques
             else if($pswdInsc != $pswdConfirmInsc){
-                echo("Les mots de passe ne sont pas identiques");
+                echo "Les mots de passe ne sont pas identiques";
             }
             else if($result1->num_rows > 0){
-                echo("Ce mail est déjà associé à un compte");
+                echo "Ce mail est déjà associé à un compte";
             }
             else if($result2->num_rows > 0){
-                echo("Ce pseudo est déjà associé à un compte");
+                echo "Ce pseudo est déjà associé à un compte";
             }
             else{
                 $sql = "INSERT INTO utilisateur (NOM_USER, PASSWORD_USER, MAIL_USER)
@@ -113,7 +113,7 @@ if ($conn->connect_error) {
                     echo "Error: " . $sql . "<br>" . $conn->error . "<br>";
                 }
                 else{
-                    echo("Votre compte a bien été crée");
+                    echo "Votre compte a bien été crée";
                 }
             }
         }
@@ -130,7 +130,7 @@ if ($conn->connect_error) {
         }
 
         else if($result->num_rows == 0){
-            echo("Le compte et le mot de passe ne correspondent pas");
+            echo "Le compte et le mot de passe ne correspondent pas";
         }
         else{
             session_start();
