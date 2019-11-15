@@ -1,6 +1,6 @@
 <?php
 
-include 'database/DBconnect.php';
+include '../database/DBconnect.php';
 $conn = connect();
 // Check connection
 if ($conn->connect_error) {
@@ -16,7 +16,7 @@ if ($conn->connect_error) {
 <head>
     <?php include './defaultHead.php'; ?>
     <title>Mon profil - GoProject</title>
-    <link href="index.css" rel="stylesheet">
+    <link href="../assets/css/index.css" rel="stylesheet">
 </head>
 
 <body>

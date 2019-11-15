@@ -5,7 +5,7 @@
 <head>
     <?php include './defaultHead.php'; ?>
     <title>Issues - GoProject</title>
-    <link href="projet.css" rel="stylesheet">
+    <link href="../assets/css/projet.css" rel="stylesheet">
 </head>
 
 <body>

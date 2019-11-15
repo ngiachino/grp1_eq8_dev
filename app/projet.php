@@ -1,6 +1,6 @@
 <?php
 
-include 'database/DBconnect.php';
+include '../database/DBconnect.php';
 $conn = connect();
 
 // Check connection
@@ -20,7 +20,7 @@ $result2 = mysqli_fetch_row(mysqli_query($conn, $query2));
 <head>
     <?php include './defaultHead.php'; ?>
     <title>Projet : <?php echo $result2[1]?> - GoProject</title>
-    <link href="projet.css" rel="stylesheet">
+    <link href="../assets/css/projet.css" rel="stylesheet">
 </head>
 
 <body>
