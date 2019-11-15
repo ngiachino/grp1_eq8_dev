@@ -50,10 +50,10 @@ $result1 = mysqli_query($conn, $query);
         <?php $i = 0;
         while($row1 = mysqli_fetch_row($result1)):;?>
             <tr>
-                <td>
-                    <span><?php echo $row1[0];?></span>
+                <td class = tdProject>
+                    <span class="projectTitle"><?php echo $row1[0];?></span>
                     <br/>
-                    <span class="subtitle"><?php echo $row1[1];?></span>
+                    <span class="projectOwner"><?php echo $row1[1];?></span>
                 </td>
             </tr>
             <?php
