@@ -7,6 +7,12 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 session_start();
+
+//test si l'utilisateur est connecté. Sinon le renvoie vers l'index
+if($_SESSION['userName'] == null || $_SESSION['userID'] == null){
+    header("Location:index.php");
+}
+
 $userName = $_SESSION['userName'];
 $userID = $_SESSION['userID'];
 
@@ -30,7 +36,7 @@ $result1 = mysqli_query($conn, $query);
 <div class = "menuBar">
     <span id="title">GoProject</span>
     <div class="menuBar-right">
-        <a class = "disconnect">Se déconnecter</a>
+        <a class = "disconnect" href="./index.php">Se déconnecter</a>
     </div>
 </div>
 <div class="pageName">

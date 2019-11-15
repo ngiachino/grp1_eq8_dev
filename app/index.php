@@ -1,6 +1,8 @@
 <?php
 
 include '../database/DBconnect.php';
+session_start();
+session_unset();
 $conn = connect();
 // Check connection
 if ($conn->connect_error) {
@@ -133,7 +135,6 @@ if ($conn->connect_error) {
             echo "Le compte et le mot de passe ne correspondent pas";
         }
         else{
-            session_start();
             $data = mysqli_fetch_assoc($result);
             $_SESSION['userName'] = $data['NOM_USER'];
             $_SESSION['userID'] = $data['ID_USER'];
