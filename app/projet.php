@@ -135,7 +135,11 @@ $result1 = mysqli_query($conn, $query);
 
         <ul>
             <?php while($member = mysqli_fetch_row($result1)) { ?>
-                <li><?php echo $member[2] ?><a>&#x274C;</a></li>
+                <li><?php echo $member[2] ?>
+                <form method="post">
+                <input type="hidden" name="name" value="<?php echo $member[2];?>">
+                <input type="<?php if($member[2] == $projectOwner){echo "hidden";} else{echo "submit";} ?>" name="deleteUser" value="&#x274C;">
+                </form></li>
             <?php } ?>
         </ul>
 
@@ -144,3 +148,12 @@ $result1 = mysqli_query($conn, $query);
 
 </body>
 </html>
+
+<?php 
+if(isset($_POST['deleteUser'])){
+    $userToDelete = $_POST['name'];
+    $query = "DELETE FROM membre WHERE NOM_MEMBRE = '$userToDelete'";
+    $result = mysqli_query($conn,$query);
+    header("Refresh:0");
+}
+?>

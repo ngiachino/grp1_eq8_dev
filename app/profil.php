@@ -43,9 +43,9 @@ $result1 = mysqli_query($conn, $query);
     <p>Mon Profil</p>
 </div>
 <div class = "container-left">
-    <table class="floatLeft" id="projectsList">
+    <table class="floatLeft" id="projectsList" summary="Table des projets de l'utilisateur">
         <tr>
-            <th class="listTitle">Mes projets</th>
+            <th class="listTitle" id="projectListTitle">Mes projets</th>
         </tr>
         <?php $i = 0;
         while($row1 = mysqli_fetch_row($result1)){?>
@@ -70,9 +70,9 @@ $result1 = mysqli_query($conn, $query);
 
 
 <div class = "container-right">
-    <table class="floatRight" id="TasksList">
+    <table class="floatRight" id="TasksList" summary="Table des tâches de l'utilisateur">
         <tr>
-            <th class="listTitle">Mes tâches</th>
+            <th class="listTitle" id="taskListTitle">Mes tâches</th>
         </tr>
         <tr>
             <td>
