@@ -21,7 +21,7 @@ $result1 = mysqli_query($conn, $query);
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 
 <head>
     <?php include './defaultHead.php'; ?>
@@ -45,10 +45,10 @@ $result1 = mysqli_query($conn, $query);
 <div class = "container-left">
     <table class="floatLeft" id="projectsList">
         <tr>
-            <td class="listTitle">Mes projets</td>
+            <th class="listTitle">Mes projets</th>
         </tr>
         <?php $i = 0;
-        while($row1 = mysqli_fetch_row($result1)):;?>
+        while($row1 = mysqli_fetch_row($result1)){?>
             <tr>
                 <td class = tdProject>
                     <span class="projectTitle"><?php echo $row1[0];?></span>
@@ -58,7 +58,7 @@ $result1 = mysqli_query($conn, $query);
             </tr>
             <?php
             $i++;
-        endwhile;
+        }
         while ($i<4){
             echo '<tr><td></td></tr>';
             $i++;
@@ -72,7 +72,7 @@ $result1 = mysqli_query($conn, $query);
 <div class = "container-right">
     <table class="floatRight" id="TasksList">
         <tr>
-            <td class="listTitle">Mes tâches</td>
+            <th class="listTitle">Mes tâches</th>
         </tr>
         <tr>
             <td>
@@ -103,11 +103,11 @@ $result1 = mysqli_query($conn, $query);
         <form class="form-container" method = "POST">
             <h1>Nouveau projet</h1>
 
-            <label for="name"><b>Nom du projet :</b></label>
+            <label for="name">Nom du projet :</label>
             <br/>
             <input type="text" name="name" required id="projectName">
             <br/><br/>
-            <label for="description"><b>Description :</b></label>
+            <label for="description">Description :</label>
             <br/>
             <input type="text" name="description" id="projectDescription">
             <br/><br/>

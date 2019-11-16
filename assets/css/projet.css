@@ -17,9 +17,6 @@ body{
     line-height: 25px;
 }
 
-.menuBar-left {
-}
-
 .menuBar-right {
     float: right;
 }
@@ -104,11 +101,6 @@ ul a:hover{
     background-color: rgb(218,218,218);
     cursor: pointer;
 }
-
-button{
-
-}
-
 .pageLink{
     text-decoration: none;
     color: black;
