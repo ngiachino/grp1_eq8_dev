@@ -7,7 +7,7 @@ function closeForm(){
 function openProject(project){
     let projectTitle=project.getElementsByClassName("projectTitle")[0].textContent;
     let projectOwner=project.getElementsByClassName("projectOwner")[0].textContent;
-    window.location.href = "./projet.php?title="+projectTitle+"&owner="+projectOwner; 
+    window.location.href = "./projet.php?title="+projectTitle+"&owner="+projectOwner;
 }
 
 document.getElementById("openNewProjectForm").addEventListener("click", openForm);

@@ -131,15 +131,22 @@ $result1 = mysqli_query($conn, $query);
 
             //test que l'utilisateur n'a pas déjà créé un projet du même nom
             $sqlTest1 = "SELECT ID_PROJET FROM projet WHERE NOM_PROJET = '$projectName' AND ID_MANAGER = '$userID'";
-            $result1 = $conn->query($sqlTest1);
+            $result1 = mysqli_query($conn,$sqlTest1);
 
-            if($result1->num_rows > 0){
+            if(mysqli_num_rows($result1) > 0){
                 echo "Vous avez déjà créé un projet du même nom";
             }
             else{
                 $sql = "INSERT INTO projet (NOM_PROJET, ID_MANAGER, DESCRIPTION)
                 VALUES ('$projectName','$userID','$projectDesc')";
-                if ($conn->query($sql) === FALSE) {
+
+                $sql2 = "INSERT INTO membre (ID_MEMBRE, ID_PROJET, NOM_MEMBRE)
+                VALUES ('$userID',LAST_INSERT_ID(),'$userName')";
+
+                if (mysqli_query($conn,$sql) === FALSE) {
+                    echo "Error: " . $sql . "<br>" . $conn->error . "<br>";
+                }
+                else if(mysqli_query($conn,$sql2) === FALSE){
                     echo "Error: " . $sql . "<br>" . $conn->error . "<br>";
                 }
                 else{

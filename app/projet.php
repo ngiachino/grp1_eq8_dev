@@ -7,10 +7,15 @@ $conn = connect();
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-$query = "SELECT * FROM membre WHERE ID_PROJET = 1";
-$query2 = "SELECT * FROM projet WHERE ID_PROJET = 1";
+
+$projectTitle = $_GET['title'];
+$projectOwner = $_GET['owner'];
+$query2 = "SELECT ID_PROJET FROM projet JOIN utilisateur ON projet.ID_MANAGER = utilisateur.ID_USER WHERE NOM_PROJET ='$projectTitle' AND NOM_USER='$projectOwner'";
+$result2 = mysqli_query($conn, $query2);
+$projectId = mysqli_fetch_row($result2)[0];
+
+$query = "SELECT * FROM membre WHERE ID_PROJET = '$projectId'";
 $result1 = mysqli_query($conn, $query);
-$result2 = mysqli_fetch_row(mysqli_query($conn, $query2));
 ?>
 
 
@@ -19,7 +24,7 @@ $result2 = mysqli_fetch_row(mysqli_query($conn, $query2));
 
 <head>
     <?php include './defaultHead.php'; ?>
-    <title>Projet : <?php echo $result2[1]?> - GoProject</title>
+    <title>Projet : <?php echo $projectTitle?> - GoProject</title>
     <link href="../assets/css/projet.css" rel="stylesheet">
 </head>
 
@@ -34,7 +39,7 @@ $result2 = mysqli_fetch_row(mysqli_query($conn, $query2));
 </div>
 
 <h1>
-    <?php echo $result2[1]?>
+    <?php echo $projectTitle?>
 </h1>
 
 <div class="supercontainer">
