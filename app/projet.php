@@ -8,6 +8,17 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+session_start();
+
+//test si l'utilisateur est connecté. Sinon le renvoie vers l'index
+if($_SESSION['userName'] == null || $_SESSION['userID'] == null){
+    header("Location:index.php");
+}
+//test si l'utilisateur est bien passé par sa page de profil. Sinon le renvoie vers le profil
+else if( $_GET['title'] == null || $_GET['owner'] == null){
+    header("Location:profil.php");
+}
+
 $projectTitle = $_GET['title'];
 $projectOwner = $_GET['owner'];
 $query2 = "SELECT ID_PROJET FROM projet JOIN utilisateur ON projet.ID_MANAGER = utilisateur.ID_USER WHERE NOM_PROJET ='$projectTitle' AND NOM_USER='$projectOwner'";
@@ -34,7 +45,7 @@ $result1 = mysqli_query($conn, $query);
         <a href="profil.php">GoProject</a>
     </div>
     <div class="menuBar-right">
-        <a href="#">Se déconnecter</a>
+        <a class = "disconnect" href="./index.php">Se déconnecter</a>
     </div>
 </div>
 
