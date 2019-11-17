@@ -16,8 +16,12 @@ if($_SESSION['userName'] == null || $_SESSION['userID'] == null){
 $userName = $_SESSION['userName'];
 $userID = $_SESSION['userID'];
 
-$query = "SELECT NOM_PROJET,NOM_USER FROM projet JOIN utilisateur ON projet.ID_MANAGER = utilisateur.ID_USER WHERE ID_MANAGER = '$userID'";
-$result1 = mysqli_query($conn, $query);
+//Selection liste de projets
+$query = "SELECT NOM_PROJET,NOM_USER FROM projet
+JOIN utilisateur ON projet.ID_MANAGER = utilisateur.ID_USER
+JOIN membre ON projet.ID_PROJET = membre.ID_PROJET
+WHERE ID_MEMBRE = '$userID'";
+$result1 = mysqli_query($conn,$query);
 ?>
 
 <!DOCTYPE html>
