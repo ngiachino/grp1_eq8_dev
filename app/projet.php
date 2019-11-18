@@ -24,6 +24,7 @@ $projectOwner = $_GET['owner'];
 $query2 = "SELECT ID_PROJET FROM projet JOIN utilisateur ON projet.ID_MANAGER = utilisateur.ID_USER WHERE NOM_PROJET ='$projectTitle' AND NOM_USER='$projectOwner'";
 $result2 = mysqli_query($conn, $query2);
 $projectId = mysqli_fetch_row($result2)[0];
+$_SESSION['projectId'] = $projectId;
 
 $query = "SELECT * FROM membre WHERE ID_PROJET = '$projectId'";
 $result1 = mysqli_query($conn, $query);
@@ -56,7 +57,7 @@ $result1 = mysqli_query($conn, $query);
 <div class="supercontainer">
 
     <div class="container">
-        <a class="pageLink" href="#">
+        <a class="pageLink" href="issues.php">
             <h2>Les issues</h2>
         </a>
     </div>

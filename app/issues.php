@@ -2,14 +2,18 @@
 
 include '../database/DBconnect.php';
 $conn = connect();
+session_start();
 
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+if($_SESSION['projectId'] == null){
+  header("Location:index.php");
+}
 
-
-$query = "SELECT ID_USER_STORY,PRIORITE,DIFFICULTE,DESCRIPTION FROM issue";
+$idProjet = $_SESSION['projectId'];
+$query = "SELECT ID_USER_STORY,PRIORITE,DIFFICULTE,DESCRIPTION FROM issue WHERE ID_PROJET = '$idProjet'";
 $result = mysqli_query($conn, $query);
 
 ?>
@@ -33,6 +37,7 @@ $result = mysqli_query($conn, $query);
     </div>
 </div>
 <h1>Issues</h1>
+<form method="POST" id="newIssueForm"></form>
 <table class="table">
   <thead class="thead-dark">
     <tr>
@@ -51,17 +56,38 @@ $result = mysqli_query($conn, $query);
       <td><?php echo $row[3];?></td>
       <td><?php echo $row[1];?></td>
       <td><?php echo $row[2];?></td>
-      <td><button class="modify" type="button">Modifier</button><button class="supprimer" type="button">Supprimer</button></td>
+      <td><input type="submit" name="modify" value="Modifier"><input type="submit" name="delete" value="Supprimer"></td>
     </tr>
     <?php } ?>
     <tr>
-        <th scope="row"><input type="number" name="idUS"></th>
-        <td><input type="text" name="description"></td>
-        <td><input type="text" name="priorité"></td>
-        <td><input type="number" name="difficulté"></td>
-        <td><input type="submit" name="submit" value="Créer"></td> 
+        <th scope="row"></th>
+        <td><input type="text" name="description" form="newIssueForm"></td>
+        <td><input type="text" name="priority" form="newIssueForm"></td>
+        <td><input type="number" name="difficulty" form="newIssueForm"></td>
+        <td><input type="submit" name="submit" value="Créer" form="newIssueForm"></td> 
     </tr>
   </tbody>
 </table>
 </body>
 </html>
+<?php
+if(isset($_POST['submit'])){
+    $query = "SELECT MAX(ID_USER_STORY) FROM issue WHERE ID_PROJET='$idProjet'";
+    $result = mysqli_query($conn, $query);
+    if(mysqli_query($conn,$query) === FALSE){
+      $idUS=1;
+    }
+    else{
+      $idUS = mysqli_fetch_row($result)[0]+1;
+    }
+    $description = $_POST['description'];
+    $priority = $_POST['priority'];
+    $difficulty = $_POST['difficulty'];
+    $query = "INSERT INTO issue (ID_USER_STORY, PRIORITE, DIFFICULTE, DESCRIPTION, ID_PROJET)
+              VALUES ('$idUS','$priority','$difficulty','$description','$idProjet')";
+    if(mysqli_query($conn,$query) === FALSE){
+      echo "Error: " . $query . "<br>" . $conn->connect_error . "<br>";
+    }
+    header("Refresh:0");
+  }
+?>

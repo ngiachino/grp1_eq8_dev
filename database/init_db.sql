@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  lun. 18 nov. 2019 à 10:21
+-- Généré le :  lun. 18 nov. 2019 à 18:29
 -- Version du serveur :  10.4.8-MariaDB
 -- Version de PHP :  7.3.11
 
@@ -44,7 +44,8 @@ CREATE TABLE `issue` (
   `ID_USER_STORY` int(50) UNSIGNED NOT NULL COMMENT '"Identifiant de la user story"',
   `PRIORITE` varchar(10) NOT NULL COMMENT '"Les valeurs de la priorité sont Basse, Moyenne, Haute "',
   `DIFFICULTE` varchar(10) NOT NULL COMMENT '"Les valeurs de la difficulté sont Basse, Moyenne, Haute "',
-  `DESCRIPTION` varchar(500) NOT NULL
+  `DESCRIPTION` varchar(500) NOT NULL,
+  `ID_PROJET` int(50) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='La table des Issues';
 
 -- --------------------------------------------------------
@@ -146,6 +147,13 @@ CREATE TABLE `utilisateur` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
+-- Déchargement des données de la table `utilisateur`
+--
+
+INSERT INTO `utilisateur` (`ID_USER`, `NOM_USER`, `PASSWORD_USER`, `MAIL_USER`) VALUES
+(12, 'a', 'a', 'a@a.a');
+
+--
 -- Index pour les tables déchargées
 --
 
@@ -159,7 +167,7 @@ ALTER TABLE `documentation`
 -- Index pour la table `issue`
 --
 ALTER TABLE `issue`
-  ADD PRIMARY KEY (`ID_USER_STORY`);
+  ADD PRIMARY KEY (`ID_USER_STORY`,`ID_PROJET`);
 
 --
 -- Index pour la table `membre`
@@ -212,13 +220,13 @@ ALTER TABLE `utilisateur`
 -- AUTO_INCREMENT pour la table `projet`
 --
 ALTER TABLE `projet`
-  MODIFY `ID_PROJET` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"Identifiant du projet"', AUTO_INCREMENT=6;
+  MODIFY `ID_PROJET` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"Identifiant du projet"', AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `ID_USER` int(50) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `ID_USER` int(50) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
