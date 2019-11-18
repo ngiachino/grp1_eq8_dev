@@ -38,7 +38,7 @@ $result = mysqli_query($conn, $query);
 </div>
 <h1>Issues</h1>
 <form method="POST" id="newIssueForm"></form>
-<table class="table">
+<table class="table" id="issuesList" summary="Table des issues du projet">
   <thead class="thead-dark">
     <tr>
       <th scope="col">#</th>
@@ -61,8 +61,8 @@ $result = mysqli_query($conn, $query);
     <?php } ?>
     <tr>
         <th scope="row"></th>
-        <td><input type="text" name="description" form="newIssueForm"></td>
-        <td><input type="text" name="priority" form="newIssueForm"></td>
+        <td><input type="text" name="description" form="newIssueForm" maxlength="500"></td>
+        <td><input type="text" name="priority" form="newIssueForm" maxlength="10"></td>
         <td><input type="number" name="difficulty" form="newIssueForm"></td>
         <td><input type="submit" name="submit" value="Créer" form="newIssueForm"></td> 
     </tr>
