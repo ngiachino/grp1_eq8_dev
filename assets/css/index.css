@@ -20,31 +20,26 @@ h2{
     font-size: 30px;
 }
 
-.container{
-    overflow-y:auto;
-    height:60vh;
-    width:28vw;
-    float: left;
+.col-sm-5{
     background-color: rgb(238,238,238);
     font-weight: bold;
     font-size:30px;
     color:rgb(0, 0, 0);
     text-align: center;
-    padding-left: 4vw;
-    padding-right: 4vw;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    padding-bottom: 2vw;
     border: 1px solid black;
     border-radius: 3px;
 }
 
-.container:hover{
+.col-sm-5:hover{
     border: 2px solid red;
 }
 
-.supercontainer{
-    display: flex;
-    justify-content: space-between;
-    padding-left: 20vw;
-    padding-right: 20vw;
+.container{
+    padding-left: 12vw;
+    padding-right: 12vw;
 }
 
 .menuBar {

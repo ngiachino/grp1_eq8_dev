@@ -28,49 +28,54 @@ if ($conn->connect_error) {
 
 <h1>Bienvenue</h1>
 
-<div class="supercontainer">
-    <form class="form-container" method = "POST" id="formCo">
-    <div class="container">
-        <h2>Connexion</h2>
-        <div>
-            <label for="nameCo">Email ou Pseudo</label>
-            <input type="text" name="nameCo" id="nameCo">
+<div class="container">
+    <div class="row justify-content-around">
+        <div class="col-sm-5">
+            <form class="form-container" method = "POST" id="formCo">
+                <h2>Connexion</h2>
+                <div>
+                    <label for="nameCo">Email ou Pseudo</label>
+                    <input type="text" name="nameCo" id="nameCo">
+                </div>
+                <div>
+                    <label for="pswdCo">Mot de passe</label>
+                    <input type="password" name="pswdCo" id="pswdCo">
+                </div>
+                <div>
+                    <input class="mt-4" type="submit" name="submitCo" value = "Se connecter">
+                </div>
+            </form>
         </div>
-        <div>
-            <label for="pswdCo">Mot de passe</label>
-            <input type="password" name="pswdCo" id="pswdCo">
-        </div>
-        <div>
-            <input type="submit" name="submitCo" value = "Se connecter">
-        </div>
-    </div>
 
-    <div class="container">
-    <form class="form-container" method = "POST" id="formInsc">
-        <h2>Inscription</h2>
-        <div>
-            <label for="pseudoInsc">Pseudo</label>
-            <input type="text" name="pseudoInsc" id="pseudoInsc">
+        <div class="col-sm-5">
+            <form class="form-container" method = "POST" id="formInsc">
+                <h2>Inscription</h2>
+                <div>
+                    <label for="pseudoInsc">Pseudo</label>
+                    <input type="text" name="pseudoInsc" id="pseudoInsc">
+                </div>
+                <div>
+                    <label for="mailInsc">Email</label>
+                    <input type="email" name="mailInsc" id="mailInsc">
+                </div>
+                <div>
+                    <label for="pswdInsc">Mot de passe</label>
+                    <input type="password" name="pswdInsc" id="pswdInsc">
+                </div>
+                <div>
+                    <label for="pswdConfirmInsc">Confirmer mot de passe</label>
+                    <input type="password" name="pswdConfirmInsc" id="pswdConfirmInsc">
+                </div>
+                <div>
+                    <input class="mt-4" type="submit" name="submitInsc" value="S'inscrire">
+                </div>
+            </form>
         </div>
-        <div>
-            <label for="mailInsc">Email</label>
-            <input type="email" name="mailInsc" id="mailInsc">
-        </div>
-        <div>
-            <label for="pswdInsc">Mot de passe</label>
-            <input type="password" name="pswdInsc" id="pswdInsc">
-        </div>
-        <div>
-            <label for="pswdConfirmInsc">Confirmer mot de passe</label>
-            <input type="password" name="pswdConfirmInsc" id="pswdConfirmInsc">
-        </div>
-        <div>
-            <input type="submit" name="submitInsc" value="S'inscrire">
-        </div>
-    </form>
     </div>
 </div>
-<?php
+
+<div class="text-center">
+    <?php
     if(isset($_POST['submitInsc'])){
         $pseudoInsc = $_POST['pseudoInsc'];
         $mailInsc = $_POST['mailInsc'];
@@ -115,7 +120,7 @@ if ($conn->connect_error) {
                     echo "Error: " . $sql . "<br>" . $conn->error . "<br>";
                 }
                 else{
-                    echo "Votre compte a bien été crée";
+                    echo "Votre compte a bien été créé";
                 }
             }
         }
@@ -139,10 +144,11 @@ if ($conn->connect_error) {
             $_SESSION['userName'] = $data['NOM_USER'];
             $_SESSION['userID'] = $data['ID_USER'];
             echo "Vous êtes connecté";
-            header("Location:profil.php"); 
+            header("Location:profil.php");
         }
     }
-  ?>
+    ?>
+</div>
 
 </body>
 </html>
