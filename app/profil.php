@@ -126,7 +126,7 @@ $result1 = mysqli_query($conn,$query);
                     </div>
                     <div class="form-group">
                         <label for="projectDescription">Description</label>
-                        <input type="text" class="form-control" placeholder="Description" id="projectDescription" name="description" required>
+                        <textarea class="form-control" placeholder="Description" id="projectDescription" name="description" required></textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" name="submit" class="btn btn-primary">Créer</button>

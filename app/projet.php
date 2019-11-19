@@ -63,8 +63,8 @@ $result1 = mysqli_query($conn, $query);
     </div>
 
     <div class="container">
-        <a class="pageLink" href="#">
-            <h2>Les tâches</h2>
+        <a class="pageLink" href="sprints.php">
+            <h2>Les sprints</h2>
         </a>
     </div>
 
