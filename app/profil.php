@@ -61,7 +61,7 @@ $result1 = mysqli_query($conn,$query);
                             <a class="d-inline-block w-100 h-100" href="./projet.php?title=<?php echo $row1[0];?>&owner=<?php echo $row1[1];?>">
                                 <span class="projectTitle"><?php echo $row1[0];?></span>
                                 <br/>
-                                <span class="projectOwner"><?php echo $row1[1];?></span>
+                                <span class="projectOwner">Créateur : <?php echo $row1[1];?></span>
                             </a>
                         </td>
                     </tr>

@@ -49,5 +49,4 @@ function deleteProject($conn, $userID, $projectName){
             return "Votre projet a bien été supprimé";
         }
     }
-
 }
