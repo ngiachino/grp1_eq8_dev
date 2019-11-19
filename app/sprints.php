@@ -1,7 +1,6 @@
 <?php
-
 include '../database/DBconnect.php';
-include 'sprintCreation.php';
+include 'sprintControl.php';
 $conn = connect();
 session_start();
 
@@ -14,10 +13,10 @@ if($_SESSION['projectId'] == null){
 }
 
 $idProjet = $_SESSION['projectId'];
-$message = addSprint($conn, $idProjet);
-$query = "SELECT NOM_SPRINT,DATE_DEBUT,DATE_FIN FROM sprint WHERE ID_PROJET = '$idProjet' ORDER BY DATE_FIN";
+$messageAdd = addSprint($conn, $idProjet);
+$messageDel = deleteSprint($conn);
+$query = "SELECT NOM_SPRINT,DATE_DEBUT,DATE_FIN, ID_SPRINT FROM sprint WHERE ID_PROJET = '$idProjet' ORDER BY DATE_FIN";
 $result = mysqli_query($conn, $query);
-
 ?>
 
 <!DOCTYPE html>
@@ -42,6 +41,7 @@ $result = mysqli_query($conn, $query);
 <div class="col-sm-4" id="openNewProjectForm">
     <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#newProjectModal" id="addButton">Créer un nouveau sprint</button>
 </div>
+<div class="row">
 <?php $i = 1;
     while($row = mysqli_fetch_row($result)){
 ?>
@@ -53,14 +53,18 @@ $result = mysqli_query($conn, $query);
         <div class="card-body">
             <p class="card-text">Date de début : <?php echo $row[1]?></p>
             <p class="card-text">Date de fin : <?php echo $row[2]?></p>
-            <a href="#" class="btn btn-primary">Modifier</a>
-            <a href="#" class="btn btn-primary">Supprimer</a>
+            <form method="POST">
+            <input type="hidden" name="id" value="<?php echo $row[3];?>">
+            <button type="submit" name="modify" class="btn btn-primary">Modifier</button>
+            <button type="submit" name="delete" class="btn btn-secondary">Supprimer</button>
+            </form>
         </div>
     </div>
 </div>
 <?php
     }
 ?>
+</div>
 
 <div class="modal" tabindex="-1" role="dialog" id="newProjectModal">
     <div class="modal-dialog" role="document">
@@ -94,6 +98,9 @@ $result = mysqli_query($conn, $query);
         </div>
     </div>
 </div>
-<?php echo $message; ?>
+<?php 
+echo $messageAdd;
+echo $messageDel;
+?>
 </body>
 </html>

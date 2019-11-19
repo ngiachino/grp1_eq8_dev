@@ -28,4 +28,12 @@ function addSprint($conn,$projectID)
         }
     }
 }
+function deleteSprint($conn)
+{
+    if (isset($_POST['delete'])) {
+        $sprintID = $_POST['id'];
+        $query = "DELETE FROM sprint WHERE ID_SPRINT = '$sprintID'";
+        $result = mysqli_query($conn,$query);
+    }
+}
 ?>
