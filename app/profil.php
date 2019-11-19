@@ -1,5 +1,5 @@
 <?php
-include './projectCreation.php';
+include './projectManagement.php';
 include '../database/DBconnect.php';
 $conn = connect();
 // Check connection
@@ -34,7 +34,6 @@ $result1 = mysqli_query($conn,$query);
     <?php include './defaultHead.php'; ?>
     <title>Mon profil - GoProject</title>
     <link href="../assets/css/profil.css" rel="stylesheet">
-    <!-- <script src="../assets/js/profil.js" defer></script>-->
 </head>
 
 
@@ -62,7 +61,7 @@ $result1 = mysqli_query($conn,$query);
                             <a class="d-inline-block w-100 h-100" href="./projet.php?title=<?php echo $row1[0];?>&owner=<?php echo $row1[1];?>">
                                 <span class="projectTitle"><?php echo $row1[0];?></span>
                                 <br/>
-                                <span class="projectOwner"><?php echo $row1[1];?></span>
+                                <span class="projectOwner">Créateur : <?php echo $row1[1];?></span>
                             </a>
                         </td>
                     </tr>
@@ -138,9 +137,11 @@ $result1 = mysqli_query($conn,$query);
     </div>
 </div>
 
+<span class="m-4">
 <?php
 echo $message;
 ?>
+</span>
 
 
 </body>

@@ -41,8 +41,9 @@ body{
     padding-right: 2vh;
     width: 18rem;
 }
-
-
+.row{
+    width: 100%;
+}
 h1{
     text-align: center;
     line-height: 0;
@@ -54,7 +55,7 @@ h1{
 h2{
     font-size: 2rem;
 }
-#openNewProjectForm{
+#openNewSprintForm{
     margin-left: auto;
     margin-right: auto;
 }
