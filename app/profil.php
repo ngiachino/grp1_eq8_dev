@@ -34,7 +34,6 @@ $result1 = mysqli_query($conn,$query);
     <?php include './defaultHead.php'; ?>
     <title>Mon profil - GoProject</title>
     <link href="../assets/css/profil.css" rel="stylesheet">
-    <!-- <script src="../assets/js/profil.js" defer></script>-->
 </head>
 
 
