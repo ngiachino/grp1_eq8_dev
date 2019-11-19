@@ -21,13 +21,16 @@ h1{
     border-color: rgb(120,50,20);
 }
 
+a:hover{
+    text-decoration: none;
+}
+
 td a{
     color: black;
 }
 
 td a:hover{
     color: black;
-    text-decoration: none;
 }
 
 .table-bordered{
@@ -65,6 +68,7 @@ td a:hover{
 }
 .menuBar a:hover {
     color: rgb(126, 126, 126);
+    background-color: rgb(160,60,20);
     cursor: pointer;
 }
 

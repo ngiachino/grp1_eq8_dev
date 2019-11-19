@@ -1,5 +1,5 @@
 <?php
-include './projectCreation.php';
+include './projectManagement.php';
 include '../database/DBconnect.php';
 $conn = connect();
 // Check connection
@@ -138,9 +138,11 @@ $result1 = mysqli_query($conn,$query);
     </div>
 </div>
 
+<span class="m-4">
 <?php
 echo $message;
 ?>
+</span>
 
 
 </body>

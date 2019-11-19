@@ -1,6 +1,8 @@
 <?php
 
 include '../database/DBconnect.php';
+include 'membersManagement.php';
+include 'projectManagement.php';
 $conn = connect();
 
 // Check connection
@@ -26,6 +28,9 @@ $result2 = mysqli_query($conn, $query2);
 $projectId = mysqli_fetch_row($result2)[0];
 $_SESSION['projectId'] = $projectId;
 
+$message = addMember($conn, $projectId);
+deleteProject($conn, $_SESSION['userID'], $projectTitle, $projectOwner);
+
 $query = "SELECT * FROM membre WHERE ID_PROJET = '$projectId'";
 $result1 = mysqli_query($conn, $query);
 ?>
@@ -41,12 +46,12 @@ $result1 = mysqli_query($conn, $query);
 </head>
 
 <body>
-<div class = "menuBar">
-    <div class="menuBar-left">
+<div class="menuBar">
+    <div class="float-left">
         <a href="profil.php">GoProject</a>
     </div>
-    <div class="menuBar-right">
-        <a class = "disconnect" href="./index.php">Se déconnecter</a>
+    <div class="float-right">
+        <a class="disconnect" href="./index.php">Se déconnecter</a>
     </div>
 </div>
 
@@ -54,103 +59,84 @@ $result1 = mysqli_query($conn, $query);
     <?php echo $projectTitle?>
 </h1>
 
-<div class="supercontainer">
+<div class="container">
+    <div class="row mb-2">
+        <div class="col-sm">
+            <a class="projectComponent" href="issues.php">
+                <h2>Les issues</h2>
+            </a>
+        </div>
 
-    <div class="container">
-        <a class="pageLink" href="issues.php">
-            <h2>Les issues</h2>
-        </a>
+        <div class="col-sm">
+            <a class="projectComponent" href="sprints.php">
+                <h2>Les sprints</h2>
+            </a>
+        </div>
+
+        <div class="col-sm">
+            <a class="projectComponent" href="#">
+                <h2>Les releases</h2>
+            </a>
+        </div>
+
+        <div class="col-sm">
+            <a class="projectComponent" href="#">
+                <h2>Les test</h2>
+            </a>
+        </div>
+
+        <div class="col-sm">
+            <a class="projectComponent" href="#">
+                <h2>La doc</h2>
+            </a>
+        </div>
     </div>
 
-    <div class="container">
-        <a class="pageLink" href="sprints.php">
-            <h2>Les sprints</h2>
-        </a>
-    </div>
+    <div class="row">
+        <div class="col-5">
+            <div class="membersList">
+                Informations
+                <form class="d-inline" method="post">
+                    <button class="btn btn-info" type="submit" name="modify">Modifier</button>
+                    <button class="btn btn-danger" type="submit" name="delete">Supprimer</button>
+                </form>
+            </div>
+        </div>
 
-    <div class="container">
-        <a class="pageLink" href="#">
-            <h2>Les releases</h2>
-        </a>
-    </div>
+        <div class="col-7">
+            <div class="membersList">
+                <form class="form-container d-inline" method="POST">
+                    <input type="text" name="userName" placeholder="Pseudo ou Email" id="userName">
+                    <input type="submit" name="submit" class="submit btn btn-outline-danger" value="Inviter membre">
+                </form>
+                <span class="p-3 small font-weight-bold">
+                    <?php
+                    echo $message;
+                    ?>
+                </span>
+                <div>
+                    Liste des membres :
+                </div>
 
-    <div class="container">
-        <a class="pageLink" href="#">
-            <h2>Les test</h2>
-        </a>
-    </div>
-
-    <div class="container">
-        <a class="pageLink" href="#">
-            <h2>La doc</h2>
-        </a>
-    </div>
-
-</div>
-
-<div id="membersList">
-    <div class="container">
-        <form class="form-container" method = "POST">
-            <input type="text" name="userName" placeholder="Pseudo ou Email" id="userName">
-            <input type="submit" name="submit" class="submit" value="Inviter membre">
-        </form>
-        <?php
-        if(isset($_POST['submit'])){
-            $userName = $_POST['userName'];
-            //Test que le champ n'est pas vide
-            if(empty($userName)){
-                echo "<span>Vous devez indiquer un pseudo ou un mail</span></br>";
-            }
-            else{
-                //Test que l'utilisateur n'est pas déjà dans le projet
-                $query = "SELECT ID_MEMBRE FROM membre JOIN utilisateur ON membre.ID_MEMBRE = utilisateur.ID_USER WHERE (NOM_MEMBRE ='$userName' OR MAIL_USER='$userName') AND ID_PROJET = '$projectId'";
-                $result = mysqli_query($conn, $query);
-                if(mysqli_num_rows($result) != 0){
-                    echo "<span>Cet utilisateur fait déjà parti du projet</span></br>";
-                }
-                else{
-                    //Test que l'utilisateur existe (mail ou pseudo)
-                    $query = "SELECT ID_USER,NOM_USER FROM utilisateur WHERE NOM_USER ='$userName' OR MAIL_USER = '$userName'";
-                    $result = mysqli_query($conn, $query);
-                    if(mysqli_num_rows($result) == 0){
-                        echo "<span>Ce pseudo/mail ne correspond à aucun utilisateur</span></br>";
-                    }
-                    //Ajout de l'utilisateur au projet
-                    else{
-                        $row = mysqli_fetch_row($result);
-                        $memberName=$row[1];
-                        $memberId=$row[0];
-                        $query = "INSERT INTO membre (ID_MEMBRE, ID_PROJET, NOM_MEMBRE)
-                        VALUES ('$memberId','$projectId','$memberName')";
-                        if(mysqli_query($conn,$query) === FALSE){
-                            echo "Error: " . $query . "<br>" . $conn->connect_error . "<br>";
-                        }
-                        header("Refresh:0");
-                    }
-                }
-            }
-
-        }
-        ?>
-        Liste des membres
-
-        <ul>
-            <?php while($member = mysqli_fetch_row($result1)) { ?>
-                <li><?php echo $member[2] ?>
-                <form method="post">
-                <input type="hidden" name="name" value="<?php echo $member[2];?>">
-                <input type="<?php if($member[2] == $projectOwner){echo "hidden";} else{echo "submit";} ?>" name="deleteUser" value="&#x274C;">
-                </form></li>
-            <?php } ?>
-        </ul>
-
+                <ul>
+                    <?php while($member = mysqli_fetch_row($result1)) { ?>
+                        <li><?php echo '- '.$member[2] ?>
+                            <form method="post">
+                                <input type="hidden" name="name" value="<?php echo $member[2];?>">
+                                <input type="<?php if($member[2] == $projectOwner){echo "hidden";} else{echo "submit";} ?>" name="deleteUser" value="&#x274C;">
+                            </form>
+                        </li>
+                    <?php } ?>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
 
 </body>
 </html>
 
-<?php 
+<?php
 if(isset($_POST['deleteUser'])){
     $userToDelete = $_POST['name'];
     $query = "DELETE FROM membre WHERE NOM_MEMBRE = '$userToDelete'";

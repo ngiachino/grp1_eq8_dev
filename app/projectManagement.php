@@ -23,14 +23,31 @@ function addProject($conn, $userID, $userName)
                 VALUES ('$userID',LAST_INSERT_ID(),'$userName')";
 
                 if (mysqli_query($conn, $sql) === FALSE) {
-                    echo "Error: " . $sql . "<br>" . $conn->error . "<br>";
+                    return "Error: " . $sql . "<br>" . $conn->error . "<br>";
                 } else if (mysqli_query($conn, $sql2) === FALSE) {
-                    echo "Error: " . $sql . "<br>" . $conn->error . "<br>";
+                    return "Error: " . $sql . "<br>" . $conn->error . "<br>";
                 } else {
-                    return "Votre projet a bien été crée";
+                    return "Votre projet a bien été créé";
                 }
             }
         }
     }
 }
-?>
+
+function editProject($conn){
+
+}
+
+function deleteProject($conn, $userID, $projectName){
+    if (isset($_POST['delete'])) {
+        $sql = "DELETE FROM projet WHERE NOM_PROJET = '$projectName' AND ID_MANAGER = '$userID'";
+
+        if (mysqli_query($conn, $sql) === FALSE) {
+            return "Error: " . $sql . "<br>" . $conn->error . "<br>";
+        } else {
+            header("Location: profil.php");
+            return "Votre projet a bien été supprimé";
+        }
+    }
+
+}

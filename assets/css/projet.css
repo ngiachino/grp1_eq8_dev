@@ -1,7 +1,3 @@
-*{
-    box-sizing: border-box;
-}
-
 body{
     background-color: rgb(253,253,253);
     color: rgb(51,51,51);
@@ -10,15 +6,11 @@ body{
 
 .menuBar {
     overflow: hidden;
-    background-color:  rgb(160,60,20);
+    background-color: rgb(160,60,20);
     padding: 20px 30px;
     color: whitesmoke;
     font-size: 30px;
     line-height: 25px;
-}
-
-.menuBar-right {
-    float: right;
 }
 
 .menuBar a {
@@ -32,6 +24,7 @@ body{
 
 .menuBar a:hover {
     color: rgb(126, 126, 126);
+    background-color: rgb(160,60,20);
     cursor: pointer;
 }
 
@@ -39,51 +32,27 @@ h1{
     text-align: center;
     line-height: 0;
     font-size: 60px;
-    margin-top: 3rem;
-    margin-bottom: 3rem;
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
 }
 
 h2{
     font-size: 2rem;
 }
 
-.supercontainer{
-    display: flex;
-    justify-content: space-between;
-    padding-left: 1vw;
-    padding-right: 1vw;
-}
-
-.container{
-    overflow-y: auto;
-    height: 30vh;
-    width: 18vw;
-    float: left;
+.membersList{
     background-color: rgb(238,238,238);
     font-weight: bold;
-    font-size: 2rem;
     color: rgb(0, 0, 0);
-    text-align: center;
     border: 2px solid black;
     border-radius: 3px;
+    padding: 0.3rem;
+    height: 45vh;
 }
 
-.container:hover{
+.membersList:hover{
     background-color: rgb(218,218,218);
     border: 2px solid red;
-    cursor: pointer;
-}
-
-#membersList{
-    padding-left: 25vw;
-    padding-right: 25vw;
-    padding-top: 4vh;
-}
-
-#membersList .container{
-    width: 100%;
-    height: 41vh;
-    padding-top: 1vh;
 }
 
 ul{
@@ -97,30 +66,29 @@ ul a{
     margin-right: 5vw;
 }
 
-ul a:hover{
+a:hover{
     background-color: rgb(218,218,218);
     cursor: pointer;
-}
-.pageLink{
     text-decoration: none;
     color: black;
-    width: 100%;
-    height: 100%;
-    display: inline-block;
 }
 
-#membersList .container:hover{
+.projectComponent{
+    margin-top: 2vh;
+    width: 100%;
+    height: 30vh;
     background-color: rgb(238,238,238);
+    font-weight: bold;
+    font-size: 2rem;
+    color: rgb(0, 0, 0);
+    text-align: center;
     border: 2px solid black;
-    cursor: default;
+    border-radius: 3px;
+    display: block;
 }
 
-#issues{
-    margin-top: 2vh;
-    width: 100%;
-}
-
-#tasks{
-    margin-top: 2vh;
-    width: 100%;
+.projectComponent:hover{
+    background-color: rgb(218,218,218);
+    border: 2px solid red;
+    cursor: pointer;
 }
