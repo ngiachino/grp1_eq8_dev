@@ -62,7 +62,10 @@ $result = mysqli_query($conn, $query);
       <td><input type="submit" name="modify" value="Modifier"><input type="submit" name="delete" value="Supprimer"></td>
     </tr>
     </form>
-    <?php $i++;} ?>
+    <?php 
+      $i++;
+      }
+    ?>
     <tr>
         <th scope="row"></th>
         <td><input type="text" name="description" form="newIssueForm" maxlength="500"></td>
