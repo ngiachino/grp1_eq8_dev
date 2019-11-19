@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  lun. 18 nov. 2019 à 18:29
+-- Généré le :  mar. 19 nov. 2019 à 19:07
 -- Version du serveur :  10.4.8-MariaDB
 -- Version de PHP :  7.3.11
 
@@ -99,7 +99,8 @@ CREATE TABLE `sprint` (
   `ID_SPRINT` int(50) UNSIGNED NOT NULL COMMENT '"identifiant et numéro du sprint"',
   `ID_PROJET` int(50) UNSIGNED NOT NULL COMMENT '"identifiant du projet auquel appartient le sprint"',
   `DATE_DEBUT` date NOT NULL,
-  `DATE_FIN` date NOT NULL
+  `DATE_FIN` date NOT NULL,
+  `NOM_SPRINT` varchar(20) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Table des sprints';
 
 -- --------------------------------------------------------
@@ -147,13 +148,6 @@ CREATE TABLE `utilisateur` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `utilisateur`
---
-
-INSERT INTO `utilisateur` (`ID_USER`, `NOM_USER`, `PASSWORD_USER`, `MAIL_USER`) VALUES
-(12, 'a', 'a', 'a@a.a');
-
---
 -- Index pour les tables déchargées
 --
 
@@ -191,7 +185,7 @@ ALTER TABLE `release`
 -- Index pour la table `sprint`
 --
 ALTER TABLE `sprint`
-  ADD PRIMARY KEY (`ID_SPRINT`,`ID_PROJET`);
+  ADD PRIMARY KEY (`ID_SPRINT`);
 
 --
 -- Index pour la table `tache`
@@ -220,7 +214,13 @@ ALTER TABLE `utilisateur`
 -- AUTO_INCREMENT pour la table `projet`
 --
 ALTER TABLE `projet`
-  MODIFY `ID_PROJET` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"Identifiant du projet"', AUTO_INCREMENT=9;
+  MODIFY `ID_PROJET` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"Identifiant du projet"', AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT pour la table `sprint`
+--
+ALTER TABLE `sprint`
+  MODIFY `ID_SPRINT` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"identifiant et numéro du sprint"', AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT pour la table `utilisateur`
