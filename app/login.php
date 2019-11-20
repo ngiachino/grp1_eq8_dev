@@ -1,39 +1,31 @@
 <?php
-session_start();
-
-if(isset($_POST['nameCo']) && isset($_POST['pswdCo']) )
-{
-    $db_username = 'aouldamara';
-    $db_password = 'cdp';
-    $db_host = 'localhost';
-    try {
-        $connexion = new PDO("mysql:host=$db_host;dbname=aouldamara",$db_username,$db_password);
-        // set the PDO error mode to exception
-        $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        echo "Connected successfully";
-        //Getting username and passsword
-        $username = $_POST['nameCo'];
-        $password = password_hash($_POST['pswdCo'], PASSWORD_DEFAULT);
-
-        //Rechercher le user dans la BDD
-        $pdo_query = $connexion->prepare('SELECT count(*)  FROM utilisateur WHERE NOM_USER = ? AND PASSWORD_USER= ?');
-        $pdo_query->execute([$username,$password]);
-        $exist = $pdo_query->fetch();
-
-        //test Existance
-        if($exist != 0){
-            $_SESSION['username'] = $username;
-            header('Location : profile.php');
-        }
-        else {
-            header('Location:index.php');
-        }
-
-    } catch (\PDOException $e) {
-        throw new \PDOException($e->getMessage(), (int)$e->getCode());
+function connexion(){
+    $conn = connect();
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
     }
+    if(isset($_POST['submitCo'])){
+        $nameCo = $_POST['nameCo'];
+        $pswdCo = $_POST['pswdCo'];
 
-    $connexion=null;
+        //test que le mail n'est pas déjà utilisé
+        $sql = "SELECT ID_USER,NOM_USER FROM utilisateur WHERE (MAIL_USER = '$nameCo' OR NOM_USER = '$nameCo') AND PASSWORD_USER = '$pswdCo'";
+        $result = $conn->query($sql);
+        if($result === FALSE){
+            echo "Error: " . $sql . "<br>" . $conn->error . "<br>";
+        }
+
+        else if($result->num_rows == 0){
+            return "Le compte et le mot de passe ne correspondent pas";
+        }
+        else{
+            $data = mysqli_fetch_assoc($result);
+            $_SESSION['userName'] = $data['NOM_USER'];
+            $_SESSION['userID'] = $data['ID_USER'];
+            header("Location:profil.php");
+            return "Vous êtes connecté !";
+        }
+    }
 }
-
 ?>

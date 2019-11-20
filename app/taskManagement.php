@@ -26,8 +26,7 @@ function addTask($conn,$projectId,$sprintId,$userStoryId)
                            0
                           );                  
                   ";
-        $result = mysqli_query($conn,$query);
-
+    mysqli_query($conn,$query);
     }
 }
 
@@ -42,7 +41,7 @@ function deleteTask($conn)
     if (isset($_POST['taskId'])) {
         $taskId = $_POST['taskId'];
         $query = "DELETE FROM Tache WHERE ID_TACHE = '$taskId'";
-        $result = mysqli_query($conn,$query);
+        mysqli_query($conn,$query);
     }
 }
 ?>
