@@ -23,7 +23,6 @@ h2{
 .col-sm-5{
     background-color: rgb(238,238,238);
     font-weight: bold;
-    font-size:30px;
     color:rgb(0, 0, 0);
     text-align: center;
     padding-left: 2vw;
@@ -58,7 +57,6 @@ h2{
     font-size: 18px;
     border-radius: 4px;
 }
-
 label{
     font-size:15px;
 }

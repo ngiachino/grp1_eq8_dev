@@ -1,50 +1,50 @@
 <?php
-session_start();
-if(isset($_POST['mailInsc']) && isset($_POST['pseudoInsc']) && isset($_POST['pswdInsc']) && isset($_POST['pswdConfirmInsc']) )
-{
-    $db_username = 'aouldamara';
-    $db_password = 'cdp';
-    $db_host = 'localhost';
-    try {
-    $connexion = new PDO("mysql:host=$db_host;dbname=aouldamara",$db_username,$db_password);
-    // set the PDO error mode to exception
-    $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    echo "Connected successfully";
-    //Getting username and passsword
-    $username = $_POST['nameCo'];
-    $password = password_hash($_POST['pswdCo'], PASSWORD_DEFAULT);
-    $mail = $_POST['mailInsc'];
-
-    //Rechercher le user dans la BDD
-    $pdo_query = $connexion->prepare('SELECT count(*)  FROM utilisateur WHERE NOM_USER = ?');
-    $pdo_query->execute([$username]);
-    $exist = $pdo_query->fetch();
-
-    //test Existance
-    if($exist != 0){
-        echo "This User exists";
-        $_SESSION['username'] = $username;
-        header('Location : index.php');
+function register(){
+    $conn = connect();
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
     }
-    else {
+    if(isset($_POST['submitInsc'])){
+        $pseudoInsc = $_POST['pseudoInsc'];
+        $mailInsc = $_POST['mailInsc'];
+        $pswdInsc = $_POST['pswdInsc'];
+        $pswdConfirmInsc = $_POST['pswdConfirmInsc'];
 
-        $pdo_query = $connexion->prepare('INSERT INTO utilisateur (NOM_USER, PASSWORD_USER, MAIL_USER) 
-                                           VALUE 
-                                            (   $username,
-                                               $password,
-                                               $mail 
-                                            );
-                                         ');
-        $pdo_query->execute();
+        //test que tous les champs sont remplis
+        if(empty($pseudoInsc) || empty($mailInsc) || empty($pswdInsc) || empty($pswdConfirmInsc)){
+            return "Vous devez remplir tous les champs";
+        }
+        //test que les deux mots de passe sont identiques
+        else if($pswdInsc != $pswdConfirmInsc){
+            return "Les mots de passe ne sont pas identiques";
+        }
+        else{
 
-        header('Location:profil.php');
+            //test que le mail n'est pas déjà utilisé
+            $sqlTest1 = "SELECT ID_USER FROM utilisateur WHERE MAIL_USER = '$mailInsc'";
+            $result1 = $conn->query($sqlTest1);
+
+            //test que le pseudo n'est pas déjà utilisé
+            $sqlTest2 = "SELECT ID_USER FROM utilisateur WHERE NOM_USER = '$pseudoInsc'";
+            $result2 = $conn->query($sqlTest2);
+            if($result1->num_rows > 0){
+                return "Ce mail est déjà associé à un compte";
+            }
+            else if($result2->num_rows > 0){
+                return "Ce pseudo est déjà associé à un compte";
+            }
+            else{
+                $sql = "INSERT INTO utilisateur (NOM_USER, PASSWORD_USER, MAIL_USER)
+                VALUES ('$pseudoInsc','$pswdInsc','$mailInsc')";
+                if ($conn->query($sql) === FALSE) {
+                    echo "Error: " . $sql . "<br>" . $conn->error . "<br>";
+                }
+                else{
+                    return "Votre compte a bien été créé";
+                }
+            }
+        }
     }
-
-    } catch (\PDOException $e) {
-        throw new \PDOException($e->getMessage(), (int)$e->getCode());
-    }
-
-    $connexion=null;
 }
-
 ?>

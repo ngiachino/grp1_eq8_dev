@@ -2,10 +2,11 @@
 
 include '../database/DBconnect.php';
 include './login.php';
+include './register.php';
 session_start();
 session_unset();
 connexion();
-
+register();
 ?>
 
 <!DOCTYPE html>
@@ -31,17 +32,18 @@ connexion();
                 <h2>Connexion</h2>
                 <div>
                     <label for="nameCo">Email ou Pseudo</label>
-                    <input type="text" name="nameCo" id="nameCo">
+                    <input type="text" name="nameCo" id="nameCo" required>
                 </div>
                 <div>
                     <label for="pswdCo">Mot de passe</label>
-                    <input type="password" name="pswdCo" id="pswdCo">
+                    <input type="password" name="pswdCo" id="pswdCo" required>
                 </div>
                 <div>
                     <input class="mt-4" type="submit" name="submitCo" value = "Se connecter">
                 </div>
             </form>
         </div>
+        
 
         <div class="col-sm-5">
             <form class="form-container" method = "POST" id="formInsc">
@@ -69,60 +71,5 @@ connexion();
         </div>
     </div>
 </div>
-
-<div class="text-center">
-    <?php
-    if(isset($_POST['submitInsc'])){
-        $pseudoInsc = $_POST['pseudoInsc'];
-        $mailInsc = $_POST['mailInsc'];
-        $pswdInsc = $_POST['pswdInsc'];
-        $pswdConfirmInsc = $_POST['pswdConfirmInsc'];
-
-        //test que tous les champs sont remplis
-        if(empty($pseudoInsc) || empty($mailInsc) || empty($pswdInsc) || empty($pswdConfirmInsc)){
-            echo "Vous devez remplir tous les champs";
-        }
-        //test que les deux mots de passe sont identiques
-        else if($pswdInsc != $pswdConfirmInsc){
-            echo "Les mots de passe ne sont pas identiques";
-        }
-        else{
-
-            //test que le mail n'est pas déjà utilisé
-            $sqlTest1 = "SELECT ID_USER FROM utilisateur WHERE MAIL_USER = '$mailInsc'";
-            $result1 = $conn->query($sqlTest1);
-
-            //test que le pseudo n'est pas déjà utilisé
-            $sqlTest2 = "SELECT ID_USER FROM utilisateur WHERE NOM_USER = '$pseudoInsc'";
-            $result2 = $conn->query($sqlTest2);
-
-            if(empty($pseudoInsc) || empty($mailInsc) || empty($pswdInsc) || empty($pswdConfirmInsc)){
-                echo "Vous devez remplir tous les champs";
-            }
-            //test que les deux mots de passe sont identiques
-            else if($pswdInsc != $pswdConfirmInsc){
-                echo "Les mots de passe ne sont pas identiques";
-            }
-            else if($result1->num_rows > 0){
-                echo "Ce mail est déjà associé à un compte";
-            }
-            else if($result2->num_rows > 0){
-                echo "Ce pseudo est déjà associé à un compte";
-            }
-            else{
-                $sql = "INSERT INTO utilisateur (NOM_USER, PASSWORD_USER, MAIL_USER)
-                VALUES ('$pseudoInsc','$pswdInsc','$mailInsc')";
-                if ($conn->query($sql) === FALSE) {
-                    echo "Error: " . $sql . "<br>" . $conn->error . "<br>";
-                }
-                else{
-                    echo "Votre compte a bien été créé";
-                }
-            }
-        }
-    }
-    ?>
-</div>
-
 </body>
 </html>

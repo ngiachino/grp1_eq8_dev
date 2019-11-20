@@ -8,23 +8,27 @@ function connexion(){
     if(isset($_POST['submitCo'])){
         $nameCo = $_POST['nameCo'];
         $pswdCo = $_POST['pswdCo'];
-
-        //test que le mail n'est pas déjà utilisé
-        $sql = "SELECT ID_USER,NOM_USER FROM utilisateur WHERE (MAIL_USER = '$nameCo' OR NOM_USER = '$nameCo') AND PASSWORD_USER = '$pswdCo'";
-        $result = $conn->query($sql);
-        if($result === FALSE){
-            echo "Error: " . $sql . "<br>" . $conn->error . "<br>";
-        }
-
-        else if($result->num_rows == 0){
-            return "Le compte et le mot de passe ne correspondent pas";
+        //test que tous les champs sont remplis
+        if(empty($nameCo) || empty($pswdCo)){
+            return "Vous devez remplir tous les champs";
         }
         else{
-            $data = mysqli_fetch_assoc($result);
-            $_SESSION['userName'] = $data['NOM_USER'];
-            $_SESSION['userID'] = $data['ID_USER'];
-            header("Location:profil.php");
-            return "Vous êtes connecté !";
+            //test que le mail n'est pas déjà utilisé
+            $sql = "SELECT ID_USER,NOM_USER FROM utilisateur WHERE (MAIL_USER = '$nameCo' OR NOM_USER = '$nameCo') AND PASSWORD_USER = '$pswdCo'";
+            $result = $conn->query($sql);
+            if($result === FALSE){
+                echo "Error: " . $sql . "<br>" . $conn->error . "<br>";
+            }
+            else if($result->num_rows == 0){
+                return "Le compte et le mot de passe ne correspondent pas";
+            }
+            else{
+                $data = mysqli_fetch_assoc($result);
+                $_SESSION['userName'] = $data['NOM_USER'];
+                $_SESSION['userID'] = $data['ID_USER'];
+                header("Location:profil.php");
+                return "Vous êtes connecté !";
+            }
         }
     }
 }
