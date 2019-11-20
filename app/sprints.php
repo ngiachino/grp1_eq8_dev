@@ -30,14 +30,7 @@ $result = mysqli_query($conn, $query);
 </head>
 
 <body>
-<div class = "menuBar">
-    <div class="menuBar-left">
-        <a id="title" href="profil.php">GoProject</a>
-    </div>
-    <div class="menuBar-right">
-        <a class="disconnect">Se déconnecter</a>
-    </div>
-</div>
+<?php include "navbar.php";?>
 <h1>Les Sprints</h1>
 <div class="col-sm-4" id="openNewSprintForm">
     <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#newSprintModal" id="addButton">Créer un nouveau sprint</button>
@@ -101,6 +94,7 @@ $result = mysqli_query($conn, $query);
 </div>
 <?php
 //positionne le pointeur au début de result
+//contenu de row NOM_SPRINT,DATE_DEBUT,DATE_FIN, ID_SPRINT
 mysqli_data_seek($result,0);
 while($row = mysqli_fetch_row($result)){
 ?>
@@ -117,8 +111,11 @@ while($row = mysqli_fetch_row($result)){
                 <form method="POST">
                     <input type="hidden" name="id" value="<?php echo $row[3];?>">
                     <div class="form-group">
+                    <!--PAS ENCORE TESTÉ-->
+                       <a href="sprintConsult.php?projectId=<?php echo $idProjet;?>&sprintId=<?php echo $row[1];?>">
                         <label for="sprintName">Nom du sprint</label>
                         <input type="text" class="form-control" value="<?php echo $row[0];?>" id="sprintName" name="name" required>
+                       </a>
                     </div>
                     <div class="form-group">
                         <label for="startDate">Date de début</label>
