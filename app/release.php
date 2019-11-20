@@ -15,7 +15,8 @@ if($_SESSION['projectId'] == null){
 
 $idProjet = $_SESSION['projectId'];
 addRelease($conn,$idProjet);
-$query = "SELECT VERSION,DESCRIPTION,DATE_RELEASE,URL_DOCKER FROM `release` WHERE ID_PROJET = '$idProjet' ORDER BY DATE_RELEASE";
+deleteRelease($conn,$idProjet);
+$query = "SELECT VERSION,DESCRIPTION,DATE_RELEASE,URL_DOCKER,ID_RELEASE FROM `release` WHERE ID_PROJET = '$idProjet' ORDER BY DATE_RELEASE";
 $result = mysqli_query($conn, $query);
 if($result === FALSE){
     echo "Error: " . $query . "<br>" . $conn->error . "<br>";
@@ -28,7 +29,7 @@ if($result === FALSE){
 <head>
     <?php include './defaultHead.php'; ?>
     <title>Release - GoProject</title>
-    <link href="../assets/css/projet.css" rel="stylesheet">
+    <link href="../assets/css/navbar.css" rel="stylesheet">
 </head>
 
 <body>
@@ -62,8 +63,10 @@ if($result === FALSE){
       <td><?php echo $row[1];?></td>
       <td><?php echo $row[2];?></td>
       <td>
-          <input class="btn btn-info" type="submit" name="modify" value="Modifier">
-          <input class="btn btn-danger" type="submit" name="delete" value="Supprimer">
+          <form method="POST">
+          <input type="hidden" name="id" value="<?php echo $row[4];?>">
+          <button type="submit" name="delete" class="btn btn-secondary">Supprimer</button>
+          </form>
       </td>
     </tr>
     <?php 

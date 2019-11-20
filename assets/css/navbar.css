@@ -21,3 +21,10 @@
     background-color: rgb(160,60,20);
     cursor: pointer;
 }
+h1{
+    text-align: center;
+    line-height: 0;
+    font-size: 60px;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}

@@ -27,6 +27,7 @@ $result = mysqli_query($conn, $query);
 <head>
     <?php include './defaultHead.php'; ?>
     <title>Issues - GoProject</title>
+    <link href="../assets/css/navbar.css" rel="stylesheet">
     <link href="../assets/css/issues.css" rel="stylesheet">
 </head>
 

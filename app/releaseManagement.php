@@ -12,4 +12,12 @@ function addRelease($conn, $idProjet){
         }
     }
 }
+function deleteRelease($conn, $idProjet)
+{
+    if (isset($_POST['delete'])) {
+        $releaseID = $_POST['id'];
+        $query = "DELETE FROM `release` WHERE ID_RELEASE = '$releaseID' AND ID_PROJET = '$idProjet'";
+        mysqli_query($conn, $query);
+    }
+}
 ?>
