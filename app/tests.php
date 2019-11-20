@@ -9,14 +9,7 @@
 
 
 <body>
-<div class="menuBar">
-    <div class="float-left">
-        <a href="profil.php">GoProject</a>
-    </div>
-    <div class="float-right">
-        <a class="disconnect" href="./index.php">Se déconnecter</a>
-    </div>
-</div>
+<?php include 'navbar.php'; ?>
 
 <h1 class="text-center">Les Tests</h1>
 
