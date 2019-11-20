@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  mar. 19 nov. 2019 à 19:07
+-- Généré le :  mer. 20 nov. 2019 à 15:50
 -- Version du serveur :  10.4.8-MariaDB
 -- Version de PHP :  7.3.11
 
@@ -84,9 +84,10 @@ CREATE TABLE `projet` (
 CREATE TABLE `release` (
   `ID_RELEASE` int(50) NOT NULL,
   `ID_PROJET` int(50) NOT NULL,
+  `VERSION` varchar(10) NOT NULL,
   `DESCRIPTION` varchar(500) NOT NULL,
   `DATE_RELEASE` date NOT NULL,
-  `URL_DOCKER` varchar(500) NOT NULL
+  `URL_DOCKER` varchar(100) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='La table des Releases';
 
 -- --------------------------------------------------------
@@ -214,19 +215,25 @@ ALTER TABLE `utilisateur`
 -- AUTO_INCREMENT pour la table `projet`
 --
 ALTER TABLE `projet`
-  MODIFY `ID_PROJET` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"Identifiant du projet"', AUTO_INCREMENT=17;
+  MODIFY `ID_PROJET` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"Identifiant du projet"', AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT pour la table `release`
+--
+ALTER TABLE `release`
+  MODIFY `ID_RELEASE` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT pour la table `sprint`
 --
 ALTER TABLE `sprint`
-  MODIFY `ID_SPRINT` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"identifiant et numéro du sprint"', AUTO_INCREMENT=5;
+  MODIFY `ID_SPRINT` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"identifiant et numéro du sprint"', AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `ID_USER` int(50) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `ID_USER` int(50) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
