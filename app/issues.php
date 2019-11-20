@@ -27,18 +27,11 @@ $result = mysqli_query($conn, $query);
 <head>
     <?php include './defaultHead.php'; ?>
     <title>Issues - GoProject</title>
-    <link href="../assets/css/projet.css" rel="stylesheet">
+    <link href="../assets/css/issues.css" rel="stylesheet">
 </head>
 
 <body>
-<div class="menuBar">
-    <div class="float-left">
-        <a href="profil.php">GoProject</a>
-    </div>
-    <div class="float-right">
-        <a class="disconnect" href="./index.php">Se déconnecter</a>
-    </div>
-</div>
+<?php include 'navbar.php'; ?>
 
 <h1>Issues</h1>
 <form method="POST" id="newIssueForm"></form>
