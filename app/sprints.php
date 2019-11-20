@@ -41,11 +41,11 @@ $result = mysqli_query($conn, $query);
 ?>
 <div class="containerSprints">
     <div class="card">
+    <a href="sprintConsult.php?projectId=<?php echo $idProjet;?>&sprintId=<?php echo $row[3];?>">
         <div class="card-header">
-        <a href="sprintConsult.php?projectId=<?php echo $idProjet;?>&sprintId=<?php echo $row[3];?>">
-        <?php echo $row[0]; ?>
+              <?php echo $row[0]; ?>
+            </div>
         </a>
-        </div>
         <div class="card-body">
             <p class="card-text">Date de début : <?php echo $row[1]?></p>
             <p class="card-text">Date de fin : <?php echo $row[2]?></p>
