@@ -1,0 +1,23 @@
+.menuBar {
+    overflow: hidden;
+    background-color: rgb(160,60,20);
+    padding: 20px 30px;
+    color: whitesmoke;
+    font-size: 30px;
+    line-height: 25px;
+}
+
+.menuBar a {
+    float: left;
+    color: white;
+    text-align: center;
+    font-size: 18px;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.menuBar a:hover {
+    color: rgb(126, 126, 126);
+    background-color: rgb(160,60,20);
+    cursor: pointer;
+}
