@@ -74,7 +74,7 @@ $result1 = mysqli_query($conn, $query);
         </div>
 
         <div class="col-sm">
-            <a class="projectComponent" href="#">
+            <a class="projectComponent" href="release.php">
                 <h2>Les releases</h2>
             </a>
         </div>
