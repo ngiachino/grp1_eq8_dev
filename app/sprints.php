@@ -42,7 +42,9 @@ $result = mysqli_query($conn, $query);
 <div class="containerSprints">
     <div class="card">
         <div class="card-header">
+        <a href="sprintConsult.php?projectId=<?php echo $idProjet;?>&sprintId=<?php echo $row[3];?>">
         <?php echo $row[0]; ?>
+        </a>
         </div>
         <div class="card-body">
             <p class="card-text">Date de début : <?php echo $row[1]?></p>
@@ -112,10 +114,10 @@ while($row = mysqli_fetch_row($result)){
                     <input type="hidden" name="id" value="<?php echo $row[3];?>">
                     <div class="form-group">
                     <!--PAS ENCORE TESTÉ-->
-                       <a href="sprintConsult.php?projectId=<?php echo $idProjet;?>&sprintId=<?php echo $row[1];?>">
+                      
                         <label for="sprintName">Nom du sprint</label>
                         <input type="text" class="form-control" value="<?php echo $row[0];?>" id="sprintName" name="name" required>
-                       </a>
+                    
                     </div>
                     <div class="form-group">
                         <label for="startDate">Date de début</label>
