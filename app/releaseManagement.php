@@ -20,4 +20,29 @@ function deleteRelease($conn, $idProjet)
         mysqli_query($conn, $query);
     }
 }
+function modifyRelease($conn,$projectID){
+    if(isset($_POST['modify'])){
+        $releaseID = $_POST['id'];
+        $releaseVersion = $_POST['version'];
+        $releaseLink = $_POST['link'];
+        $releaseDescription = $_POST['description'];
+        $releaseDate = $_POST['date'];
+        //test que l'utilisateur n'a pas déjà créé un projet du même nom
+        $sqlTest1 = "SELECT ID_RELEASE FROM `release` WHERE VERSION = '$releaseVersion' AND ID_PROJET = '$projectID' AND ID_RELEASE != '$releaseID'";
+        $result1 = mysqli_query($conn, $sqlTest1);
+        if (mysqli_num_rows($result1) > 0) {
+            return "Ce numéro de version existe déjà";
+        } else {
+            $sql = "UPDATE `release`
+            SET VERSION='$releaseVersion',DESCRIPTION='$releaseDescription',
+            DATE_RELEASE='$releaseDate',URL_DOCKER='$releaseLink' 
+            WHERE ID_RELEASE = '$releaseID'";
+            if (mysqli_query($conn, $sql) === FALSE) {
+                echo "Error: " . $sql . "<br>" . $conn->error . "<br>";
+            } else {
+                return "Votre release a bien été modifiée";
+            }
+        }
+    }
+}
 ?>

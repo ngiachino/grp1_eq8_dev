@@ -16,6 +16,7 @@ if($_SESSION['projectId'] == null){
 $idProjet = $_SESSION['projectId'];
 addRelease($conn,$idProjet);
 deleteRelease($conn,$idProjet);
+modifyRelease($conn,$idProjet);
 $query = "SELECT VERSION,DESCRIPTION,DATE_RELEASE,URL_DOCKER,ID_RELEASE FROM `release` WHERE ID_PROJET = '$idProjet' ORDER BY DATE_RELEASE";
 $result = mysqli_query($conn, $query);
 if($result === FALSE){
@@ -67,6 +68,7 @@ if($result === FALSE){
           <input type="hidden" name="id" value="<?php echo $row[4];?>">
           <button type="submit" name="delete" class="btn btn-secondary">Supprimer</button>
           </form>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#modifyReleaseModal<?php echo $row[4];?>">Modifier</button>
       </td>
     </tr>
     <?php 
@@ -91,5 +93,51 @@ if($result === FALSE){
     </tr>
   </tbody>
 </table>
+<?php
+//positionne le pointeur au début de result
+mysqli_data_seek($result,0);
+while($row = mysqli_fetch_row($result)){
+?>
+<div class="modal" tabindex="-1" role="dialog" id="modifyReleaseModal<?php echo $row[4];?>">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modifier Release</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST">
+                    <input type="hidden" name="id" value="<?php echo $row[4];?>">
+                    <div class="form-group">
+                    <!--PAS ENCORE TESTÉ-->
+                        <label for="releaseVersion">Version de la release</label>
+                        <input type="text" class="form-control" value="<?php echo $row[0];?>" id="releaseVersion" name="version" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="releaseLink">Lien de la release</label>
+                        <input type="text" class="form-control" value="<?php echo $row[3];?>" id="releaseLinl" name="link" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="releaseLink">Description</label>
+                        <textarea class="form-control" id="releaseDescription" name="description"><?php echo $row[1];?></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="releaseLink">Date de la release</label>
+                        <input type="date" class="form-control" value="<?php echo $row[2];?>" id="releaseDate" name="date" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" name="modify" class="btn btn-primary">Modifier</button>
+                        <button type="button" class="btn btn-secondary buttonCancel" data-dismiss="modal">Annuler</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<?php
+}
+?>
 </body>
 </html>
