@@ -49,11 +49,12 @@ if($result === FALSE){
     </thead>
     <tbody>
     <?php
+    $i=0;
     while($row = mysqli_fetch_row($result)){?>
 
         <tr>
             <td><?php echo $row[0];?></td>
-            <td><a href="<?php echo $row[3];?>">Lien de la version</a></td>
+            <td><a id="link<?php echo $i?>" href="<?php echo $row[3];?>">Lien de la version</a></td>
             <td><?php echo $row[1];?></td>
             <td><?php echo $row[2];?></td>
             <td>
@@ -65,6 +66,7 @@ if($result === FALSE){
             </td>
         </tr>
         <?php
+        $i++;
     }
     ?>
     <tr>

@@ -55,31 +55,31 @@ $result1 = mysqli_query($conn, $query);
 <div class="container">
     <div class="row mb-2">
         <div class="col-sm">
-            <a class="projectComponent" href="issues.php">
+            <a class="projectComponent" id="issues" href="issues.php">
                 <h2>Les issues</h2>
             </a>
         </div>
 
         <div class="col-sm">
-            <a class="projectComponent" href="sprints.php">
+            <a class="projectComponent" id="sprints" href="sprints.php">
                 <h2>Les sprints</h2>
             </a>
         </div>
 
         <div class="col-sm">
-            <a class="projectComponent" href="release.php">
+            <a class="projectComponent" id="releases" href="release.php">
                 <h2>Les releases</h2>
             </a>
         </div>
 
         <div class="col-sm">
-            <a class="projectComponent" href="tests.php">
-                <h2>Les test</h2>
+            <a class="projectComponent" id="tests" href="tests.php">
+                <h2>Les tests</h2>
             </a>
         </div>
 
         <div class="col-sm">
-            <a class="projectComponent" href="#">
+            <a class="projectComponent" id="doc" href="#">
                 <h2>La doc</h2>
             </a>
         </div>
