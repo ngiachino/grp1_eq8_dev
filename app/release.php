@@ -30,7 +30,6 @@ if($result === FALSE){
 <head>
     <?php include './defaultHead.php'; ?>
     <title>Release - GoProject</title>
-    <link href="../assets/css/navbar.css" rel="stylesheet">
 </head>
 
 <body>

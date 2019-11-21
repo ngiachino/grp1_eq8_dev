@@ -27,7 +27,6 @@ $result = mysqli_query($conn, $query);
     <?php include './defaultHead.php'; ?>
     <title>Sprint - GoProject</title>
     <link href="../assets/css/sprints.css" rel="stylesheet">
-    <link href="../assets/css/navbar.css" rel="stylesheet">
 </head>
 
 <body>
