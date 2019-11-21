@@ -19,7 +19,7 @@ class TestReleaseAddModifyDelete(unittest.TestCase):
     self.driver.quit()
   
   def test_releaseAddModifyDelete(self):
-    self.driver.get("http://localhost/CDP/app/")
+    self.driver.get("http://localhost/CDP/app/view")
     self.driver.set_window_size(1900, 1020)
     self.driver.find_element(By.ID, "nameCo").click()
     self.driver.find_element(By.ID, "nameCo").send_keys("TestAccount")

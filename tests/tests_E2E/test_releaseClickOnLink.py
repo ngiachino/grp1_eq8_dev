@@ -18,7 +18,7 @@ class TestReleaseClickOnLink(unittest.TestCase):
     self.driver.quit()
   
   def test_releaseClickOnLink(self):
-    self.driver.get("http://localhost/CDP/app/")
+    self.driver.get("http://localhost/CDP/app/view")
     self.driver.set_window_size(1900, 1020)
     self.driver.find_element(By.CSS_SELECTOR, "#formCo > div:nth-child(3)").click()
     self.driver.find_element(By.ID, "nameCo").click()
