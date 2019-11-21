@@ -113,10 +113,10 @@ $result1 = mysqli_query($conn, $query);
 
                 <ul>
                     <?php while($member = mysqli_fetch_row($result1)) { ?>
-                        <li><?php echo '- '.$member[2] ?>
+                        <li class="d-flex"><?php echo '- '.$member[2] ?>
                             <form method="post">
-                                <input type="hidden" name="name" value="<?php echo $member[2];?>">
-                                <input type="<?php if($member[2] == $projectOwner){echo "hidden";} else{echo "submit";} ?>" name="deleteUser" value="&#x274C;">
+                                <input class="" type="hidden" name="name" value="<?php echo $member[2];?>">
+                                <input class="btn pt-1" type="<?php if($member[2] == $projectOwner){echo "hidden";} else{echo "submit";} ?>" name="deleteUser" value="&#x274C;">
                             </form>
                         </li>
                     <?php } ?>
