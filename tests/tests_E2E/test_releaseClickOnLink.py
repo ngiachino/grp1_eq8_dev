@@ -11,11 +11,9 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 
 class TestReleaseClickOnLink(unittest.TestCase):
-  def setup_method(self):
-    self.driver = webdriver.Chrome()
-  
-  def teardown_method(self):
-    self.driver.quit()
+  def setUp(self):
+    self.driver = webdriver.Chrome(executable_path='C:/bin/chromedriver.exe')
+    self.vars = {}
   
   def test_releaseClickOnLink(self):
     self.driver.get("http://localhost/CDP/app/view")
@@ -29,4 +27,6 @@ class TestReleaseClickOnLink(unittest.TestCase):
     self.driver.find_element(By.CSS_SELECTOR, ".d-inline-block").click()
     self.driver.find_element(By.LINK_TEXT, "Les releases").click()
     self.driver.find_element(By.LINK_TEXT, "Lien de la version").click()
-  
+
+  def tearDown(self):
+    self.driver.quit() 

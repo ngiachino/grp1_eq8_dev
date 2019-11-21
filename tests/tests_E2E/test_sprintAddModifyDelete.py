@@ -11,11 +11,9 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 
 class TestSprintAddModifyDelete(unittest.TestCase):
-  def setup_method(self):
-    self.driver = webdriver.Chrome()
-  
-  def teardown_method(self):
-    self.driver.quit()
+  def setUp(self):
+    self.driver = webdriver.Chrome(executable_path='C:/bin/chromedriver.exe')
+    self.vars = {}
   
   def test_sprintAddModifyDelete(self):
     self.driver.get("http://localhost/CDP/app/view")
@@ -40,4 +38,7 @@ class TestSprintAddModifyDelete(unittest.TestCase):
     self.driver.find_element(By.CSS_SELECTOR, ".form-group:nth-child(4) > #sprintEndDate").send_keys("2019-11-13")
     self.driver.find_element(By.NAME, "modify").click()
     self.driver.find_element(By.NAME, "delete").click()
+
+  def tearDown(self):
+    self.driver.quit()
   

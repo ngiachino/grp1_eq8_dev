@@ -11,12 +11,9 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 
 class TestMemberAddDelete(unittest.TestCase):
-  def setup_method(self):
-    self.driver = webdriver.Chrome()
+  def setUp(self):
+    self.driver = webdriver.Chrome(executable_path='C:/bin/chromedriver.exe')
     self.vars = {}
-  
-  def teardown_method(self):
-    self.driver.quit()
   
   def test_memberAddDelete(self):
     self.driver.get("http://localhost/CDP/app/view")
@@ -48,4 +45,6 @@ class TestMemberAddDelete(unittest.TestCase):
     self.driver.find_element(By.ID, "pswdCo").send_keys("test")
     self.driver.find_element(By.NAME, "submitCo").click()
     self.driver.find_element(By.CSS_SELECTOR, ".d-inline-block").click()
-  
+
+  def tearDown(self):
+    self.driver.quit()

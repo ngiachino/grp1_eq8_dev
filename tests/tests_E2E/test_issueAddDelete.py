@@ -11,12 +11,10 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 
 class TestIssueAddDelete(unittest.TestCase):
-  def setup_method(self):
-    self.driver = webdriver.Chrome()
-  
-  def teardown_method(self):
-    self.driver.quit()
-  
+  def setUp(self):
+    self.driver = webdriver.Chrome(executable_path='C:/bin/chromedriver.exe')
+    self.vars = {}
+
   def test_issueAddDelete(self):
     self.driver.get("http://localhost/CDP/app/view")
     self.driver.set_window_size(1900, 1020)
@@ -38,4 +36,6 @@ class TestIssueAddDelete(unittest.TestCase):
     self.driver.find_element(By.NAME, "difficulty").click()
     self.driver.find_element(By.NAME, "submit").click()
     self.driver.find_element(By.CSS_SELECTOR, "tr:nth-child(2) .btn-danger").click()
-  
+
+  def tearDown(self):
+    self.driver.quit()

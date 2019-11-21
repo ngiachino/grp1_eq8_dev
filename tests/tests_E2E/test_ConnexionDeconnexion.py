@@ -10,12 +10,9 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 
 class TestConnexionDeconnexion(unittest.TestCase):
-  def setup_method(self):
-    self.driver = webdriver.Chrome()
+  def setUp(self):
+    self.driver = webdriver.Chrome(executable_path='C:/bin/chromedriver.exe')
     self.vars = {}
-  
-  def teardown_method(self):
-    self.driver.quit()
   
   def test_connexionDeconnexion(self):
     self.driver.get("http://localhost/CDP/app/view")
@@ -26,4 +23,6 @@ class TestConnexionDeconnexion(unittest.TestCase):
     self.driver.find_element(By.ID, "pswdCo").send_keys("test")
     self.driver.find_element(By.NAME, "submitCo").click()
     self.driver.find_element(By.LINK_TEXT, "Se déconnecter").click()
-  
+
+  def tearDown(self):
+    self.driver.quit()

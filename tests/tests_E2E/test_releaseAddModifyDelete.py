@@ -11,12 +11,9 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 
 class TestReleaseAddModifyDelete(unittest.TestCase):
-  def setup_method(self):
-    self.driver = webdriver.Chrome()
+  def setUp(self):
+    self.driver = webdriver.Chrome(executable_path='C:/bin/chromedriver.exe')
     self.vars = {}
-  
-  def teardown_method(self):
-    self.driver.quit()
   
   def test_releaseAddModifyDelete(self):
     self.driver.get("http://localhost/CDP/app/view")
@@ -42,4 +39,7 @@ class TestReleaseAddModifyDelete(unittest.TestCase):
     self.driver.find_element(By.CSS_SELECTOR, "#modifyReleaseModal19 #releaseVersion").send_keys("0.2")
     self.driver.find_element(By.CSS_SELECTOR, "#modifyReleaseModal19 .btn-primary").click()
     self.driver.find_element(By.CSS_SELECTOR, "tr:nth-child(2) form > .btn").click()
+
+  def tearDown(self):
+    self.driver.quit()
   
