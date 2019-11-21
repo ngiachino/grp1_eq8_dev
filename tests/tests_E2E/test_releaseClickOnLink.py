@@ -18,15 +18,18 @@ class TestReleaseClickOnLink(unittest.TestCase):
   def test_releaseClickOnLink(self):
     self.driver.get("http://localhost/CDP/app/view")
     self.driver.set_window_size(1900, 1020)
+    self.driver.implicitly_wait(3)
     self.driver.find_element(By.CSS_SELECTOR, "#formCo > div:nth-child(3)").click()
     self.driver.find_element(By.ID, "nameCo").click()
     self.driver.find_element(By.ID, "nameCo").send_keys("TestAccount")
     self.driver.find_element(By.ID, "pswdCo").click()
     self.driver.find_element(By.ID, "pswdCo").send_keys("test")
     self.driver.find_element(By.NAME, "submitCo").click()
+    self.driver.implicitly_wait(3)
     self.driver.find_element(By.CSS_SELECTOR, ".d-inline-block").click()
-    self.driver.find_element(By.LINK_TEXT, "Les releases").click()
-    self.driver.find_element(By.LINK_TEXT, "Lien de la version").click()
+    self.driver.implicitly_wait(3)
+    self.driver.find_element(By.ID, "releases").click()
+    self.driver.find_element(By.ID, "link0").click()
 
   def tearDown(self):
     self.driver.quit() 

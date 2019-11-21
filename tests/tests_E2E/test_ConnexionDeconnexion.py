@@ -17,11 +17,13 @@ class TestConnexionDeconnexion(unittest.TestCase):
   def test_connexionDeconnexion(self):
     self.driver.get("http://localhost/CDP/app/view")
     self.driver.set_window_size(1900, 1020)
+    self.driver.implicitly_wait(3)
     self.driver.find_element(By.ID, "nameCo").click()
     self.driver.find_element(By.ID, "nameCo").send_keys("TestAccount")
     self.driver.find_element(By.ID, "pswdCo").click()
     self.driver.find_element(By.ID, "pswdCo").send_keys("test")
     self.driver.find_element(By.NAME, "submitCo").click()
+    self.driver.implicitly_wait(3)
     self.driver.find_element(By.LINK_TEXT, "Se déconnecter").click()
 
   def tearDown(self):

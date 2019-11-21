@@ -16,17 +16,21 @@ class TestIssueAddDelete(unittest.TestCase):
     self.vars = {}
 
   def test_issueAddDelete(self):
-    self.driver.get("http://localhost/CDP/app/view")
+    self.driver.get("http://localhost/CDP/app/view/")
     self.driver.set_window_size(1900, 1020)
+    self.driver.implicitly_wait(3)
     self.driver.find_element(By.ID, "nameCo").click()
     self.driver.find_element(By.ID, "nameCo").send_keys("TestAccount")
     self.driver.find_element(By.ID, "pswdCo").click()
     self.driver.find_element(By.ID, "pswdCo").send_keys("test")
     self.driver.find_element(By.NAME, "submitCo").click()
+    self.driver.implicitly_wait(3)
     self.driver.find_element(By.CSS_SELECTOR, ".d-inline-block").click()
-    self.driver.find_element(By.LINK_TEXT, "Les issues").click()
+    self.driver.implicitly_wait(3)
+    self.driver.find_element(By.ID, "issues").click()
+    self.driver.implicitly_wait(3)
     self.driver.find_element(By.NAME, "description").click()
-    self.driver.find_element(By.NAME, "description").send_keys("Issue Selenium")
+    self.driver.find_element(By.NAME, "description").send_keys("Issue Test")
     self.driver.find_element(By.NAME, "priority").click()
     dropdown = self.driver.find_element(By.NAME, "priority")
     dropdown.find_element(By.XPATH, "//option[. = 'Medium']").click()
@@ -34,8 +38,10 @@ class TestIssueAddDelete(unittest.TestCase):
     self.driver.find_element(By.NAME, "difficulty").click()
     self.driver.find_element(By.NAME, "difficulty").send_keys("1")
     self.driver.find_element(By.NAME, "difficulty").click()
+    self.driver.find_element(By.NAME, "difficulty").send_keys("2")
+    self.driver.find_element(By.NAME, "difficulty").click()
     self.driver.find_element(By.NAME, "submit").click()
-    self.driver.find_element(By.CSS_SELECTOR, "tr:nth-child(2) .btn-danger").click()
+    self.driver.find_element(By.CSS_SELECTOR, "tr:nth-child(3) .btn-danger").click()
 
   def tearDown(self):
     self.driver.quit()

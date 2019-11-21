@@ -15,7 +15,6 @@ from selenium.webdriver.common.keys import Keys
 import test_ConnexionDeconnexion
 import test_issueAddDelete
 import test_memberAddDelete
-import test_releaseAddModifyDelete
 import test_releaseClickOnLink
 import test_sprintAddModifyDelete
 
@@ -24,7 +23,6 @@ def main(out = sys.stderr, verbosity = 3):
     suite.addTest(unittest.makeSuite(test_ConnexionDeconnexion.TestConnexionDeconnexion))
     suite.addTest(unittest.makeSuite(test_issueAddDelete.TestIssueAddDelete))
     suite.addTest(unittest.makeSuite(test_memberAddDelete.TestMemberAddDelete))
-    suite.addTest(unittest.makeSuite(test_releaseAddModifyDelete.TestReleaseAddModifyDelete))
     suite.addTest(unittest.makeSuite(test_releaseClickOnLink.TestReleaseClickOnLink))
     suite.addTest(unittest.makeSuite(test_sprintAddModifyDelete.TestSprintAddModifyDelete))
     unittest.TextTestRunner(out, verbosity = verbosity).run(suite)
