@@ -35,7 +35,6 @@ $result = mysqli_query($conn, $query);
 
 <h1>Issues</h1>
 <form method="POST" id="newIssueForm"></form>
-<form method="POST" id="deleteModifyForm"></form>
 <table class="table" id="issuesList" summary="Table des issues du projet">
   <thead class="thead-dark">
     <tr>
@@ -51,17 +50,18 @@ $result = mysqli_query($conn, $query);
     while($row = mysqli_fetch_row($result)){?>
     <tr>
       <th scope="row"><?php echo $i;?>
-          <input form="deleteModifyForm" type="hidden" name="id" value="<?php echo $row[0];?>">
+          <form method="POST" id="deleteModifyForm<?php echo $i; ?>"></form>
+          <input form="deleteModifyForm<?php echo $i; ?>" type="hidden" name="id" value="<?php echo $row[0];?>">
       </th>
       <td><?php echo $row[3];?></td>
       <td><?php echo $row[1];?></td>
       <td><?php echo $row[2];?></td>
       <td>
           <input class="btn btn-info" type="submit" name="modify" value="Modifier">
-          <input class="btn btn-danger" form="deleteModifyForm" type="submit" name="delete" value="Supprimer">
+          <input class="btn btn-danger" form="deleteModifyForm<?php echo $i; ?>" type="submit" name="delete" value="Supprimer">
       </td>
     </tr>
-    <?php 
+    <?php
       $i++;
       }
     ?>
