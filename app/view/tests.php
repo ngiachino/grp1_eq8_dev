@@ -4,7 +4,7 @@
 <head>
     <?php include './defaultHead.php'; ?>
     <title>Tests - GoProject</title>
-    <link href="../assets/css/profil.css" rel="stylesheet">
+    <link href="../../assets/css/profil.css" rel="stylesheet">
 </head>
 
 

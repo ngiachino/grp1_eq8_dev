@@ -1,6 +1,6 @@
 <?php
-include './projectManagement.php';
-include '../database/DBconnect.php';
+include '../management/projectManagement.php';
+include '../../database/DBconnect.php';
 $conn = connect();
 // Check connection
 if ($conn->connect_error) {
@@ -33,7 +33,7 @@ $result1 = mysqli_query($conn,$query);
 <head>
     <?php include './defaultHead.php'; ?>
     <title>Mon profil - GoProject</title>
-    <link href="../assets/css/profil.css" rel="stylesheet">
+    <link href="../../assets/css/profil.css" rel="stylesheet">
 </head>
 
 

@@ -1,7 +1,7 @@
 <?php
 
-include '../database/DBconnect.php';
-include 'releaseManagement.php';
+include '../../database/DBconnect.php';
+include '../management/releaseManagement.php';
 $conn = connect();
 session_start();
 

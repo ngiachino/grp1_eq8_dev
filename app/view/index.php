@@ -1,8 +1,8 @@
 <?php
 
-include '../database/DBconnect.php';
-include './login.php';
-include './register.php';
+include '../../database/DBconnect.php';
+include '../management/loginManagement.php';
+include '../management/registerManagement.php';
 session_start();
 session_unset();
 connexion();
@@ -13,9 +13,9 @@ register();
 <html lang="fr">
 
 <head>
-    <?php include './defaultHead.php'; ?>
+    <?php include 'defaultHead.php'; ?>
     <title>Mon profil - GoProject</title>
-    <link href="../assets/css/index.css" rel="stylesheet">
+    <link href="../../assets/css/index.css" rel="stylesheet">
 </head>
 
 <body>

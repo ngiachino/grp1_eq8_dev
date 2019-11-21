@@ -1,4 +1,4 @@
-<link href="../assets/css/navbar.css" rel="stylesheet">
+<link href="../../assets/css/navbar.css" rel="stylesheet">
 
 <div class="menuBar">
     <div class="float-left">

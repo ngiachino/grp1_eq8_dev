@@ -1,8 +1,8 @@
 <?php
 
-include '../database/DBconnect.php';
-include 'membersManagement.php';
-include 'projectManagement.php';
+include '../../database/DBconnect.php';
+include '../management/membersManagement.php';
+include '../management/projectManagement.php';
 $conn = connect();
 
 // Check connection
@@ -42,7 +42,7 @@ $result1 = mysqli_query($conn, $query);
 <head>
     <?php include './defaultHead.php'; ?>
     <title>Projet : <?php echo $projectTitle?> - GoProject</title>
-    <link href="../assets/css/projet.css" rel="stylesheet">
+    <link href="../../assets/css/projet.css" rel="stylesheet">
 </head>
 
 <body>

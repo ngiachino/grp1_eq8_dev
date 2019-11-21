@@ -1,6 +1,6 @@
 <?php
-include '../database/DBconnect.php';
-include 'sprintControl.php';
+include '../../database/DBconnect.php';
+include '../management/sprintManagement.php';
 $conn = connect();
 session_start();
 
@@ -26,7 +26,7 @@ $result = mysqli_query($conn, $query);
 <head>
     <?php include './defaultHead.php'; ?>
     <title>Sprint - GoProject</title>
-    <link href="../assets/css/sprints.css" rel="stylesheet">
+    <link href="../../assets/css/sprints.css" rel="stylesheet">
 </head>
 
 <body>

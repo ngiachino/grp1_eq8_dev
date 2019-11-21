@@ -1,7 +1,7 @@
 <?php
 
-include '../database/DBconnect.php';
-include 'issuesManagement.php';
+include '../../database/DBconnect.php';
+include '../management/issuesManagement.php';
 $conn = connect();
 session_start();
 
@@ -27,7 +27,7 @@ $result = mysqli_query($conn, $query);
 <head>
     <?php include './defaultHead.php'; ?>
     <title>Issues - GoProject</title>
-    <link href="../assets/css/issues.css" rel="stylesheet">
+    <link href="../../assets/css/issues.css" rel="stylesheet">
 </head>
 
 <body>

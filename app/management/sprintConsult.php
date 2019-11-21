@@ -1,6 +1,6 @@
 <?php
-include '../database/DBconnect.php';
-include 'sprintControl.php';
+include '../../database/DBconnect.php';
+include 'sprintManagement.php';
 $conn = connect();
 
 // Check connection
@@ -32,7 +32,7 @@ $connexion=null;
 <head>
     <?php include './defaultHead.php'; ?>
     <title>Tasks - GoProject</title>
-    <link href="../assets/projet.css" rel="stylesheet">
+    <link href="../../assets/projet.css" rel="stylesheet">
 </head>
 
 <body>
