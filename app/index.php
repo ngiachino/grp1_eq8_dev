@@ -27,45 +27,45 @@ register();
 
 <div class="container">
     <div class="row justify-content-around">
-        <div class="col-sm-5">
+        <div class="col-sm-5 logInscBox">
             <form class="form-container" method = "POST" id="formCo">
                 <h2>Connexion</h2>
                 <div>
                     <label for="nameCo">Email ou Pseudo</label>
-                    <input type="text" name="nameCo" id="nameCo" required>
+                    <input class="form-control" type="text" name="nameCo" id="nameCo" required>
                 </div>
                 <div>
                     <label for="pswdCo">Mot de passe</label>
-                    <input type="password" name="pswdCo" id="pswdCo" required>
+                    <input class="form-control" type="password" name="pswdCo" id="pswdCo" required>
                 </div>
                 <div>
-                    <input class="mt-4" type="submit" name="submitCo" value = "Se connecter">
+                    <input class="mt-4 btn btn-primary" type="submit" name="submitCo" value = "Se connecter">
                 </div>
             </form>
         </div>
         
 
-        <div class="col-sm-5">
+        <div class="col-sm-5 logInscBox">
             <form class="form-container" method = "POST" id="formInsc">
                 <h2>Inscription</h2>
                 <div>
                     <label for="pseudoInsc">Pseudo</label>
-                    <input type="text" name="pseudoInsc" id="pseudoInsc">
+                    <input class="form-control" type="text" name="pseudoInsc" id="pseudoInsc">
                 </div>
                 <div>
                     <label for="mailInsc">Email</label>
-                    <input type="email" name="mailInsc" id="mailInsc">
+                    <input class="form-control" type="email" name="mailInsc" id="mailInsc">
                 </div>
                 <div>
                     <label for="pswdInsc">Mot de passe</label>
-                    <input type="password" name="pswdInsc" id="pswdInsc">
+                    <input class="form-control" type="password" name="pswdInsc" id="pswdInsc">
                 </div>
                 <div>
                     <label for="pswdConfirmInsc">Confirmer mot de passe</label>
-                    <input type="password" name="pswdConfirmInsc" id="pswdConfirmInsc">
+                    <input class="form-control" type="password" name="pswdConfirmInsc" id="pswdConfirmInsc">
                 </div>
                 <div>
-                    <input class="mt-4" type="submit" name="submitInsc" value="S'inscrire">
+                    <input class="mt-4 btn btn-primary" type="submit" name="submitInsc" value="S'inscrire">
                 </div>
             </form>
         </div>
