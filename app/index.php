@@ -16,7 +16,6 @@ register();
     <?php include './defaultHead.php'; ?>
     <title>Mon profil - GoProject</title>
     <link href="../assets/css/index.css" rel="stylesheet">
-    <link href="../assets/css/navbar.css" rel="stylesheet">
 </head>
 
 <body>
@@ -40,7 +39,7 @@ register();
                     <input class="form-control" type="password" name="pswdCo" id="pswdCo" required>
                 </div>
                 <div>
-                    <input class="mt-4 btn btn-primary" type="submit" name="submitCo" value = "Se connecter">
+                    <input class="mt-4 btn btn-primary btn-block" type="submit" name="submitCo" value = "Se connecter">
                 </div>
             </form>
         </div>
@@ -66,7 +65,7 @@ register();
                     <input class="form-control" type="password" name="pswdConfirmInsc" id="pswdConfirmInsc">
                 </div>
                 <div>
-                    <input class="mt-4 btn btn-primary" type="submit" name="submitInsc" value="S'inscrire">
+                    <input class="mt-4 btn btn-primary btn-block" type="submit" name="submitInsc" value="S'inscrire">
                 </div>
             </form>
         </div>

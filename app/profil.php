@@ -34,7 +34,6 @@ $result1 = mysqli_query($conn,$query);
     <?php include './defaultHead.php'; ?>
     <title>Mon profil - GoProject</title>
     <link href="../assets/css/profil.css" rel="stylesheet">
-    <link href="../assets/css/navbar.css" rel="stylesheet">
 </head>
 
 
@@ -47,7 +46,7 @@ $result1 = mysqli_query($conn,$query);
     </div>
 </div>
 
-<h1 class="text-center">Mon Profil</h1>
+<h1>Mon Profil</h1>
 
 <div class="container">
     <div class="row justify-content-aroud">

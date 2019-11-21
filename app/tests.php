@@ -11,7 +11,7 @@
 <body>
 <?php include 'navbar.php'; ?>
 
-<h1 class="text-center">Les Tests</h1>
+<h1>Les Tests</h1>
 
 <div class="container">
     <div>
@@ -20,11 +20,5 @@
         </form>
     </div>
 </div>
-
-
-
-
-
-
 </body>
 </html>
