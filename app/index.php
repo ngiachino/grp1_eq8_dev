@@ -16,6 +16,7 @@ register();
     <?php include './defaultHead.php'; ?>
     <title>Mon profil - GoProject</title>
     <link href="../assets/css/index.css" rel="stylesheet">
+    <link href="../assets/css/navbar.css" rel="stylesheet">
 </head>
 
 <body>

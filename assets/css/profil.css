@@ -46,32 +46,6 @@ td a:hover{
     color: rgb(0, 0, 0);
 }
 
-.menuBar {
-    overflow: hidden;
-    background-color: rgb(160,60,20);
-    padding: 20px 30px;
-    color: whitesmoke;
-    font-size: 30px;
-    line-height: 25px;
-}
-.menuBar-right {
-    float: right;
-}
-
-.menuBar a {
-    float: left;
-    color: rgb(255, 255, 255);
-    text-align: center;
-    font-size: 18px;
-    border-radius: 4px;
-
-}
-.menuBar a:hover {
-    color: rgb(126, 126, 126);
-    background-color: rgb(160,60,20);
-    cursor: pointer;
-}
-
 @keyframes animatetop {
     from {top: -300px; opacity: 0}
     to {top: 0; opacity: 1}

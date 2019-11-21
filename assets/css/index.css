@@ -13,7 +13,7 @@ h1{
 }
 
 h2{
-    font-size: 30px;
+    font-size: 2rem;
 }
 
 .logInscBox{
@@ -35,23 +35,6 @@ h2{
 .container{
     padding-left: 12vw;
     padding-right: 12vw;
-}
-
-.menuBar {
-    overflow: hidden;
-    background-color:  rgb(160,60,20);
-    padding: 20px 30px;
-    color: whitesmoke;
-    font-size: 30px;
-    line-height: 25px;
-}
-
-.menuBar a {
-    float: left;
-    color: rgb(255, 255, 255);
-    text-align: center;
-    font-size: 18px;
-    border-radius: 4px;
 }
 
 label{

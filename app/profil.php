@@ -34,13 +34,15 @@ $result1 = mysqli_query($conn,$query);
     <?php include './defaultHead.php'; ?>
     <title>Mon profil - GoProject</title>
     <link href="../assets/css/profil.css" rel="stylesheet">
+    <link href="../assets/css/navbar.css" rel="stylesheet">
 </head>
 
 
 <body>
+
 <div class = "menuBar">
     <span id="title">GoProject</span>
-    <div class="menuBar-right">
+    <div class="float-right">
         <a class="disconnect" href="./index.php">Se déconnecter</a>
     </div>
 </div>

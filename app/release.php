@@ -10,7 +10,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 if($_SESSION['projectId'] == null){
-  header("Location:index.php");
+    header("Location:index.php");
 }
 
 $idProjet = $_SESSION['projectId'];
@@ -34,45 +34,39 @@ if($result === FALSE){
 </head>
 
 <body>
-<div class="menuBar">
-    <div class="float-left">
-        <a href="profil.php">GoProject</a>
-    </div>
-    <div class="float-right">
-        <a class="disconnect" href="./index.php">Se déconnecter</a>
-    </div>
-</div>
+<?php include "navbar.php";?>
+
 <form method="POST" id="newReleaseForm"></form>
 <h1>Releases</h1>
 <table class="table" id="releasesList" summary="Table des releases du projet">
-  <thead class="thead-dark">
+    <thead class="thead-dark">
     <tr>
-      <th scope="col">Version</th>
-      <th scope="col">Lien</th>
-      <th scope="col">Description</th>
-      <th scope="col">Date</th>
-      <th scope="col"></th>
+        <th scope="col">Version</th>
+        <th scope="col">Lien</th>
+        <th scope="col">Description</th>
+        <th scope="col">Date</th>
+        <th scope="col"></th>
     </tr>
-  </thead>
-  <tbody>
-  <?php
+    </thead>
+    <tbody>
+    <?php
     while($row = mysqli_fetch_row($result)){?>
 
-    <tr>
-      <td><?php echo $row[0];?></td>
-      <td><a href="<?php echo $row[3];?>">Lien de la version</a></td>
-      <td><?php echo $row[1];?></td>
-      <td><?php echo $row[2];?></td>
-      <td>
-          <form method="POST">
-          <input type="hidden" name="id" value="<?php echo $row[4];?>">
-          <button type="submit" name="delete" class="btn btn-secondary">Supprimer</button>
-          </form>
-          <button class="btn btn-primary" data-toggle="modal" data-target="#modifyReleaseModal<?php echo $row[4];?>">Modifier</button>
-      </td>
-    </tr>
-    <?php 
-      }
+        <tr>
+            <td><?php echo $row[0];?></td>
+            <td><a href="<?php echo $row[3];?>">Lien de la version</a></td>
+            <td><?php echo $row[1];?></td>
+            <td><?php echo $row[2];?></td>
+            <td>
+                <form method="POST">
+                    <input type="hidden" name="id" value="<?php echo $row[4];?>">
+                    <button type="submit" name="delete" class="btn btn-secondary">Supprimer</button>
+                </form>
+                <button class="btn btn-primary" data-toggle="modal" data-target="#modifyReleaseModal<?php echo $row[4];?>">Modifier</button>
+            </td>
+        </tr>
+        <?php
+    }
     ?>
     <tr>
         <td>
@@ -91,52 +85,52 @@ if($result === FALSE){
             <input class="btn btn-dark" type="submit" name="submit" value="Créer" form="newReleaseForm">
         </td>
     </tr>
-  </tbody>
+    </tbody>
 </table>
 <?php
 //positionne le pointeur au début de result
 mysqli_data_seek($result,0);
 while($row = mysqli_fetch_row($result)){
-?>
-<div class="modal" tabindex="-1" role="dialog" id="modifyReleaseModal<?php echo $row[4];?>">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Modifier Release</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form method="POST">
-                    <input type="hidden" name="id" value="<?php echo $row[4];?>">
-                    <div class="form-group">
-                    <!--PAS ENCORE TESTÉ-->
-                        <label for="releaseVersion">Version de la release</label>
-                        <input type="text" class="form-control" value="<?php echo $row[0];?>" id="releaseVersion" name="version" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="releaseLink">Lien de la release</label>
-                        <input type="text" class="form-control" value="<?php echo $row[3];?>" id="releaseLinl" name="link" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="releaseLink">Description</label>
-                        <textarea class="form-control" id="releaseDescription" name="description"><?php echo $row[1];?></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="releaseLink">Date de la release</label>
-                        <input type="date" class="form-control" value="<?php echo $row[2];?>" id="releaseDate" name="date" required>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" name="modify" class="btn btn-primary">Modifier</button>
-                        <button type="button" class="btn btn-secondary buttonCancel" data-dismiss="modal">Annuler</button>
-                    </div>
-                </form>
+    ?>
+    <div class="modal" tabindex="-1" role="dialog" id="modifyReleaseModal<?php echo $row[4];?>">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modifier Release</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST">
+                        <input type="hidden" name="id" value="<?php echo $row[4];?>">
+                        <div class="form-group">
+                            <!--PAS ENCORE TESTÉ-->
+                            <label for="releaseVersion">Version de la release</label>
+                            <input type="text" class="form-control" value="<?php echo $row[0];?>" id="releaseVersion" name="version" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="releaseLink">Lien de la release</label>
+                            <input type="text" class="form-control" value="<?php echo $row[3];?>" id="releaseLinl" name="link" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="releaseLink">Description</label>
+                            <textarea class="form-control" id="releaseDescription" name="description"><?php echo $row[1];?></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="releaseLink">Date de la release</label>
+                            <input type="date" class="form-control" value="<?php echo $row[2];?>" id="releaseDate" name="date" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" name="modify" class="btn btn-primary">Modifier</button>
+                            <button type="button" class="btn btn-secondary buttonCancel" data-dismiss="modal">Annuler</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<?php
+    <?php
 }
 ?>
 </body>
