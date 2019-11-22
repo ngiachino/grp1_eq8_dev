@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  mer. 20 nov. 2019 à 15:50
+-- Généré le :  ven. 22 nov. 2019 à 09:12
 -- Version du serveur :  10.4.8-MariaDB
--- Version de PHP :  7.3.11
+-- Version de PHP :  7.1.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données :  `cdp`
+-- Base de données :  `aouldamara`
 --
 
 -- --------------------------------------------------------
@@ -48,6 +48,13 @@ CREATE TABLE `issue` (
   `ID_PROJET` int(50) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='La table des Issues';
 
+--
+-- Déchargement des données de la table `issue`
+--
+
+INSERT INTO `issue` (`ID_USER_STORY`, `PRIORITE`, `DIFFICULTE`, `DESCRIPTION`, `ID_PROJET`) VALUES
+(1, 'High', '2', 'AMEL', 18);
+
 -- --------------------------------------------------------
 
 --
@@ -74,6 +81,13 @@ CREATE TABLE `projet` (
   `ID_MANAGER` int(50) UNSIGNED NOT NULL COMMENT '"Identifiant du Créateur du projet"',
   `DESCRIPTION` text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '" Description du projet"'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='L''entité Projet';
+
+--
+-- Déchargement des données de la table `projet`
+--
+
+INSERT INTO `projet` (`ID_PROJET`, `NOM_PROJET`, `ID_MANAGER`, `DESCRIPTION`) VALUES
+(18, 'newProject', 14, 'AMEL');
 
 -- --------------------------------------------------------
 
@@ -115,7 +129,7 @@ CREATE TABLE `tache` (
   `ID_PROJET` int(50) UNSIGNED NOT NULL COMMENT '"identifiant du projet auquel appartient la tâche"',
   `ID_SPRINT` int(50) UNSIGNED NOT NULL COMMENT '"Identifiant du sprint auquel appartient la tâche"',
   `ID_USER_STORY` int(50) UNSIGNED NOT NULL COMMENT '"Identifiant de la USS qui correspond à la tâche"',
-  `DESCRIPTION` int(50) NOT NULL,
+  `DESCRIPTION` text NOT NULL,
   `DUREE_TACHE` float NOT NULL COMMENT '" Durée de la tâche. Ne dépasse pas une journée"',
   `IS_DONE` tinyint(1) NOT NULL COMMENT '"Indique si la tâche a été effectuée"',
   `IS_CLOSED` tinyint(1) NOT NULL COMMENT '"Indique si la tâche a été cloturée Dans le cas où elle n''a pas été traitée, elle sera transférée vers le nouveau sprint ou abandonnée"'
@@ -215,7 +229,7 @@ ALTER TABLE `utilisateur`
 -- AUTO_INCREMENT pour la table `projet`
 --
 ALTER TABLE `projet`
-  MODIFY `ID_PROJET` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"Identifiant du projet"', AUTO_INCREMENT=18;
+  MODIFY `ID_PROJET` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"Identifiant du projet"', AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT pour la table `release`
@@ -227,13 +241,19 @@ ALTER TABLE `release`
 -- AUTO_INCREMENT pour la table `sprint`
 --
 ALTER TABLE `sprint`
-  MODIFY `ID_SPRINT` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"identifiant et numéro du sprint"', AUTO_INCREMENT=13;
+  MODIFY `ID_SPRINT` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"identifiant et numéro du sprint"', AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT pour la table `tache`
+--
+ALTER TABLE `tache`
+  MODIFY `ID_TACHE` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"Identifiant de la tâche"', AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `ID_USER` int(50) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `ID_USER` int(50) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

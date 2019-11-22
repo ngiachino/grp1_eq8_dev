@@ -65,4 +65,22 @@ function modifySprint($conn,$projectID){
         }
     }
 }
+
+
+function getTasksSprint($conn){
+
+if ($_GET['projectId'] == null || $_GET['sprintId'] == null) {
+    header("Location:sprints.php");
+}
+$projectId = $_GET['projectId'];
+$sprintId = $_GET['sprintId'];
+
+//Récuperer les tâches d'un sprint
+$query = "SELECT *
+          FROM Sprint
+          WHERE ID_SPRINT = $sprintId";
+$result = mysqli_query($conn, $query);
+
+}
+
 ?>
