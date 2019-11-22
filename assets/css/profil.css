@@ -8,6 +8,10 @@
     border-color: rgb(120,50,20);
 }
 
+#addButton:focus{
+    box-shadow: 0 0 0 0.2rem rgba(160,60,20,.5);
+}
+
 a:hover{
     text-decoration: none;
     background-color: #ececec;
