@@ -37,7 +37,7 @@ function register(){
             else{
                 $sql = "INSERT INTO utilisateur (NOM_USER, PASSWORD_USER, MAIL_USER)
                 VALUES ('$pseudoInsc','$pswdInsc','$mailInsc')";
-                if ($conn->query($sql) === FALSE) {
+                if (!$conn->query($sql)) {
                     echo "Error: " . $sql . "<br>" . $conn->error . "<br>";
                 }
                 else{

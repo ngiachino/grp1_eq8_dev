@@ -7,7 +7,7 @@ function addRelease($conn, $idProjet){
         $date = $_POST['date'];
         $query = "INSERT INTO `release` (VERSION,DESCRIPTION,DATE_RELEASE,URL_DOCKER,ID_PROJET)
             VALUES ('$version','$description','$date','$lien','$idProjet')";
-        if (mysqli_query($conn, $query) === FALSE) {
+        if (!mysqli_query($conn, $query)) {
             echo "Error: " . $query . "<br>" . $conn->error . "<br>";
         }
     }

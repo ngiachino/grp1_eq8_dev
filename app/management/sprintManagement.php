@@ -19,7 +19,7 @@ function addSprint($conn,$projectID)
                 $sql = "INSERT INTO sprint (NOM_SPRINT, ID_PROJET, DATE_DEBUT, DATE_FIN)
                 VALUES ('$sprintName','$projectID','$startDate', '$endDate')";
 
-                if (mysqli_query($conn, $sql) === FALSE) {
+                if (!mysqli_query($conn, $sql)) {
                     echo "Error: " . $sql . "<br>" . $conn->error . "<br>";
                 } else {
                     return "Votre sprint a bien été crée";
@@ -56,7 +56,7 @@ function modifySprint($conn,$projectID){
                 $sql = "UPDATE sprint
                 SET NOM_SPRINT='$sprintName', DATE_DEBUT='$startDate', DATE_FIN='$endDate'
                 WHERE ID_SPRINT = '$sprintID'";
-                if (mysqli_query($conn, $sql) === FALSE) {
+                if (!mysqli_query($conn, $sql)) {
                     echo "Error: " . $sql . "<br>" . $conn->error . "<br>";
                 } else {
                     return "Votre sprint a bien été modifié";

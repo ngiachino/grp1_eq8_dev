@@ -25,7 +25,7 @@ function addMember($conn, $projectId)
                     $memberId = $row[0];
                     $query = "INSERT INTO membre (ID_MEMBRE, ID_PROJET, NOM_MEMBRE)
                         VALUES ('$memberId','$projectId','$memberName')";
-                    if (mysqli_query($conn, $query) === FALSE) {
+                    if (!mysqli_query($conn, $query)) {
                         return "Error: " . $query . "<br>" . $conn->connect_error . "<br>";
                     }
                 }

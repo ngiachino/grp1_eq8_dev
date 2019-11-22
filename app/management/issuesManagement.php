@@ -3,7 +3,7 @@ function addIssue($conn, $idProjet){
     if (isset($_POST['submit'])) {
         $query = "SELECT MAX(ID_USER_STORY) FROM issue WHERE ID_PROJET='$idProjet'";
         $result = mysqli_query($conn, $query);
-        if (mysqli_query($conn, $query) === FALSE) {
+        if (!mysqli_query($conn, $query)) {
             //Si il n'y a pas encore d'issue pour ce projet
             $idUS = 1;
         } else {
@@ -14,7 +14,7 @@ function addIssue($conn, $idProjet){
         $difficulty = $_POST['difficulty'];
         $query = "INSERT INTO issue (ID_USER_STORY, PRIORITE, DIFFICULTE, DESCRIPTION, ID_PROJET)
             VALUES ('$idUS','$priority','$difficulty','$description','$idProjet')";
-        if (mysqli_query($conn, $query) === FALSE) {
+        if (!mysqli_query($conn, $query)) {
             echo "Error: " . $query . "<br>" . $conn->connect_error . "<br>";
         }
     }

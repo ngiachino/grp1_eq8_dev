@@ -19,7 +19,7 @@ deleteRelease($conn,$idProjet);
 modifyRelease($conn,$idProjet);
 $query = "SELECT VERSION,DESCRIPTION,DATE_RELEASE,URL_DOCKER,ID_RELEASE FROM `release` WHERE ID_PROJET = '$idProjet' ORDER BY DATE_RELEASE";
 $result = mysqli_query($conn, $query);
-if($result === FALSE){
+if(!$result){
     echo "Error: " . $query . "<br>" . $conn->error . "<br>";
 }
 ?>

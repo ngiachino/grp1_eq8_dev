@@ -22,9 +22,9 @@ function addProject($conn, $userID, $userName)
                 $sql2 = "INSERT INTO membre (ID_MEMBRE, ID_PROJET, NOM_MEMBRE)
                 VALUES ('$userID',LAST_INSERT_ID(),'$userName')";
 
-                if (mysqli_query($conn, $sql) === FALSE) {
+                if (!mysqli_query($conn, $sql)) {
                     return "Error: " . $sql . "<br>" . $conn->error . "<br>";
-                } else if (mysqli_query($conn, $sql2) === FALSE) {
+                } else if (!mysqli_query($conn, $sql2)) {
                     return "Error: " . $sql . "<br>" . $conn->error . "<br>";
                 } else {
                     return "Votre projet a bien été créé";
@@ -42,7 +42,7 @@ function deleteProject($conn, $userID, $projectName){
     if (isset($_POST['delete'])) {
         $sql = "DELETE FROM projet WHERE NOM_PROJET = '$projectName' AND ID_MANAGER = '$userID'";
 
-        if (mysqli_query($conn, $sql) === FALSE) {
+        if (!mysqli_query($conn, $sql)) {
             return "Error: " . $sql . "<br>" . $conn->error . "<br>";
         } else {
             header("Location: profil.php");

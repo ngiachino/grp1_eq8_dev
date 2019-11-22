@@ -6,7 +6,7 @@ function addTest($conn, $idProjet){
         $date = $_POST['date'];
         $query = "INSERT INTO `test` (ID_PROJET, DATE_DEBUT, ETAT, DESCRIPTION)
             VALUES ('$idProjet','$date','$etat','$description')";
-        if (mysqli_query($conn, $query) === FALSE) {
+        if (!mysqli_query($conn, $query)) {
             echo "Error: " . $query . "<br>" . $conn->error . "<br>";
         }
     }

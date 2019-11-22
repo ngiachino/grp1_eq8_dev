@@ -19,7 +19,7 @@ deleteTest($conn,$idProjet);
 modifyTest($conn,$idProjet);
 $query = "SELECT DATE_DEBUT,ETAT,DESCRIPTION,ID_TEST FROM `test` WHERE ID_PROJET = '$idProjet' ORDER BY ID_TEST";
 $result = mysqli_query($conn, $query);
-if($result === FALSE){
+if(!$result){
     echo "Error: " . $query . "<br>" . $conn->error . "<br>";
 }
 ?>
