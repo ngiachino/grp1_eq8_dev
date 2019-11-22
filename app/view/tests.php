@@ -78,7 +78,7 @@ if($result === FALSE){
             <input type="date" class="form-control" form="newTestForm" name="date" required>
         </td>
         <td>
-            <input type="number" class="form-control" name="etat" form="newTestForm">
+            <input type="number" class="form-control" name="etat" form="newTestForm" placeholder="Etat" min="1" step="1" required>
         </td>
         <td>
             <input class="btn btn-dark" type="submit" name="submit" value="Créer" form="newTestForm">
@@ -102,19 +102,18 @@ while($row = mysqli_fetch_row($result)){
                 </div>
                 <div class="modal-body">
                     <form method="POST">
-                        <input type="hidden" name="id" value="<?php echo $row[0];?>">
+                        <input type="hidden" name="id" value="<?php echo $row[3];?>">
                         <div class="form-group">
-                            <!--PAS ENCORE TESTÉ-->
-                            <label for="testEtat">Version de la release</label>
-                            <input type="text" class="form-control" value="<?php echo $row[2];?>" id="testVersion" name="etat" required>
+                            <label for="testDescription">Description</label>
+                            <textarea class="form-control" id="testDescription" name="description"><?php echo $row[2];?></textarea>
                         </div>
                         <div class="form-group">
                             <label for="testDate">Date</label>
-                            <input type="text" class="form-control" value="<?php echo $row[3];?>" id="testDate" name="date" required>
+                            <input type="date" class="form-control" value="<?php echo $row[0];?>" id="testDate" name="date" required>
                         </div>
                         <div class="form-group">
-                            <label for="testDescription">Description</label>
-                            <textarea class="form-control" id="testDescription" name="description"><?php echo $row[1];?></textarea>
+                            <label for="testEtat">Etat du test</label>
+                            <input type="number" class="form-control" value="<?php echo $row[1];?>" id="testEtat" name="etat" min="1" step="1" required>
                         </div>
                         <div class="modal-footer">
                             <button type="submit" name="modify" class="btn btn-primary">Modifier</button>

@@ -37,7 +37,7 @@ function modifyRelease($conn,$projectID){
             SET VERSION='$releaseVersion',DESCRIPTION='$releaseDescription',
             DATE_RELEASE='$releaseDate',URL_DOCKER='$releaseLink' 
             WHERE ID_RELEASE = '$releaseID'";
-            if (mysqli_query($conn, $sql) === FALSE) {
+            if (!mysqli_query($conn, $sql)) {
                 echo "Error: " . $sql . "<br>" . $conn->error . "<br>";
             } else {
                 return "Votre release a bien été modifiée";
