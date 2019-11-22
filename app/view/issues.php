@@ -35,7 +35,7 @@ $result = mysqli_query($conn, $query);
 
 <h1>Issues</h1>
 <form method="POST" id="newIssueForm"></form>
-<table class="table" id="issuesList" summary="Table des issues du projet">
+<table class="table" id="issuesList">
   <thead class="thead-dark">
     <tr>
       <th scope="col">#</th>

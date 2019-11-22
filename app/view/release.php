@@ -37,7 +37,7 @@ if($result === FALSE){
 
 <form method="POST" id="newReleaseForm"></form>
 <h1>Releases</h1>
-<table class="table" id="releasesList" summary="Table des releases du projet">
+<table class="table" id="releasesList">
     <thead class="thead-dark">
     <tr>
         <th scope="col">Version</th>

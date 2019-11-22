@@ -91,7 +91,7 @@ $result1 = mysqli_query($conn, $query);
                 Informations
                 <form class="d-inline" method="post">
                     <button class="btn btn-info" type="submit" name="modify">Modifier</button>
-                    <button class="btn btn-danger" type="submit" name="delete">Supprimer</button>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delProjectModal">Supprimer</button>
                 </form>
             </div>
         </div>
@@ -122,6 +122,25 @@ $result1 = mysqli_query($conn, $query);
                     <?php } ?>
                 </ul>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="delProjectModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Voulez-vous vraiment supprimer le projet?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="POST">
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-danger" name="delete" value="Supprimer">
+                    <button type="button" class="btn btn-secondary buttonCancel" data-dismiss="modal">Annuler</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
