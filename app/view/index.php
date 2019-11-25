@@ -5,8 +5,8 @@ include '../management/loginManagement.php';
 include '../management/registerManagement.php';
 session_start();
 session_unset();
-connexion();
-register();
+startConnexion();
+startRegister();
 ?>
 
 <!DOCTYPE html>
