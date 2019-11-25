@@ -1,38 +1,13 @@
 <?php
-
-include '../../database/DBconnect.php';
 include '../management/membersManagement.php';
 include '../management/projectManagement.php';
-$conn = connect();
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+$projectId = start();
+$message = startAddMember($projectId);
+startDeleteMember($projectId);
+deleteProject($projectId);
+$result1 = showMembers($projectId);
 
-session_start();
-
-//test si l'utilisateur est connecté. Sinon le renvoie vers l'index
-if($_SESSION['userName'] == null || $_SESSION['userID'] == null){
-    header("Location:index.php");
-}
-//test si l'utilisateur est bien passé par sa page de profil. Sinon le renvoie vers le profil
-else if( $_GET['title'] == null || $_GET['owner'] == null){
-    header("Location:profil.php");
-}
-
-$projectTitle = $_GET['title'];
-$projectOwner = $_GET['owner'];
-$query2 = "SELECT ID_PROJET FROM projet JOIN utilisateur ON projet.ID_MANAGER = utilisateur.ID_USER WHERE NOM_PROJET ='$projectTitle' AND NOM_USER='$projectOwner'";
-$result2 = mysqli_query($conn, $query2);
-$projectId = mysqli_fetch_row($result2)[0];
-$_SESSION['projectId'] = $projectId;
-
-$message = addMember($conn, $projectId);
-deleteProject($conn, $_SESSION['userID'], $projectTitle, $projectOwner);
-
-$query = "SELECT * FROM membre WHERE ID_PROJET = '$projectId'";
-$result1 = mysqli_query($conn, $query);
 ?>
 
 
@@ -41,7 +16,7 @@ $result1 = mysqli_query($conn, $query);
 
 <head>
     <?php include './defaultHead.php'; ?>
-    <title>Projet : <?php echo $projectTitle?> - GoProject</title>
+    <title>Projet : <?php echo $_GET['title']?> - GoProject</title>
     <link href="../../assets/css/projet.css" rel="stylesheet">
 </head>
 
@@ -49,7 +24,7 @@ $result1 = mysqli_query($conn, $query);
 <?php include 'navbar.php'; ?>
 
 <h1>
-    <?php echo $projectTitle?>
+    <?php echo $_GET['title']?>
 </h1>
 
 <div class="container">
@@ -116,7 +91,7 @@ $result1 = mysqli_query($conn, $query);
                         <li class="d-flex"><?php echo '- '.$member[2] ?>
                             <form method="post">
                                 <input class="" type="hidden" name="name" value="<?php echo $member[2];?>">
-                                <input class="btn pt-1" type="<?php if($member[2] == $projectOwner){echo "hidden";} else{echo "submit";} ?>" name="deleteUser" value="&#x274C;">
+                                <input class="btn pt-1" type="<?php if($member[2] == $_GET['owner']){echo "hidden";} else{echo "submit";} ?>" name="deleteUser" value="&#x274C;">
                             </form>
                         </li>
                     <?php } ?>
@@ -147,12 +122,3 @@ $result1 = mysqli_query($conn, $query);
 
 </body>
 </html>
-
-<?php
-if(isset($_POST['deleteUser'])){
-    $userToDelete = $_POST['name'];
-    $query = "DELETE FROM membre WHERE NOM_MEMBRE = '$userToDelete'";
-    $result = mysqli_query($conn,$query);
-    header("Refresh:0");
-}
-?>

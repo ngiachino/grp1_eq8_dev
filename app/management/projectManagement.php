@@ -38,15 +38,32 @@ function editProject($conn){
 
 }
 
-function deleteProject($conn, $userID, $projectName){
+function deleteProject($idProject){
+    
+    $conn = connect();
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
     if (isset($_POST['delete'])) {
-        $sql = "DELETE FROM projet WHERE NOM_PROJET = '$projectName' AND ID_MANAGER = '$userID'";
+        $sql = "DELETE FROM projet WHERE ID_PROJET = '$idProject'";
+        mysqli_query($conn, $sql);
+        $sql = "DELETE FROM membre WHERE ID_PROJET = '$idProject'";
+        mysqli_query($conn, $sql);
+        $sql = "DELETE FROM release WHERE ID_PROJET = '$idProject'";
+        mysqli_query($conn, $sql);
+        $sql = "DELETE FROM sprint WHERE ID_PROJET = '$idProject'";
+        mysqli_query($conn, $sql);
+        $sql = "DELETE FROM tache WHERE ID_PROJET = '$idProject'";
+        mysqli_query($conn, $sql);
+        $sql = "DELETE FROM test WHERE ID_PROJET = '$idProject'";
+        mysqli_query($conn, $sql);
+        $sql = "DELETE FROM documentation WHERE ID_PROJET = '$idProject'";
+        mysqli_query($conn, $sql);
+        $sql = "DELETE FROM issue WHERE ID_PROJET = '$idProject'";
+        mysqli_query($conn, $sql);
 
-        if (!mysqli_query($conn, $sql)) {
-            return "Error: " . $sql . "<br>" . $conn->error . "<br>";
-        } else {
-            header("Location: profil.php");
-            return "Votre projet a bien été supprimé";
-        }
+        header("Location: profil.php");
+        return "Votre projet a bien été supprimé";
     }
 }
