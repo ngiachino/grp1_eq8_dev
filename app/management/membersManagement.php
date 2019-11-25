@@ -3,10 +3,7 @@ include '../../database/DBconnect.php';
 
 function start(){
     $conn = connect();
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+
     session_start();
 
     //test si l'utilisateur est connecté. Sinon le renvoie vers l'index
@@ -29,13 +26,9 @@ function start(){
 
 function showMembers($projectId){
     $conn = connect();
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+
     $query = "SELECT * FROM membre WHERE ID_PROJET = '$projectId'";
-    $result1 = mysqli_query($conn, $query);
-    return $result1;
+    return mysqli_query($conn, $query);;
 }
 
 function startAddMember($projectId){
@@ -47,10 +40,7 @@ function startAddMember($projectId){
 function addMember($projectId,$userName)
 {
     $conn = connect();
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+
     //Test que le champ n'est pas vide
     if (empty($userName)) {
         return "<span>Vous devez indiquer un pseudo ou un mail</span></br>";
@@ -73,9 +63,7 @@ function addMember($projectId,$userName)
                 $memberId = $row[0];
                 $query = "INSERT INTO membre (ID_MEMBRE, ID_PROJET, NOM_MEMBRE)
                     VALUES ('$memberId','$projectId','$memberName')";
-                if (!mysqli_query($conn, $query)) {
-                    return "Error: " . $query . "<br>" . $conn->connect_error . "<br>";
-                }
+                mysqli_query($conn, $query);
             }
         }
     }
@@ -89,10 +77,7 @@ function startDeleteMember($projectId){
 }
 function deleteMember($projectId,$userToDelete){
     $conn = connect();
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+
     $query = "DELETE FROM membre WHERE NOM_MEMBRE = '$userToDelete' AND ID_PROJET = '$projectId'";
     $result = mysqli_query($conn,$query);
 }

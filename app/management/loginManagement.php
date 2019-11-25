@@ -9,10 +9,7 @@ function startConnexion(){
 
 function connexion($nameCo,$pswdCo){
     $conn = connect();
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+    
     //test que tous les champs sont remplis
     if(empty($nameCo) || empty($pswdCo)){
         return "Vous devez remplir tous les champs";

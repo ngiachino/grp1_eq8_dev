@@ -4,10 +4,6 @@ include '../management/sprintManagement.php';
 $conn = connect();
 session_start();
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 if($_SESSION['projectId'] == null){
     header("Location:index.php");
 }

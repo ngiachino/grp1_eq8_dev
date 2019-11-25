@@ -4,11 +4,6 @@
     include 'sprintManagement.php';
     $conn = connect();
 
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
     session_start();
     //test si l'utilisateur est connecté. Sinon le renvoie vers l'index
     if($_SESSION['userName'] == null || $_SESSION['userID'] == null){

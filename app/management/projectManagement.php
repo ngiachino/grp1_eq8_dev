@@ -21,30 +21,17 @@ function addProject($conn, $userID, $userName)
 
                 $sql2 = "INSERT INTO membre (ID_MEMBRE, ID_PROJET, NOM_MEMBRE)
                 VALUES ('$userID',LAST_INSERT_ID(),'$userName')";
-
-                if (!mysqli_query($conn, $sql)) {
-                    return "Error: " . $sql . "<br>" . $conn->error . "<br>";
-                } else if (!mysqli_query($conn, $sql2)) {
-                    return "Error: " . $sql . "<br>" . $conn->error . "<br>";
-                } else {
-                    return "Votre projet a bien été créé";
-                }
+                mysqli_query($conn, $sql);
+                mysqli_query($conn, $sql2);
+                return "Votre projet a bien été créé";
             }
         }
     }
 }
 
-function editProject($conn){
-
-}
-
 function deleteProject($idProject){
     
     $conn = connect();
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
     if (isset($_POST['delete'])) {
         $sql = "DELETE FROM projet WHERE ID_PROJET = '$idProject'";
         mysqli_query($conn, $sql);
@@ -67,3 +54,4 @@ function deleteProject($idProject){
         return "Votre projet a bien été supprimé";
     }
 }
+?>

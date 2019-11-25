@@ -10,10 +10,7 @@ function startRegister(){
 }
 function register($pseudoInsc,$mailInsc,$pswdInsc,$pswdConfirmInsc){
     $conn = connect();
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+    
     //test que tous les champs sont remplis
     if(empty($pseudoInsc) || empty($mailInsc) || empty($pswdInsc) || empty($pswdConfirmInsc)){
         return "Vous devez remplir tous les champs";
