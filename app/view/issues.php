@@ -1,20 +1,13 @@
 <?php
-
 include '../../database/DBconnect.php';
 include '../management/issuesManagement.php';
 $conn = connect();
 session_start();
 
-if($_SESSION['projectId'] == null){
-  header("Location:index.php");
-}
-
-$idProjet = $_SESSION['projectId'];
-addIssue($conn, $idProjet);
-deleteIssue($conn, $idProjet);
-$query = "SELECT ID_USER_STORY,PRIORITE,DIFFICULTE,DESCRIPTION FROM issue WHERE ID_PROJET = '$idProjet' ORDER BY ID_USER_STORY";
-$result = mysqli_query($conn, $query);
-
+$idProjet = start();
+startAddIssue($idProjet);
+startDeleteIssue($idProjet);
+$result = showIssues($idProjet);
 ?>
 
 <!DOCTYPE html>
