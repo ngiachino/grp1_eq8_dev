@@ -2,22 +2,13 @@
 
 include '../../database/DBconnect.php';
 include '../management/testManagement.php';
-$conn = connect();
-session_start();
 
-if($_SESSION['projectId'] == null){
-    header("Location:index.php");
-}
+$idProjet = startTests();
+$result = showTests($idProjet);
+startAddTest($idProjet);
+startDeleteTest($idProjet);
+startModifyTest($idProjet);
 
-$idProjet = $_SESSION['projectId'];
-addTest($conn,$idProjet);
-deleteTest($conn,$idProjet);
-modifyTest($conn,$idProjet);
-$query = "SELECT DATE_DEBUT,ETAT,DESCRIPTION,ID_TEST FROM `test` WHERE ID_PROJET = '$idProjet' ORDER BY ID_TEST";
-$result = mysqli_query($conn, $query);
-if(!$result){
-    echo "Error: " . $query . "<br>" . $conn->error . "<br>";
-}
 ?>
 
 <!DOCTYPE html>
