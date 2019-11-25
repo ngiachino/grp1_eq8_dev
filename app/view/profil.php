@@ -1,26 +1,9 @@
 <?php
 include '../management/projectManagement.php';
 include '../../database/DBconnect.php';
-$conn = connect();
-
 session_start();
-
-//test si l'utilisateur est connecté. Sinon le renvoie vers l'index
-if($_SESSION['userName'] == null || $_SESSION['userID'] == null){
-    header("Location:index.php");
-}
-
-$userName = $_SESSION['userName'];
-$userID = $_SESSION['userID'];
-
-$message = addProject($conn, $userID, $userName);
-
-//Selection liste de projets
-$query = "SELECT NOM_PROJET,NOM_USER FROM projet
-JOIN utilisateur ON projet.ID_MANAGER = utilisateur.ID_USER
-JOIN membre ON projet.ID_PROJET = membre.ID_PROJET
-WHERE ID_MEMBRE = '$userID'";
-$result1 = mysqli_query($conn,$query);
+$result1 = startProfil();
+$message = startAddProject();
 ?>
 
 

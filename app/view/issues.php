@@ -1,7 +1,7 @@
 <?php
 include '../../database/DBconnect.php';
 include '../management/issuesManagement.php';
-$conn = connect();
+
 session_start();
 
 $idProjet = start();
