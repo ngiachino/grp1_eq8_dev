@@ -7,8 +7,7 @@
         /** @test */
         public function testRegister(){
             $conn = connect();
-            $sql = "DELETE FROM utilisateur WHERE NOM_USER = 'TestAccount' || MAIL_USER = 'TestAccount@test.fr' || NOM_USER = 'TestAccount2' || MAIL_USER = 'TestAccount@test.fr'";
-            $conn->query($sql);
+            $this->clear();
 
             $res = register("TestAccount","TestAccount@test.fr","test","test");
             $this->assertEquals($res,"Votre compte a bien été créé");
@@ -33,5 +32,12 @@
             $sql = "SELECT ID_USER FROM utilisateur WHERE NOM_USER = 'TestAccount2'";
             $result = $conn->query($sql);
             $this->assertEquals($result->num_rows, 0);
+
+            $this->clear();
+        }
+        private function clear(){
+            $conn = connect();
+            $sql = "DELETE FROM utilisateur WHERE NOM_USER = 'TestAccount' OR MAIL_USER = 'TestAccount@test.fr' OR NOM_USER = 'TestAccount2' OR MAIL_USER = 'TestAccount@test.fr'";
+            $conn->query($sql);
         }
     }

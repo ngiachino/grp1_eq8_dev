@@ -5,7 +5,7 @@ include '../management/projectManagement.php';
 $projectId = startProject();
 $message = startAddMember($projectId);
 startDeleteMember($projectId);
-deleteProject($projectId);
+startDeleteProject($projectId);
 $result1 = showMembers($projectId);
 
 ?>

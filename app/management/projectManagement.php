@@ -1,4 +1,5 @@
 <?php
+
 function startProfil(){
     $conn = connect();
     //test si l'utilisateur est connecté. Sinon le renvoie vers l'index
@@ -20,10 +21,10 @@ function startAddProject(){
         $projectDesc = $_POST['description'];
         $userName = $_SESSION['userName'];
         $userID = $_SESSION['userID'];
-        return addProject($projectName,$projectDesc,$userName,$userID);
+        return addProject($projectName,$projectDesc,$userName,$userID,true);
     }
 }
-function addProject(($projectName,$projectDesc,$userName,$userID){   
+function addProject($projectName,$projectDesc,$userName,$userID,$processIsolation){   
     $conn = connect();
     //test que tous les champs sont remplis
     if (empty($projectName) || empty($projectDesc)) {
@@ -43,34 +44,40 @@ function addProject(($projectName,$projectDesc,$userName,$userID){
             VALUES ('$userID',LAST_INSERT_ID(),'$userName')";
             mysqli_query($conn, $sql);
             mysqli_query($conn, $sql2);
-            header("Location: profil.php");
+            if($processIsolation){
+                header("Location: profil.php");
+            }
             return "Votre projet a bien été créé";
         }
     }
 }
-
-function deleteProject($idProject){
-    $conn = connect();
+function startDeleteProject($idProject){
     if (isset($_POST['delete'])) {
-        $sql = "DELETE FROM projet WHERE ID_PROJET = '$idProject'";
-        mysqli_query($conn, $sql);
-        $sql = "DELETE FROM membre WHERE ID_PROJET = '$idProject'";
-        mysqli_query($conn, $sql);
-        $sql = "DELETE FROM release WHERE ID_PROJET = '$idProject'";
-        mysqli_query($conn, $sql);
-        $sql = "DELETE FROM sprint WHERE ID_PROJET = '$idProject'";
-        mysqli_query($conn, $sql);
-        $sql = "DELETE FROM tache WHERE ID_PROJET = '$idProject'";
-        mysqli_query($conn, $sql);
-        $sql = "DELETE FROM test WHERE ID_PROJET = '$idProject'";
-        mysqli_query($conn, $sql);
-        $sql = "DELETE FROM documentation WHERE ID_PROJET = '$idProject'";
-        mysqli_query($conn, $sql);
-        $sql = "DELETE FROM issue WHERE ID_PROJET = '$idProject'";
-        mysqli_query($conn, $sql);
-
-        header("Location: profil.php");
-        return "Votre projet a bien été supprimé";
+        deleteProject($idProject,true);
     }
+}
+
+function deleteProject($idProject,$processIsolation){
+    $conn = connect();
+    $sql = "DELETE FROM projet WHERE ID_PROJET = '$idProject'";
+    mysqli_query($conn, $sql);
+    $sql = "DELETE FROM membre WHERE ID_PROJET = '$idProject'";
+    mysqli_query($conn, $sql);
+    $sql = "DELETE FROM release WHERE ID_PROJET = '$idProject'";
+    mysqli_query($conn, $sql);
+    $sql = "DELETE FROM sprint WHERE ID_PROJET = '$idProject'";
+    mysqli_query($conn, $sql);
+    $sql = "DELETE FROM tache WHERE ID_PROJET = '$idProject'";
+    mysqli_query($conn, $sql);
+    $sql = "DELETE FROM test WHERE ID_PROJET = '$idProject'";
+    mysqli_query($conn, $sql);
+    $sql = "DELETE FROM documentation WHERE ID_PROJET = '$idProject'";
+    mysqli_query($conn, $sql);
+    $sql = "DELETE FROM issue WHERE ID_PROJET = '$idProject'";
+    mysqli_query($conn, $sql);
+    if($processIsolation){
+        header("Location: profil.php");
+    }
+    return "Votre projet a bien été supprimé";
 }
 ?>

@@ -18,10 +18,7 @@ function connexion($nameCo,$pswdCo){
         //test que le mail n'est pas déjà utilisé
         $sql = "SELECT ID_USER,NOM_USER FROM utilisateur WHERE (MAIL_USER = '$nameCo' OR NOM_USER = '$nameCo') AND PASSWORD_USER = '$pswdCo'";
         $result = $conn->query($sql);
-        if(!$result){
-            echo "Error: " . $sql . "<br>" . $conn->error . "<br>";
-        }
-        else if($result->num_rows == 0){
+        if($result->num_rows == 0){
             return "Le compte et le mot de passe ne correspondent pas";
         }
         else{
