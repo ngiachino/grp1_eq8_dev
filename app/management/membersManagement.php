@@ -1,7 +1,7 @@
 <?php
 include '../../database/DBconnect.php';
 
-function start(){
+function startProject(){
     $conn = connect();
 
     session_start();

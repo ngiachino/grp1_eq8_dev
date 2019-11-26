@@ -1,5 +1,5 @@
 <?php
-function start(){
+function startIssues(){
     if($_SESSION['projectId'] == null){
         header("Location:index.php");
     }

@@ -2,7 +2,7 @@
 include '../management/membersManagement.php';
 include '../management/projectManagement.php';
 
-$projectId = start();
+$projectId = startProject();
 $message = startAddMember($projectId);
 startDeleteMember($projectId);
 deleteProject($projectId);

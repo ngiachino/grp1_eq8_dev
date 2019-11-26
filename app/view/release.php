@@ -1,23 +1,11 @@
 <?php
-
 include '../../database/DBconnect.php';
 include '../management/releaseManagement.php';
-$conn = connect();
-session_start();
-
-if($_SESSION['projectId'] == null){
-    header("Location:index.php");
-}
-
-$idProjet = $_SESSION['projectId'];
-addRelease($conn,$idProjet);
-deleteRelease($conn,$idProjet);
-modifyRelease($conn,$idProjet);
-$query = "SELECT VERSION,DESCRIPTION,DATE_RELEASE,URL_DOCKER,ID_RELEASE FROM `release` WHERE ID_PROJET = '$idProjet' ORDER BY DATE_RELEASE";
-$result = mysqli_query($conn, $query);
-if(!$result){
-    echo "Error: " . $query . "<br>" . $conn->error . "<br>";
-}
+$idProjet = startRelease();
+startAddRelease($idProjet);
+startDeleteRelease($idProjet);
+startModifyRelease($idProjet);
+$result = viewReleases($idProjet);
 ?>
 
 <!DOCTYPE html>

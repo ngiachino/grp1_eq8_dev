@@ -4,7 +4,7 @@ include '../management/issuesManagement.php';
 
 session_start();
 
-$idProjet = start();
+$idProjet = startIssues();
 startAddIssue($idProjet);
 startDeleteIssue($idProjet);
 $result = showIssues($idProjet);
