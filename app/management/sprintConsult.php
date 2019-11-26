@@ -17,6 +17,7 @@
     $projectId = $_GET['projectId'];
     $sprintId = $_GET['sprintId'];
     $addMessage = addTask($conn,$projectId, $sprintId);
+    $assignMessage = assignTask($conn,$projectId, $sprintId );
 
     $query = "SELECT tache.DESCRIPTION, tache.DUREE_TACHE, NOM_MEMBRE
               FROM tache  left join membre 
@@ -58,6 +59,7 @@
     <div class="container">
         <!--AFFICHER LE NUMERO DE SPRINT -->
         <h2>Sprint <?php echo $sprintId ?></h2>
+
         <button type="button" class="btn btn-lg  btn-dark" data-toggle="collapse" data-target="#demo">
             Ajouter une tâche
         </button>
@@ -76,6 +78,7 @@
             </form>
             <!--FIN DU FORMULAIRE-->
         </div>
+
     </div>
     <br>
     <br>
@@ -93,6 +96,7 @@
 
         </tr>
         </thead>
+
         <tbody>
         <?php
         $i = 1;
@@ -103,28 +107,30 @@
                 </th>
                 <td><?php echo $row[0];?></td>
                 <td><?php echo $row[1];?></td>
-                <td><?php echo $row[2];?>
-                    <button type="button" class="btn  btn-dark" data-toggle="collapse" data-target="#demo">
-                        Assigner la tâche
-                    </button>
-                    <div id="demo" class="collapse">
+                <td><?php echo $row[2];
+                        $collapseTarget = "#demo".$i;
+                        $target = "demo".$i;
+                    ?>
+                        <button type="button" class="btn  btn-dark" data-toggle="collapse" data-target=<?php echo $collapseTarget;?> >
+                            Assigner la tâche
+                        </button>
+                    <div id=<?php echo $target; ?> class="collapse">
                         <!-- Le formulaire de creation de la tâche -->
                         <form method="POST">
                             <div class="form-group">
-                                <label for="taskDescription">User:</label>
-                                <input type="text" class="form-control" name="taskDescription">
+                                <label for="userName">User:</label>
+                                <input type="text" class="form-control" name="userName">
                             </div>
-                            <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+                            <a href="../management/sprintConsult.php?taskId=<?php echo $row[3];?>">
+                                <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+                            </a>
                         </form>
+                        <?php echo $assignMessage; ?>
                         <!--FIN DU FORMULAIRE-->
                     </div>
-    </div>
-    </th>
-
-
-                </td>
-
-            </tr>
+          </th>
+        </td>
+    </tr>
             <?php
             $i++;
         }
