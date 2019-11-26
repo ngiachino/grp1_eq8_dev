@@ -18,13 +18,13 @@ function startAddProject(){
     if (isset($_POST['submit'])) {
         $projectName = $_POST['name'];
         $projectDesc = $_POST['description'];
-        return addProject($projectName,$projectDesc);
+        $userName = $_SESSION['userName'];
+        $userID = $_SESSION['userID'];
+        return addProject($projectName,$projectDesc,$userName,$userID);
     }
 }
-function addProject($projectName,$projectDesc){   
+function addProject(($projectName,$projectDesc,$userName,$userID){   
     $conn = connect();
-    $userName = $_SESSION['userName'];
-    $userID = $_SESSION['userID'];
     //test que tous les champs sont remplis
     if (empty($projectName) || empty($projectDesc)) {
         return "Vous devez remplir tous les champs";
