@@ -19,7 +19,7 @@
     $addMessage = addTask($conn,$projectId, $sprintId);
     $assignMessage = assignTask($conn,$projectId, $sprintId );
 
-    $query = "SELECT tache.DESCRIPTION, tache.DUREE_TACHE, NOM_MEMBRE
+    $query = "SELECT tache.DESCRIPTION, tache.DUREE_TACHE, NOM_MEMBRE, tache.ID_TACHE
               FROM tache  left join membre 
                           on tache.ID_TACHE = membre.ID_TACHE 
               WHERE tache.ID_PROJET = '$projectId'
@@ -59,7 +59,6 @@
     <div class="container">
         <!--AFFICHER LE NUMERO DE SPRINT -->
         <h2>Sprint <?php echo $sprintId ?></h2>
-
         <button type="button" class="btn btn-lg  btn-dark" data-toggle="collapse" data-target="#demo">
             Ajouter une tâche
         </button>
@@ -78,7 +77,6 @@
             </form>
             <!--FIN DU FORMULAIRE-->
         </div>
-
     </div>
     <br>
     <br>
@@ -111,23 +109,35 @@
                         $collapseTarget = "#demo".$i;
                         $target = "demo".$i;
                     ?>
-                        <button type="button" class="btn  btn-dark" data-toggle="collapse" data-target=<?php echo $collapseTarget;?> >
+                        <button type="button" class="btn  btn-dark" data-toggle="collapse"
+                                                 data-target=<?php echo $collapseTarget;?> >
                             Assigner la tâche
                         </button>
                     <div id=<?php echo $target; ?> class="collapse">
-                        <!-- Le formulaire de creation de la tâche -->
+                        <!-- Le formulaire d'attribution de la tâche -->
                         <form method="POST">
+                            <input type="hidden" name="taskId" value=<?php echo $row[3];?>>
                             <div class="form-group">
                                 <label for="userName">User:</label>
                                 <input type="text" class="form-control" name="userName">
                             </div>
-                            <a href="../management/sprintConsult.php?taskId=<?php echo $row[3];?>">
-                                <button type="submit" name="submit" class="btn btn-primary">Submit</button>
-                            </a>
+                             <button type="submit" name="assigner" class="btn btn-primary">Assigner</button>
                         </form>
-                        <?php echo $assignMessage; ?>
-                        <!--FIN DU FORMULAIRE-->
                     </div>
+                        <!--FIN DU FORMULAIRE-->
+                         <!-- Afficher les membres  de la tâche -->
+                    <span>
+                            <?php
+                            $taskId = $row[3];
+                            $resultMember = getMemberTask($conn, $taskId, $sprintId, $projectId);
+                            while($rowMembers = mysqli_fetch_row($resultMember)){
+                                ?>
+                                <ul class="list-group">
+                                    <li class="list-group-item"> <?php echo $rowMembers[0]; ?>
+                                </ul>
+                            <?php   } ?>
+                    </span>
+
           </th>
         </td>
     </tr>
@@ -140,7 +150,8 @@
     </div>
 <?php
  echo $addMessage;
-    $connexion=null;
+echo $assignMessage;
+$connexion=null;
     ?>
 
     </body>

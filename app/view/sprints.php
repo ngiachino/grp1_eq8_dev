@@ -39,7 +39,7 @@ $result = mysqli_query($conn, $query);
         ?>
         <div class="containerSprints">
             <div class="card">
-                <a href="sprintConsult.php?projectId=<?php echo $idProjet;?>&sprintId=<?php echo $row[3];?>">
+                <a href="../management/sprintConsult.php?projectId=<?php echo $idProjet;?>&sprintId=<?php echo $row[3];?>">
                     <div class="card-header">
                         <?php echo $row[0]; ?>
                     </div>
