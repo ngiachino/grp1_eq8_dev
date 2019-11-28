@@ -31,7 +31,7 @@ $message = startAddProject();
 <div class="container">
     <div class="row justify-content-aroud">
         <div class = "col-sm-4">
-            <table class="table table-bordered table-hover" id="projectsList" summary="Table des projets de l'utilisateur">
+            <table class="table table-bordered table-hover" id="projectsList">
                 <tr>
                     <th class="listTitle text-center" id="projectListTitle">Mes projets</th>
                 </tr>
@@ -62,7 +62,7 @@ $message = startAddProject();
         </div>
 
         <div class = "col-sm-4">
-            <table class="table table-bordered table-hover" id="TasksList" summary="Table des tâches de l'utilisateur">
+            <table class="table table-bordered table-hover" id="TasksList">
                 <tr>
                     <th class="listTitle text-center" id="taskListTitle">Mes tâches</th>
                 </tr>

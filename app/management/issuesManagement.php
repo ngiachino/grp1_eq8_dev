@@ -13,7 +13,6 @@ function showIssues($idProjet){
 }
 
 function startAddIssue($idProjet){
-    $conn = connect();
     if (isset($_POST['submit'])) {
         $description = $_POST['description'];
         $priority = $_POST['priority'];

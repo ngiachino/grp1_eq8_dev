@@ -28,7 +28,7 @@ function showMembers($projectId){
     $conn = connect();
 
     $query = "SELECT * FROM membre WHERE ID_PROJET = '$projectId'";
-    return mysqli_query($conn, $query);;
+    return mysqli_query($conn, $query);
 }
 
 function startAddMember($projectId){
@@ -79,6 +79,6 @@ function deleteMember($projectId,$userToDelete){
     $conn = connect();
 
     $query = "DELETE FROM membre WHERE NOM_MEMBRE = '$userToDelete' AND ID_PROJET = '$projectId'";
-    $result = mysqli_query($conn,$query);
+    mysqli_query($conn,$query);
 }
 ?>

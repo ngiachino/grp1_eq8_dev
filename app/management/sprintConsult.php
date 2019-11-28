@@ -26,8 +26,9 @@
                     AND tache.ID_SPRINT = '$sprintId'
                     ";
 
-    if(mysqli_query($conn, $query) == FALSE)
+    if(!mysqli_query($conn, $query)){
         echo "Error: " . $query . "<br>" . $conn->error . "<br>";
+    }
     $result = mysqli_query($conn, $query);
     ?>
     <!DOCTYPE html>
@@ -84,7 +85,7 @@
     <!-- $result recupère les tâches du sprint courant -->
     <!-- DESCRIPTION, DUREE_TACHE, NOM_MEMBRE -->
     <div class="container">
-    <table class="table" id="taskList" summary="Table des tâches du projet">
+    <table class="table" id="taskList">
         <thead class="thead-dark">
         <tr>
             <th scope="col">Numéro </th>
