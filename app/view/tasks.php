@@ -18,6 +18,7 @@ $projectId = $_GET['projectId'];
 $sprintId = $_GET['sprintId'];
 $addMessage = addTask($conn,$projectId, $sprintId);
 $assignMessage = assignTask($conn,$projectId, $sprintId );
+$modifyTaskMessage = modifyTask($conn, $projectId, $sprintId);
 $deleteMessage='';
 
 
@@ -41,10 +42,8 @@ $result = mysqli_query($conn, $query);
 </head>
 
 <body>
+
 <?php include 'navbar.php'; ?>
-
-<h1>Les tâches</h1>
-
 <div class="container">
     <!--AFFICHER LE NUMERO DE SPRINT -->
     <h2>Sprint <?php echo $sprintId ?></h2>
@@ -84,7 +83,9 @@ $result = mysqli_query($conn, $query);
             <th scope="col">Durée</th>
             <th scope="col">Etat</th>
             <th scope="col">Membre</th>
+
             <th scope="col">Action</th>
+
         </tr>
         </thead>
 
@@ -94,7 +95,8 @@ $result = mysqli_query($conn, $query);
         while($row = mysqli_fetch_row($result)){
             ?>
             <tr>
-                <th scope="row"><?php echo $i;?></th>
+                <th scope="row"><?php echo $i;?>
+                </th>
                 <td><?php echo $row[0];?></td>
                 <td><?php echo $row[1];?></td>
                 <td><?php
@@ -103,12 +105,14 @@ $result = mysqli_query($conn, $query);
                     else{
                         echo "UNDONE";
                     }?>
-                </td>
 
+                </td>
                 <td><?php
                     //LES MEMBRES
-                    $collapseTarget = "#demo".$i;
-                    $target = "demo".$i;
+//                    $collapseTarget = ;
+//                    $target = "demo".$i;
+//                    $collapseTargetModif = "#modif".$i;
+//                    $collapseTargetModif =
                     $taskId = $row[3];
                     $deleteMessage = deleteTask($conn, $taskId);
                     ?>
@@ -126,15 +130,18 @@ $result = mysqli_query($conn, $query);
                             <?php  } ?>
                     </span>
 
+
+
+                </th>
                 </td>
                 <!--Action sur les tâches-->
                 <td>
 
                     <!--MENU ASSIGNER-->
-                    <button type="button" class="btn  btn-dark" data-toggle="collapse" data-target=<?php echo $collapseTarget;?> >
+                    <button type="button" class="btn  btn-dark" data-toggle="collapse" data-target=<?php echo "#demo".$i;?> >
                         Assigner la tâche
                     </button>
-                    <div id=<?php echo $target; ?> class="collapse">
+                    <div id=<?php echo "demo".$i; ?> class="collapse">
                         <!-- Le formulaire d'attribution de la tâche -->
                         <form method="POST">
                             <input type="hidden" name="taskId" value=<?php echo $row[3];?>>
@@ -145,13 +152,33 @@ $result = mysqli_query($conn, $query);
                             <button type="submit" name="assigner" class="btn btn-primary">Assigner</button>
                         </form>
                     </div>
-                    <!--FIN Des ACTIONS FORMULAIRE-->
+                    <br> <br>
+                    <!--MODIFIER UNE TÂCHE <input type="text" name="rechercher" -->
+                    <button type="button" class="btn  btn-dark" data-toggle="collapse" data-target=<?php echo "#modifier".$i;?> >
+                        Modifier la tâche
+                    </button>
+                    <div id=<?php echo "modifier".$i; ?> class="collapse">
+                        <!-- Le formulaire d'attribution de la tâche -->
+                        <form method="POST">
+                            <div class="form-group">
+                                <input type="hidden" name="taskId" value="<?php echo $row[3];?>">
+                                <label for="descriptionTask">Description:</label>
+                                    <input type="text" class="form-control" name="descriptionTask" placeholder=<?php echo $row[0];?>>
+                                <br>
+                                <label for="durationTask">Durée:</label>
+                                   <input type="text" class="form-control" name="durationTask" placeholder=<?php echo $row[1];?>>
+                            </div>
+                            <button type="submit" name="modifier" class="btn btn-primary">Modifier</button>
+                        </form>
+                    </div>
                     <!--BOUTON DELETE-->
                     <br><br>
                     <form method="POST">
-
-                        <button type="submit" name="deleteTask" class="btn btn-secondary">Supprimer</button>
+                        <input type="hidden" name="taskId" value="<?php echo $row[3];?>">
+                        <button type="submit" name="delete" class="btn btn-secondary" ">Supprimer</button>
                     </form>
+                    <!--FIN Des ACTIONS FORMULAIRE-->
+
                 </td>
             </tr>
             <?php
@@ -165,6 +192,7 @@ $result = mysqli_query($conn, $query);
 echo $addMessage;
 echo $assignMessage;
 echo $deleteMessage;
+echo $modifyTaskMessage;
 $connexion=null;
 ?>
 
