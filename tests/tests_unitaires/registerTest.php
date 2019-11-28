@@ -1,9 +1,12 @@
 <?php
-    include '../../database/DBconnect.php';
-    include '../../app/management/registerManagement.php';
+    include_once '../../database/DBconnect.php';
+    include_once '../../app/management/registerManagement.php';
     use PHPUnit\Framework\TestCase;
-
-    class registerTest extends TestCase{
+    /**
+    * @group testsUnitaires
+    *
+    */
+    class RegisterTest extends TestCase{
         /** @test */
         public function testRegister(){
             $conn = connect();
