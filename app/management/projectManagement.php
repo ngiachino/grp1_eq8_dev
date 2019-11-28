@@ -8,7 +8,7 @@ function startProfil(){
     }
     $userID = $_SESSION['userID'];
     //Selection liste de projets
-    $query = "SELECT NOM_PROJET,NOM_USER FROM projet
+    $query = "SELECT DISTINCT NOM_PROJET,NOM_USER FROM projet
     JOIN utilisateur ON projet.ID_MANAGER = utilisateur.ID_USER
     JOIN membre ON projet.ID_PROJET = membre.ID_PROJET
     WHERE ID_MEMBRE = '$userID'";
