@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  ven. 22 nov. 2019 à 09:12
+-- Généré le :  jeu. 28 nov. 2019 à 22:33
 -- Version du serveur :  10.4.8-MariaDB
--- Version de PHP :  7.1.33
+-- Version de PHP :  7.3.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données :  `aouldamara`
+-- Base de données :  `cdp`
 --
 
 -- --------------------------------------------------------
@@ -48,13 +48,6 @@ CREATE TABLE `issue` (
   `ID_PROJET` int(50) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='La table des Issues';
 
---
--- Déchargement des données de la table `issue`
---
-
-INSERT INTO `issue` (`ID_USER_STORY`, `PRIORITE`, `DIFFICULTE`, `DESCRIPTION`, `ID_PROJET`) VALUES
-(1, 'High', '2', 'AMEL', 18);
-
 -- --------------------------------------------------------
 
 --
@@ -68,6 +61,20 @@ CREATE TABLE `membre` (
   `ID_SPRINT` int(50) UNSIGNED NOT NULL,
   `ID_TACHE` int(50) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `membre`
+--
+
+INSERT INTO `membre` (`ID_MEMBRE`, `ID_PROJET`, `NOM_MEMBRE`, `ID_SPRINT`, `ID_TACHE`) VALUES
+(0, 28, '25', 0, 0),
+(14, 53, 'a', 0, 0),
+(14, 20, 'a', 0, 0),
+(17, 19, 'TestAccount2', 0, 0),
+(105, 99, 'TestAccountSelenium', 0, 0),
+(14, 18, 'a', 0, 0),
+(106, 100, 'TestAccountSelenium2', 0, 0),
+(105, 100, 'TestAccountSelenium', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -87,7 +94,9 @@ CREATE TABLE `projet` (
 --
 
 INSERT INTO `projet` (`ID_PROJET`, `NOM_PROJET`, `ID_MANAGER`, `DESCRIPTION`) VALUES
-(18, 'newProject', 14, 'AMEL');
+(53, 'a', 14, 'a'),
+(100, 'CrumCrum', 105, 't'),
+(99, 'ProjetTestSelenium', 105, 'test');
 
 -- --------------------------------------------------------
 
@@ -103,6 +112,17 @@ CREATE TABLE `release` (
   `DATE_RELEASE` date NOT NULL,
   `URL_DOCKER` varchar(100) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='La table des Releases';
+
+--
+-- Déchargement des données de la table `release`
+--
+
+INSERT INTO `release` (`ID_RELEASE`, `ID_PROJET`, `VERSION`, `DESCRIPTION`, `DATE_RELEASE`, `URL_DOCKER`) VALUES
+(20, 19, '1.0', 'Seconde Release', '1121-12-20', 'https://github.com/ngiachino/grp1_eq8_dev/releases/tag/0.1.0'),
+(21, 19, '1.0', 'Seconde Release', '2019-11-21', 'https://github.com/ngiachino/grp1_eq8_dev/releases/tag/0.1.0'),
+(15, 18, '2', '', '2019-11-22', 'https://www.twitch.tv/'),
+(16, 18, '1.0', 'test', '2019-11-22', 'https://www.twitch.tv/domingo'),
+(18, 19, '0.1', 'Première release', '2019-11-05', 'https://github.com/ngiachino/grp1_eq8_dev/releases/tag/0.1.0');
 
 -- --------------------------------------------------------
 
@@ -129,7 +149,7 @@ CREATE TABLE `tache` (
   `ID_PROJET` int(50) UNSIGNED NOT NULL COMMENT '"identifiant du projet auquel appartient la tâche"',
   `ID_SPRINT` int(50) UNSIGNED NOT NULL COMMENT '"Identifiant du sprint auquel appartient la tâche"',
   `ID_USER_STORY` int(50) UNSIGNED NOT NULL COMMENT '"Identifiant de la USS qui correspond à la tâche"',
-  `DESCRIPTION` text NOT NULL,
+  `DESCRIPTION` int(50) NOT NULL,
   `DUREE_TACHE` float NOT NULL COMMENT '" Durée de la tâche. Ne dépasse pas une journée"',
   `IS_DONE` tinyint(1) NOT NULL COMMENT '"Indique si la tâche a été effectuée"',
   `IS_CLOSED` tinyint(1) NOT NULL COMMENT '"Indique si la tâche a été cloturée Dans le cas où elle n''a pas été traitée, elle sera transférée vers le nouveau sprint ou abandonnée"'
@@ -142,7 +162,7 @@ CREATE TABLE `tache` (
 --
 
 CREATE TABLE `test` (
-  `ID_TEST` int(50) AUTO_INCREMENT UNSIGNED NOT NULL,
+  `ID_TEST` int(50) UNSIGNED NOT NULL,
   `ID_PROJET` int(50) UNSIGNED NOT NULL,
   `DATE_DEBUT` date NOT NULL,
   `ETAT` tinyint(1) NOT NULL,
@@ -161,6 +181,17 @@ CREATE TABLE `utilisateur` (
   `PASSWORD_USER` varchar(50) NOT NULL,
   `MAIL_USER` varchar(50) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `utilisateur`
+--
+
+INSERT INTO `utilisateur` (`ID_USER`, `NOM_USER`, `PASSWORD_USER`, `MAIL_USER`) VALUES
+(106, 'TestAccountSelenium2', 'test', 'TestAccountSelenium2@gmail.fr'),
+(15, 't', 't', 't@t.t'),
+(14, 'a', 'a', 'arthurherman40@gmail.com'),
+(105, 'TestAccountSelenium', 'test', 'TestAccountSelenium@test.fr'),
+(18, 'n', 'n', 'n@n.n');
 
 --
 -- Index pour les tables déchargées
@@ -226,34 +257,34 @@ ALTER TABLE `utilisateur`
 --
 
 --
+-- AUTO_INCREMENT pour la table `issue`
+--
+ALTER TABLE `issue`
+  MODIFY `ID_USER_STORY` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"Identifiant de la user story"', AUTO_INCREMENT=38;
+
+--
 -- AUTO_INCREMENT pour la table `projet`
 --
 ALTER TABLE `projet`
-  MODIFY `ID_PROJET` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"Identifiant du projet"', AUTO_INCREMENT=19;
+  MODIFY `ID_PROJET` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"Identifiant du projet"', AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT pour la table `release`
 --
 ALTER TABLE `release`
-  MODIFY `ID_RELEASE` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `ID_RELEASE` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT pour la table `sprint`
 --
 ALTER TABLE `sprint`
-  MODIFY `ID_SPRINT` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"identifiant et numéro du sprint"', AUTO_INCREMENT=14;
-
---
--- AUTO_INCREMENT pour la table `tache`
---
-ALTER TABLE `tache`
-  MODIFY `ID_TACHE` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"Identifiant de la tâche"', AUTO_INCREMENT=26;
+  MODIFY `ID_SPRINT` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"identifiant et numéro du sprint"', AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `ID_USER` int(50) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `ID_USER` int(50) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
