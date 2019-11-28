@@ -49,3 +49,28 @@ function deleteIssue($issueID, $idProjet){
     $query = "DELETE FROM issue WHERE ID_USER_STORY = '$issueID' AND ID_PROJET = '$idProjet'";
     mysqli_query($conn, $query);
 }
+
+function startModifyIssue($projectID){
+    if(isset($_POST['modify'])){
+        $idUS = $_POST['id'];
+        $priority = $_POST['priority'];
+        $difficulty = $_POST['difficulty'];
+        $description = $_POST['description'];
+        return modifyIssue($projectID,$idUS,$priority,$difficulty,$description);
+    }
+}
+function modifyIssue($projectID,$idUS,$priority,$difficulty,$description){
+    $conn = connect();
+    //test qu'une US de même description n'a pas déjà été créée
+    $sqlTest1 = "SELECT ID_USER_STORY FROM `issue` WHERE ID_PROJET = '$projectID' AND DESCRIPTION = '$description' AND ID_USER_STORY != '$idUS'";
+    $result1 = mysqli_query($conn, $sqlTest1);
+    if (mysqli_num_rows($result1) > 0) {
+        return "Cette US existe déjà";
+    } else {
+        $sql = "UPDATE `issue`
+        SET PRIORITE = '$priority', DIFFICULTE = '$difficulty', DESCRIPTION = '$description'
+        WHERE ID_USER_STORY = '$idUS'";
+        mysqli_query($conn, $sql);
+        return "Votre issue a bien été modifiée";
+    }
+}

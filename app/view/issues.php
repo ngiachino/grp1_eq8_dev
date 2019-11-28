@@ -7,6 +7,7 @@ session_start();
 $idProjet = startIssues();
 startAddIssue($idProjet);
 startDeleteIssue($idProjet);
+startModifyIssue($idProjet);
 $result = showIssues($idProjet);
 ?>
 
@@ -46,7 +47,7 @@ $result = showIssues($idProjet);
       <td><?php echo $row[1];?></td>
       <td><?php echo $row[2];?></td>
       <td>
-          <input class="btn btn-info" type="submit" name="modify" value="Modifier">
+          <button class="btn btn-primary" data-toggle="modal" data-target="#modifyIssueModal<?php echo $row[0];?>">Modifier</button>
           <input class="btn btn-danger" form="deleteModifyForm<?php echo $i; ?>" type="submit" name="delete" value="Supprimer">
       </td>
     </tr>
@@ -75,5 +76,51 @@ $result = showIssues($idProjet);
     </tr>
   </tbody>
 </table>
+
+<?php
+//positionne le pointeur au début de result
+mysqli_data_seek($result,0);
+while($row = mysqli_fetch_row($result)){
+    ?>
+    <div class="modal" tabindex="-1" role="dialog" id="modifyIssueModal<?php echo $row[0];?>">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modifier Issue</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST">
+                        <input type="hidden" name="id" value="<?php echo $row[0];?>">
+                        <div class="form-group">
+                            <label for="issueDescription">Description de l'issue</label>
+                            <textarea class="form-control" id="issueDescription" name="description"><?php echo $row[3];?></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="issuePriorite">Priorité de l'issue</label>
+                            <select class="form-control" name="priority" id="issuePriorite">
+                                <option value="High">High</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Low">Low</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="issueDifficulte">Difficulté de l'issue</label>
+                            <input type="number" class="form-control" value="<?php echo $row[2];?>" id="issueDifficulte" name="difficulty" min="1" step="1" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" name="modify" class="btn btn-primary">Modifier</button>
+                            <button type="button" class="btn btn-secondary buttonCancel" data-dismiss="modal">Annuler</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+?>
 </body>
 </html>
