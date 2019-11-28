@@ -14,10 +14,9 @@ function addTask($conn,$projectId,$sprintId)
                          VALUES (  '$projectId','$sprintId','1','$description','$duration',
                                     '0','0' )";
 
-        if (mysqli_query($conn, $query) == FALSE) {
+        if (!mysqli_query($conn, $query)) {
             echo "Error: " . $query . "<br>" . $conn->error . "<br>";
-
-                      }
+        }
         else {
                 return " Tâche ajoutée ";
              }
@@ -39,16 +38,16 @@ function assignTask($conn,$projectId, $sprintId)
         else {
             $queryExistMember = "SELECT ID_MEMBRE from membre join utilisateur on membre.ID_MEMBRE = utilisateur.ID_USER WHERE NOM_USER = '$userName' ";
             $resultMember = mysqli_query($conn, $queryExistMember);
-            if(!($resultMember))
+            if(!($resultMember)){
                  echo  "Error: " . $queryExistMember . "<br>" . $conn->error . "<br>";
-
+            }
             if ( mysqli_num_rows($resultMember) == 0)
             {
                 $queryGet = "SELECT * from utilisateur where NOM_USER ='$userName' ";
                 $resultGetId= mysqli_query($conn, $queryGet);
-                if (!($resultGetId))
+                if (!($resultGetId)){
                     echo "Error Number " .mysqli_num_rows($resultGetId)."RESULT". $queryGet . "<br>" . $conn->error . "<br>";
-
+                }
                 $row =  mysqli_fetch_row($resultGetId);
                 $userId= $row[0];
 
@@ -61,8 +60,9 @@ function assignTask($conn,$projectId, $sprintId)
                        return "la tâche n'a pas été assignée!";
                     }
 
-            } else
+            } else{
                 return "Cette tâche est déjà assigné à cet utilisateur";
+            }
         }
     }
 }
@@ -73,9 +73,12 @@ function getMemberTask($connexion,$taskId, $sprintId, $projectId)
                         WHERE ID_PROJET = '$projectId' AND ID_SPRINT = '$sprintId' AND ID_TACHE = '$taskId' ";
 
     $result = mysqli_query($connexion, $queryMemberName);
-    if($result == false)
+    if(!$result){
         echo "Error: " . $queryMemberName . "<br>" . $connexion->error . "<br>";
-     else return $result;
+    }
+     else{
+        return $result;
+     }
 }
 //function deleteTask($conn)
 //{
