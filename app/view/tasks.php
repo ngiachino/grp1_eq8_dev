@@ -37,25 +37,13 @@ $result = mysqli_query($conn, $query);
 <head>
     <?php include 'defaultHead.php'; ?>
     <title>Tasks - GoProject</title>
-    <link href="../../assets/projet.css" rel="stylesheet">
+    <link href="../../assets/css/projet.css" rel="stylesheet">
 </head>
 
 <body>
+<?php include 'navbar.php'; ?>
 
-<div class = "menuBar">
-    <div class="menuBar-left">
-        <a id="title" href="profil.php">GoProject</a>
-    </div>
-    <div class="menuBar-right">
-        <a class="disconnect">Se déconnecter</a>
-    </div>
-</div>
-
-<div class="supercontainer">
-    <div class="container" id="tasks">
-        <h2>Les tâches</h2>
-    </div>
-</div>
+<h1>Les tâches</h1>
 
 <div class="container">
     <!--AFFICHER LE NUMERO DE SPRINT -->
@@ -96,9 +84,7 @@ $result = mysqli_query($conn, $query);
             <th scope="col">Durée</th>
             <th scope="col">Etat</th>
             <th scope="col">Membre</th>
-
             <th scope="col">Action</th>
-
         </tr>
         </thead>
 
@@ -108,8 +94,7 @@ $result = mysqli_query($conn, $query);
         while($row = mysqli_fetch_row($result)){
             ?>
             <tr>
-                <th scope="row"><?php echo $i;?>
-                </th>
+                <th scope="row"><?php echo $i;?></th>
                 <td><?php echo $row[0];?></td>
                 <td><?php echo $row[1];?></td>
                 <td><?php
@@ -118,8 +103,8 @@ $result = mysqli_query($conn, $query);
                     else{
                         echo "UNDONE";
                     }?>
-
                 </td>
+
                 <td><?php
                     //LES MEMBRES
                     $collapseTarget = "#demo".$i;
@@ -141,9 +126,6 @@ $result = mysqli_query($conn, $query);
                             <?php  } ?>
                     </span>
 
-
-
-                </th>
                 </td>
                 <!--Action sur les tâches-->
                 <td>
