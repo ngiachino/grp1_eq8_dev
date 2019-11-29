@@ -36,7 +36,9 @@ function startAddProject(){
         $userID = $_SESSION['userID'];
         return addProject($projectName,$projectDesc,$userName,$userID,true);
     }
+    return null;
 }
+
 function addProject($projectName,$projectDesc,$userName,$userID,$processIsolation){
     $conn = connect();
     //test que tous les champs sont remplis
@@ -64,6 +66,7 @@ function addProject($projectName,$projectDesc,$userName,$userID,$processIsolatio
         }
     }
 }
+
 function startDeleteProject($idProject){
     if (isset($_POST['delete'])) {
         deleteProject($idProject,true);
@@ -113,18 +116,17 @@ function modifyProject($projectID,$projectName,$projectDesc){
     if (mysqli_num_rows($result1) > 0) {
         return "Ce projet existe déjà";
     } else {
-    $sql = "UPDATE `projet`
+        $sql = "UPDATE `projet`
         SET NOM_PROJET = '$projectName', DESCRIPTION = '$projectDesc'
         WHERE ID_PROJET = '$projectID'";
-    mysqli_query($conn, $sql);
-    header("Location:projet.php?title=$projectName&owner=$userName");
-    return "Votre projet a bien été modifié";
+        mysqli_query($conn, $sql);
+        header("Location:projet.php?title=$projectName&owner=$userName");
+        return "Votre projet a bien été modifié";
     }
 }
 
 function getUserTasks()
 {   $conn = connect();
-    $userName = $_SESSION['userName'];
     $userID = $_SESSION['userID'];
 
     $idCurrentSprint = getCurrentSprint($conn);
@@ -132,8 +134,8 @@ function getUserTasks()
                  FROM membre JOIN tache ON membre.ID_TACHE = tache.ID_TACHE
                              JOIN projet ON membre.ID_PROJET = projet.ID_PROJET
                              JOIN sprint ON membre.ID_SPRINT = sprint.ID_SPRINT 
-                WHERE membre.ID_SPRINT = $idCurrentSprint  and membre.ID_MEMBRE = $userID";
-   return mysqli_query($conn, $queryTask);
+                WHERE membre.ID_SPRINT = $idCurrentSprint and membre.ID_MEMBRE = $userID";
+    return mysqli_query($conn, $queryTask);
 }
 
 function getCurrentSprint($conn){
@@ -142,9 +144,11 @@ function getCurrentSprint($conn){
                       DESC LIMIT 1";
 
     $sprintId = mysqli_query($conn, $currentSprintQuery);
-    if(!$sprintId)
+    if(!$sprintId){
         echo "Error: " . $currentSprintQuery . "<br>" . $conn->error . "<br>";
-    else
+        return null;
+    }
+    else{
         return  mysqli_fetch_row($sprintId)[0];
-
+    }
 }
