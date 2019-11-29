@@ -119,13 +119,7 @@ function modifyDurationTask($conn, $taskId, $projectId, $sprintId, $duration)
                           ID_PROJET = '$projectId' AND 
                           ID_SPRINT = '$sprintId' ";
     $updateResult = mysqli_query($conn, $queryUpdate);
-    if(!$updateResult) {
-        echo "Error: " . $queryUpdate . "<br>" . $conn->error . "<br>";
-        return;
-    }
-    else {
-        return "LA Modification de la durée de la tâche a été faite! ";
-    }
+    return "La Modification de la durée de la tâche a été faite! ";
 }
 function deleteTask($conn)
 {

@@ -75,7 +75,7 @@ else {
 
 <!--AFFICHAGE DES TÂCHES COURRANTES DU SPRINT-->
 <div class="container">
-    <table class="table" id="taskList" summary="Table des tâches du projet">
+    <table class="table" id="taskList">
         <thead class="thead-dark">
         <tr>
             <th scope="col">Numéro </th>
