@@ -48,7 +48,7 @@ $result = showIssues($idProjet);
       <td><?php echo $row[2];?></td>
       <td>
           <button class="btn btn-primary" data-toggle="modal" data-target="#modifyIssueModal<?php echo $row[0];?>">Modifier</button>
-          <input class="btn btn-danger" form="deleteModifyForm<?php echo $i; ?>" type="submit" name="delete" value="Supprimer">
+          <input class="btn btn-danger" id="delete<?php echo $i;?>" form="deleteModifyForm<?php echo $i; ?>" type="submit" name="delete" value="Supprimer">
       </td>
     </tr>
     <?php

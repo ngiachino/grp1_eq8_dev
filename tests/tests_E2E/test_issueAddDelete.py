@@ -12,23 +12,23 @@ from selenium.webdriver.common.keys import Keys
 
 class TestIssueAddDelete(unittest.TestCase):
   def setUp(self):
-    self.driver = webdriver.Chrome(executable_path='C:/bin/chromedriver.exe')
+    self.driver = webdriver.Chrome(executable_path='./chromedriver.exe')
     self.vars = {}
 
   def test_issueAddDelete(self):
     self.driver.get("http://localhost/CDP/app/view/")
     self.driver.set_window_size(1900, 1020)
-    self.driver.implicitly_wait(3)
+    time.sleep(5)
     self.driver.find_element(By.ID, "nameCo").click()
-    self.driver.find_element(By.ID, "nameCo").send_keys("TestAccount")
+    self.driver.find_element(By.ID, "nameCo").send_keys("TestAccountSelenium")
     self.driver.find_element(By.ID, "pswdCo").click()
     self.driver.find_element(By.ID, "pswdCo").send_keys("test")
     self.driver.find_element(By.NAME, "submitCo").click()
-    self.driver.implicitly_wait(3)
+    time.sleep(5)
     self.driver.find_element(By.CSS_SELECTOR, ".d-inline-block").click()
-    self.driver.implicitly_wait(3)
+    time.sleep(5)
     self.driver.find_element(By.ID, "issues").click()
-    self.driver.implicitly_wait(3)
+    time.sleep(5)
     self.driver.find_element(By.NAME, "description").click()
     self.driver.find_element(By.NAME, "description").send_keys("Issue Test")
     self.driver.find_element(By.NAME, "priority").click()
@@ -41,7 +41,8 @@ class TestIssueAddDelete(unittest.TestCase):
     self.driver.find_element(By.NAME, "difficulty").send_keys("2")
     self.driver.find_element(By.NAME, "difficulty").click()
     self.driver.find_element(By.NAME, "submit").click()
-    self.driver.find_element(By.CSS_SELECTOR, "tr:nth-child(3) .btn-danger").click()
+    time.sleep(5)
+    self.driver.find_element(By.ID,"delete1").click()
 
   def tearDown(self):
     self.driver.quit()

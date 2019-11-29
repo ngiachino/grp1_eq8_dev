@@ -12,22 +12,22 @@ from selenium.webdriver.common.keys import Keys
 
 class TestReleaseClickOnLink(unittest.TestCase):
   def setUp(self):
-    self.driver = webdriver.Chrome(executable_path='C:/bin/chromedriver.exe')
+    self.driver = webdriver.Chrome(executable_path='./chromedriver.exe')
     self.vars = {}
   
   def test_releaseClickOnLink(self):
     self.driver.get("http://localhost/CDP/app/view")
     self.driver.set_window_size(1900, 1020)
-    self.driver.implicitly_wait(3)
+    time.sleep(5)
     self.driver.find_element(By.CSS_SELECTOR, "#formCo > div:nth-child(3)").click()
     self.driver.find_element(By.ID, "nameCo").click()
-    self.driver.find_element(By.ID, "nameCo").send_keys("TestAccount")
+    self.driver.find_element(By.ID, "nameCo").send_keys("TestAccountSelenium")
     self.driver.find_element(By.ID, "pswdCo").click()
     self.driver.find_element(By.ID, "pswdCo").send_keys("test")
     self.driver.find_element(By.NAME, "submitCo").click()
-    self.driver.implicitly_wait(3)
+    time.sleep(5)
     self.driver.find_element(By.CSS_SELECTOR, ".d-inline-block").click()
-    self.driver.implicitly_wait(3)
+    time.sleep(5)
     self.driver.find_element(By.ID, "releases").click()
     self.driver.find_element(By.ID, "link0").click()
 

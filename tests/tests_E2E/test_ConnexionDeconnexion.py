@@ -11,19 +11,19 @@ from selenium.webdriver.common.keys import Keys
 
 class TestConnexionDeconnexion(unittest.TestCase):
   def setUp(self):
-    self.driver = webdriver.Chrome(executable_path='C:/bin/chromedriver.exe')
+    self.driver = webdriver.Chrome(executable_path='./chromedriver.exe')
     self.vars = {}
   
   def test_connexionDeconnexion(self):
     self.driver.get("http://localhost/CDP/app/view")
     self.driver.set_window_size(1900, 1020)
-    self.driver.implicitly_wait(3)
+    time.sleep(5)
     self.driver.find_element(By.ID, "nameCo").click()
-    self.driver.find_element(By.ID, "nameCo").send_keys("TestAccount")
+    self.driver.find_element(By.ID, "nameCo").send_keys("TestAccountSelenium")
     self.driver.find_element(By.ID, "pswdCo").click()
     self.driver.find_element(By.ID, "pswdCo").send_keys("test")
     self.driver.find_element(By.NAME, "submitCo").click()
-    self.driver.implicitly_wait(3)
+    time.sleep(5)
     self.driver.find_element(By.LINK_TEXT, "Se déconnecter").click()
 
   def tearDown(self):

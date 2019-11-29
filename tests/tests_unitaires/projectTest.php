@@ -13,9 +13,9 @@
             $conn = connect();
             $this->clear();
            
-            $userName = "TestAccount";
-            register($userName,"TestAccount@test.fr","test","test");
-            $sql = "SELECT ID_USER FROM utilisateur WHERE NOM_USER = 'TestAccount'";
+            $userName = "TestAccountSelenium";
+            register($userName,"TestAccountSelenium@test.fr","test","test");
+            $sql = "SELECT ID_USER FROM utilisateur WHERE NOM_USER = 'TestAccountSelenium'";
             $result = $conn->query($sql);
             $row = mysqli_fetch_assoc($result);
             $userID = $row["ID_USER"];
@@ -38,9 +38,9 @@
             $conn = connect();
             $this->clear();
 
-            $userName = "TestAccount";
-            register($userName,"TestAccount@test.fr","test","test");
-            $sql = "SELECT ID_USER FROM utilisateur WHERE NOM_USER = 'TestAccount'";
+            $userName = "TestAccountSelenium";
+            register($userName,"TestAccountSelenium@test.fr","test","test");
+            $sql = "SELECT ID_USER FROM utilisateur WHERE NOM_USER = 'TestAccountSelenium'";
             $result = $conn->query($sql);
             $row = mysqli_fetch_assoc($result);
             $userID = $row["ID_USER"];
@@ -62,9 +62,9 @@
         }
         private function clear(){
             $conn = connect();
-            $sql = "DELETE FROM utilisateur WHERE NOM_USER = 'TestAccount' OR MAIL_USER = 'TestAccount@test.fr'";
+            $sql = "DELETE FROM utilisateur WHERE NOM_USER = 'TestAccountSelenium' OR MAIL_USER = 'TestAccountSelenium@test.fr'";
             $conn->query($sql);
-            $sql = "DELETE FROM membre WHERE NOM_MEMBRE = 'TestAccount'";
+            $sql = "DELETE FROM membre WHERE NOM_MEMBRE = 'TestAccountSelenium'";
             $conn->query($sql);
             $sql = "DELETE FROM projet WHERE DESCRIPTION = 'Exemple de description'";
             $conn->query($sql);
