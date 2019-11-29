@@ -121,3 +121,30 @@ function modifyProject($projectID,$projectName,$projectDesc){
     return "Votre projet a bien été modifié";
     }
 }
+
+function getUserTasks()
+{   $conn = connect();
+    $userName = $_SESSION['userName'];
+    $userID = $_SESSION['userID'];
+
+    $idCurrentSprint = getCurrentSprint($conn);
+    $queryTask ="SELECT tache.DESCRIPTION, membre.ID_SPRINT, NOM_PROJET, DATE_DEBUT, DATE_FIN
+                 FROM membre JOIN tache ON membre.ID_TACHE = tache.ID_TACHE
+                             JOIN projet ON membre.ID_PROJET = projet.ID_PROJET
+                             JOIN sprint ON membre.ID_SPRINT = sprint.ID_SPRINT 
+                WHERE membre.ID_SPRINT = $idCurrentSprint  and membre.ID_MEMBRE = $userID";
+   return mysqli_query($conn, $queryTask);
+}
+
+function getCurrentSprint($conn){
+    $currentSprintQuery = "SELECT ID_SPRINT FROM sprint 
+                      ORDER BY ID_SPRINT
+                      DESC LIMIT 1";
+
+    $sprintId = mysqli_query($conn, $currentSprintQuery);
+    if(!$sprintId)
+        echo "Error: " . $currentSprintQuery . "<br>" . $conn->error . "<br>";
+    else
+        return  mysqli_fetch_row($sprintId)[0];
+
+}
