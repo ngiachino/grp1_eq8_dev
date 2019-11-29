@@ -68,23 +68,21 @@ $userTasks = getUserTasks();
                     <th class="listTitle text-center" id="taskListTitle">Mes tâches</th>
                 </tr>
 
-
-                    <!--DESCRIPTION, ID_SPRINT, NOM_PROJET, DATE_DEBUT, DATE_FIN-->
-                    <?php
-                    while($tasks = mysqli_fetch_row($userTasks))
-                    {
+                <!--DESCRIPTION, ID_SPRINT, NOM_PROJET, DATE_DEBUT, DATE_FIN-->
+                <?php
+                while($userTasks && $tasks = mysqli_fetch_row($userTasks))
+                {
                     ?>
-                <tr>
-                    <td>
-                        <span> <?php echo $tasks[0]; ?> - Sprint : <?php echo $tasks[1]; ?></span>
-                        <br/>
-                        <span class="subtitle">Projet : <?php echo $tasks[2] ;  ?></span>
-                        <br/>
-                        <span class="subtitle">Du  <?php echo $tasks[3] ;?> au  <?php echo $tasks[4] ;?></span>
-                    </td>
-                </tr>
-                    <?php }  ?>
-
+                    <tr>
+                        <td>
+                            <span> <?php echo $tasks[0]; ?> - Sprint : <?php echo $tasks[1]; ?></span>
+                            <br/>
+                            <span class="subtitle">Projet : <?php echo $tasks[2] ;  ?></span>
+                            <br/>
+                            <span class="subtitle">Du  <?php echo $tasks[3] ;?> au <?php echo $tasks[4] ;?></span>
+                        </td>
+                    </tr>
+                <?php }  ?>
 
                 <tr>
                     <td></td>
