@@ -27,10 +27,11 @@ $query = "SELECT tache.DESCRIPTION, tache.DUREE_TACHE, tache.IS_DONE, tache.ID_T
               WHERE tache.ID_PROJET = '$projectId'
                     AND tache.ID_SPRINT = '$sprintId'
                     ";
-
-if(mysqli_query($conn, $query) == FALSE)
-    echo "Error: " . $query . "<br>" . $conn->error . "<br>";
-$result = mysqli_query($conn, $query);
+if(!(mysqli_query($conn, $query)))
+{  echo "Error: " . $query . "<br>" . $conn->error . "<br>";}
+else {
+    $result = mysqli_query($conn, $query);
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -40,17 +41,18 @@ $result = mysqli_query($conn, $query);
     <title>Tasks - GoProject</title>
     <link href="../../assets/css/projet.css" rel="stylesheet">
 </head>
-
 <body>
-
 <?php include 'navbar.php'; ?>
 <div class="container">
     <!--AFFICHER LE NUMERO DE SPRINT -->
-    <h2>Sprint <?php echo $sprintId ?></h2>
+    <div class="row">
+        <div class="col-md-3">
+            <h2>Sprint <?php echo $sprintId ?></h2> </div>
+        <!--BARRE DE PROGRESSION D UN SPRINT -->
+    </div>
     <button type="button" class="btn btn-lg  btn-dark" data-toggle="collapse" data-target="#demo">
         Ajouter une tâche
     </button>
-
     <!--CREER UNE TACHE-->
     <div id="demo" class="collapse">
         <!-- Le formulaire de creation de la tâche -->
@@ -72,8 +74,6 @@ $result = mysqli_query($conn, $query);
 <br>
 
 <!--AFFICHAGE DES TÂCHES COURRANTES DU SPRINT-->
-<!-- $result recupère les tâches du sprint courant -->
-<!-- tache.DESCRIPTION, tache.DUREE_TACHE, tache.IS_DONE, tache.ID_TACHE -->
 <div class="container">
     <table class="table" id="taskList" summary="Table des tâches du projet">
         <thead class="thead-dark">
@@ -83,9 +83,7 @@ $result = mysqli_query($conn, $query);
             <th scope="col">Durée</th>
             <th scope="col">Etat</th>
             <th scope="col">Membre</th>
-
             <th scope="col">Action</th>
-
         </tr>
         </thead>
 
@@ -101,23 +99,17 @@ $result = mysqli_query($conn, $query);
                 <td><?php echo $row[1];?></td>
                 <td><?php
                     if($row[2] == 1)
-                        echo "DONE";
+                      {  echo "DONE";}
                     else{
                         echo "UNDONE";
                     }?>
-
                 </td>
                 <td><?php
                     //LES MEMBRES
-//                    $collapseTarget = ;
-//                    $target = "demo".$i;
-//                    $collapseTargetModif = "#modif".$i;
-//                    $collapseTargetModif =
                     $taskId = $row[3];
                     $deleteMessage = deleteTask($conn, $taskId);
                     ?>
                     <!-- Afficher les membres  de la tâche -->
-
                     <span>
                             <?php
                             $taskId = $row[3];
@@ -129,9 +121,6 @@ $result = mysqli_query($conn, $query);
                                 </ul>
                             <?php  } ?>
                     </span>
-
-
-
                 </th>
                 </td>
                 <!--Action sur les tâches-->
@@ -153,7 +142,7 @@ $result = mysqli_query($conn, $query);
                         </form>
                     </div>
                     <br> <br>
-                    <!--MODIFIER UNE TÂCHE <input type="text" name="rechercher" -->
+                    <!--MODIFIER UNE TÂCHE  -->
                     <button type="button" class="btn  btn-dark" data-toggle="collapse" data-target=<?php echo "#modifier".$i;?> >
                         Modifier la tâche
                     </button>
