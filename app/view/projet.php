@@ -4,10 +4,12 @@ include '../management/projectManagement.php';
 
 $projectId = startProject();
 $message = startAddMember($projectId);
-startDeleteMember($projectId);
-startDeleteProject($projectId);
+$messageDelMember = startDeleteMember($projectId);
+$messageDelProject = startDeleteProject($projectId);
+$messageModif = startModifyProject($projectId);
 $result1 = showMembers($projectId);
-
+$result12 = getCurrentProject($projectId);
+$row = mysqli_fetch_row($result12);
 ?>
 
 
@@ -64,10 +66,9 @@ $result1 = showMembers($projectId);
         <div class="col-5">
             <div class="membersList">
                 Informations
-                <form class="d-inline" method="post">
-                    <button class="btn btn-info" type="submit" name="modify">Modifier</button>
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delProjectModal">Supprimer</button>
-                </form>
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modifyProjectModal">Modifier</button>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delProjectModal">Supprimer</button>
+                <div>Description : <?php echo $row[3];?></div>
             </div>
         </div>
 
@@ -119,6 +120,41 @@ $result1 = showMembers($projectId);
         </div>
     </div>
 </div>
+
+<div class="modal" tabindex="-1" role="dialog" id="modifyProjectModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modifier Projet</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST">
+                    <input type="hidden" name="id" value="<?php echo $row[0];?>">
+                    <div class="form-group">
+                        <label for="projectName">Nom du projet</label>
+                        <input type="text" class="form-control" id="projectName" name="name" value="<?php echo $_GET['title']?>">
+                    </div>
+                    <div class="form-group">
+                        <label for="projectDesc">Description du projet</label>
+                        <textarea class="form-control" name="description" id="projectDesc"><?php echo $row[3];?></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" name="modify" class="btn btn-primary" value="Modifier">
+                        <button type="button" class="btn btn-secondary buttonCancel" data-dismiss="modal">Annuler</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <?php echo $messageModif?>
+</div>
+
+<span class="m-4 font-weight-bold">
+<?php echo $messageModif?>
+</span>
 
 </body>
 </html>

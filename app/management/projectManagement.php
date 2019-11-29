@@ -15,6 +15,19 @@ function startProfil(){
     return mysqli_query($conn,$query);
 }
 
+function getCurrentProject($projectId){
+    $conn = connect();
+    $queryProjet = " SELECT ID_PROJET,NOM_PROJET,ID_MANAGER,DESCRIPTION FROM projet WHERE ID_PROJET = '$projectId'";
+    $result = mysqli_query($conn, $queryProjet);
+    if(!($result)) {
+        echo "Error: " . $queryProjet . "<br>" . $conn->error . "<br>";
+        return null;
+    }
+    else {
+        return $result;
+    }
+}
+
 function startAddProject(){
     if (isset($_POST['submit'])) {
         $projectName = $_POST['name'];
@@ -24,7 +37,7 @@ function startAddProject(){
         return addProject($projectName,$projectDesc,$userName,$userID,true);
     }
 }
-function addProject($projectName,$projectDesc,$userName,$userID,$processIsolation){   
+function addProject($projectName,$projectDesc,$userName,$userID,$processIsolation){
     $conn = connect();
     //test que tous les champs sont remplis
     if (empty($projectName) || empty($projectDesc)) {
@@ -80,4 +93,31 @@ function deleteProject($idProject,$processIsolation){
     }
     return "Votre projet a bien été supprimé";
 }
-?>
+
+function startModifyProject($projectID)
+{
+    if (isset($_POST['modify'])) {
+        $projectName = $_POST['name'];
+        $projectDesc = $_POST['description'];
+        return modifyProject($projectID, $projectName, $projectDesc);
+    }
+    return null;
+}
+
+function modifyProject($projectID,$projectName,$projectDesc){
+    $conn = connect();
+    $userName = $_SESSION['userName'];
+    //teste qu'un projet de même ID n'a pas déjà été créée
+    $sqlTest1 = "SELECT ID_PROJET FROM `projet` WHERE NOM_PROJET = '$projectName'AND ID_PROJET != '$projectID'";
+    $result1 = mysqli_query($conn, $sqlTest1);
+    if (mysqli_num_rows($result1) > 0) {
+        return "Ce projet existe déjà";
+    } else {
+    $sql = "UPDATE `projet`
+        SET NOM_PROJET = '$projectName', DESCRIPTION = '$projectDesc'
+        WHERE ID_PROJET = '$projectID'";
+    mysqli_query($conn, $sql);
+    header("Location:projet.php?title=$projectName&owner=$userName");
+    return "Votre projet a bien été modifié";
+    }
+}
