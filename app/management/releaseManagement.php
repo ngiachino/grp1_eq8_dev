@@ -2,7 +2,7 @@
 function startRelease(){
     session_start();
     if($_SESSION['projectId'] == null){
-        header("Location:index.php");
+        header("Location:../../index.php");
     }
     return $_SESSION['projectId'];
 }

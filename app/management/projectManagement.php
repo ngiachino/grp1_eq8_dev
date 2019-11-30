@@ -4,7 +4,7 @@ function startProfil(){
     $conn = connect();
     //test si l'utilisateur est connecté. Sinon le renvoie vers l'index
     if($_SESSION['userName'] == null || $_SESSION['userID'] == null){
-        header("Location:index.php");
+        header("Location:../../index.php");
     }
     $userID = $_SESSION['userID'];
     //Selection liste de projets

@@ -7,7 +7,7 @@ $conn = connect();
 session_start();
 //test si l'utilisateur est connecté. Sinon le renvoie vers l'index
 if($_SESSION['userName'] == null || $_SESSION['userID'] == null){
-    header("Location:index.php");
+    header("Location:../../index.php");
 }
 //test si l'utilisateur est bien passé par sa page de profil. Sinon le renvoie vers le profil
 else if( $_GET['projectId'] == null || $_GET['sprintId'] == null){

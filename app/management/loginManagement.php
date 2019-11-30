@@ -25,7 +25,7 @@ function connexion($nameCo,$pswdCo){
             $data = mysqli_fetch_assoc($result);
             $_SESSION['userName'] = $data['NOM_USER'];
             $_SESSION['userID'] = $data['ID_USER'];
-            header("Location:profil.php");
+            header("Location:app/view/profil.php");
             return "Vous êtes connecté !";
         }
     }

@@ -5,7 +5,7 @@ $conn = connect();
 session_start();
 
 if($_SESSION['projectId'] == null){
-    header("Location:index.php");
+    header("Location:../../index.php");
 }
 
 $idProjet = $_SESSION['projectId'];
