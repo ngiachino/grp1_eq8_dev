@@ -66,6 +66,42 @@
             $result = $conn->query($sql);
             $this->assertEquals($result->num_rows, 0);
         }
+        public function testModifyIssue(){
+            $conn = connect();
+            $this->clear();
+            $userName = "TestAccountSelenium";
+
+            register($userName,"TestAccountSelenium@test.fr","test","test");
+            $sql = "SELECT ID_USER FROM utilisateur WHERE NOM_USER = 'TestAccountSelenium'";
+            $result = $conn->query($sql);
+            $row = mysqli_fetch_assoc($result);
+            $userID = $row["ID_USER"];
+
+            addProject("TestProjet","Exemple de description",$userName,$userID,false);
+            $sql = "SELECT ID_PROJET FROM projet WHERE NOM_PROJET = 'TestProjet'";
+            $result = $conn->query($sql);
+            $row = mysqli_fetch_assoc($result);
+            $idProjet = $row["ID_PROJET"];
+
+            addIssue($idProjet,"Description de test","HIGH",2);
+            $sql = "SELECT ID_USER_STORY FROM issue WHERE ID_PROJET = '$idProjet'";
+            $result = $conn->query($sql);
+            $row = mysqli_fetch_assoc($result);
+            $issueID = $row["ID_USER_STORY"];
+
+            $res = modifyIssue($idProjet,$issueID,"LOW",2,"Description de test");
+            $this->assertEquals($res,"Votre issue a bien été modifiée");
+
+            $sql = "SELECT ID_USER_STORY FROM issue WHERE ID_PROJET = '$idProjet' AND DESCRIPTION = 'Description de test'";
+            $result = $conn->query($sql);
+            $this->assertEquals($result->num_rows, 1);
+
+            $sql = "SELECT ID_USER_STORY FROM issue WHERE ID_PROJET = '$idProjet' AND DESCRIPTION = 'Description de test' AND PRIORITE='LOW'";
+            $result = $conn->query($sql);
+            $this->assertEquals($result->num_rows, 1);
+
+            $this->clear();
+        }
         private function clear(){
             $conn = connect();
             $sql = "DELETE FROM utilisateur WHERE NOM_USER = 'TestAccountSelenium' OR MAIL_USER = 'TestAccountSelenium@test.fr'";
