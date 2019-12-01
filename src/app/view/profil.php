@@ -23,7 +23,7 @@ $userTasks = getUserTasks();
 <div class = "menuBar">
     <span id="title">GoProject</span>
     <div class="float-right">
-        <a class="disconnect" href="./index.php">Se déconnecter</a>
+        <a class="disconnect" href="../../index.php">Se déconnecter</a>
     </div>
 </div>
 

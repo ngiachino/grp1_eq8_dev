@@ -1,7 +1,7 @@
 <?php
-    include_once '../../database/DBconnect.php';
-    include_once '../../app/management/projectManagement.php';
-    include_once '../../app/management/registerManagement.php';
+    include_once '../../src/database/DBconnect.php';
+    include_once '../../src/app/management/projectManagement.php';
+    include_once '../../src/app/management/registerManagement.php';
     use PHPUnit\Framework\TestCase;
     /**
     * @group testsUnitaires
@@ -13,9 +13,9 @@
             $conn = connect();
             $this->clear();
            
-            $userName = "TestAccountSelenium";
-            register($userName,"TestAccountSelenium@test.fr","test","test");
-            $sql = "SELECT ID_USER FROM utilisateur WHERE NOM_USER = 'TestAccountSelenium'";
+            $userName = "TestAccount";
+            register($userName,"TestAccount@test.fr","test","test");
+            $sql = "SELECT ID_USER FROM utilisateur WHERE NOM_USER = 'TestAccount'";
             $result = $conn->query($sql);
             $row = mysqli_fetch_assoc($result);
             $userID = $row["ID_USER"];
@@ -38,9 +38,9 @@
             $conn = connect();
             $this->clear();
 
-            $userName = "TestAccountSelenium";
-            register($userName,"TestAccountSelenium@test.fr","test","test");
-            $sql = "SELECT ID_USER FROM utilisateur WHERE NOM_USER = 'TestAccountSelenium'";
+            $userName = "TestAccount";
+            register($userName,"TestAccount@test.fr","test","test");
+            $sql = "SELECT ID_USER FROM utilisateur WHERE NOM_USER = 'TestAccount'";
             $result = $conn->query($sql);
             $row = mysqli_fetch_assoc($result);
             $userID = $row["ID_USER"];
@@ -62,9 +62,9 @@
         }
         private function clear(){
             $conn = connect();
-            $sql = "DELETE FROM utilisateur WHERE NOM_USER = 'TestAccountSelenium' OR MAIL_USER = 'TestAccountSelenium@test.fr'";
+            $sql = "DELETE FROM utilisateur WHERE NOM_USER = 'TestAccount' OR MAIL_USER = 'TestAccount@test.fr'";
             $conn->query($sql);
-            $sql = "DELETE FROM membre WHERE NOM_MEMBRE = 'TestAccountSelenium'";
+            $sql = "DELETE FROM membre WHERE NOM_MEMBRE = 'TestAccount'";
             $conn->query($sql);
             $sql = "DELETE FROM projet WHERE DESCRIPTION = 'Exemple de description'";
             $conn->query($sql);

@@ -16,7 +16,7 @@ class TestSprintAddModifyDelete(unittest.TestCase):
     self.vars = {}
   
   def test_sprintAddModifyDelete(self):
-    self.driver.get("http://localhost/CDP")
+    self.driver.get("http://localhost/CDP/src")
     self.driver.set_window_size(1900, 1020)
     time.sleep(5)
     self.driver.find_element(By.ID, "nameCo").click()
@@ -30,6 +30,7 @@ class TestSprintAddModifyDelete(unittest.TestCase):
     self.driver.find_element(By.ID, "sprints").click()
     time.sleep(5)
     self.driver.find_element(By.ID, "addButton").click()
+    time.sleep(3)
     self.driver.find_element(By.ID, "sprintName").click()
     self.driver.find_element(By.ID, "sprintName").send_keys("Sprint1")
     self.driver.find_element(By.ID, "sprintStartDate").click()
@@ -37,7 +38,9 @@ class TestSprintAddModifyDelete(unittest.TestCase):
     self.driver.find_element(By.ID, "sprintEndDate").click()
     self.driver.find_element(By.ID, "sprintEndDate").send_keys("2019-11-29")
     self.driver.find_element(By.NAME, "submit").click()
+    time.sleep(3)
     self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(4)").click()
+    time.sleep(3)
     self.driver.find_element(By.CSS_SELECTOR, ".form-group:nth-child(4) > #sprintEndDate").click()
     self.driver.find_element(By.CSS_SELECTOR, ".form-group:nth-child(4) > #sprintEndDate").send_keys("2019-11-28")
     self.driver.find_element(By.NAME, "modify").click()

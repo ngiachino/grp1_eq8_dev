@@ -16,7 +16,7 @@ class TestMemberAddDelete(unittest.TestCase):
     self.vars = {}
   
   def test_memberAddDelete(self):
-    self.driver.get("http://localhost/CDP")
+    self.driver.get("http://localhost/CDP/src")
     self.driver.set_window_size(1900, 1020)
     time.sleep(5)
     self.driver.find_element(By.ID, "nameCo").click()
@@ -40,7 +40,7 @@ class TestMemberAddDelete(unittest.TestCase):
     time.sleep(5)
     self.driver.find_element(By.CSS_SELECTOR, ".d-inline-block").click()
     time.sleep(5)
-    self.driver.find_element(By.NAME, "deleteUser").click()
+    self.driver.find_element(By.ID, "deleteUser1").click()
     self.driver.find_element(By.LINK_TEXT, "Se déconnecter").click()
     time.sleep(5)
     self.driver.find_element(By.ID, "nameCo").click()

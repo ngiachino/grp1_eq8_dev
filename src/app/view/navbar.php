@@ -5,6 +5,6 @@
         <a href="profil.php">GoProject</a>
     </div>
     <div class="float-right">
-        <a class="disconnect" href="./index.php">Se déconnecter</a>
+        <a class="disconnect" href="../../index.php">Se déconnecter</a>
     </div>
 </div>
