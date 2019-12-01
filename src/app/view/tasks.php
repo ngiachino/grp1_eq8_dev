@@ -7,7 +7,7 @@ $conn = connect();
 session_start();
 //test si l'utilisateur est connecté. Sinon le renvoie vers l'index
 if($_SESSION['userName'] == null || $_SESSION['userID'] == null){
-    header("Location:../../index.php");
+    header("Location:index.php");
 }
 //test si l'utilisateur est bien passé par sa page de profil. Sinon le renvoie vers le profil
 else if( $_GET['projectId'] == null || $_GET['sprintId'] == null){
@@ -19,6 +19,7 @@ $sprintId = $_GET['sprintId'];
 $addMessage = addTask($conn,$projectId, $sprintId);
 $assignMessage = assignTask($conn,$projectId, $sprintId );
 $modifyTaskMessage = modifyTask($conn, $projectId, $sprintId);
+$issueAddMessage =addUSStask($conn, $sprintId, $projectId);
 $deleteMessage='';
 
 
@@ -75,7 +76,7 @@ else {
 
 <!--AFFICHAGE DES TÂCHES COURRANTES DU SPRINT-->
 <div class="container">
-    <table class="table" id="taskList">
+    <table class="table" id="taskList" summary="Table des tâches du projet">
         <thead class="thead-dark">
         <tr>
             <th scope="col">Numéro </th>
@@ -83,6 +84,7 @@ else {
             <th scope="col">Durée</th>
             <th scope="col">Etat</th>
             <th scope="col">Membre</th>
+            <th scope ="col">User Stories</th>
             <th scope="col">Action</th>
         </tr>
         </thead>
@@ -95,8 +97,10 @@ else {
             <tr>
                 <th scope="row"><?php echo $i;?>
                 </th>
+
                 <td><?php echo $row[0];?></td>
                 <td><?php echo $row[1];?></td>
+                <!--ETAT-->
                 <td><?php
                     if($row[2] == 1)
                       {  echo "DONE";}
@@ -104,6 +108,7 @@ else {
                         echo "UNDONE";
                     }?>
                 </td>
+                <!--MEMBRES-->
                 <td><?php
                     //LES MEMBRES
                     $taskId = $row[3];
@@ -123,9 +128,11 @@ else {
                     </span>
                 </th>
                 </td>
-                <!--Action sur les tâches-->
+                <!--USER STORIES-->
                 <td>
-
+                </td>
+                <!--ACTION-->
+                <td>
                     <!--MENU ASSIGNER-->
                     <button type="button" class="btn  btn-dark" data-toggle="collapse" data-target=<?php echo "#demo".$i;?> >
                         Assigner la tâche
@@ -142,6 +149,22 @@ else {
                         </form>
                     </div>
                     <br> <br>
+                    <!-- AJOUTER -->
+                    <button type="button" class="btn  btn-dark" data-toggle="collapse" data-target=<?php echo "#us".$i;?> >
+                        Ajouter une USS
+                    </button>
+                    <div id=<?php echo "us".$i; ?> class="collapse">
+                        <!-- Le formulaire d'ajout d'une US -->
+                        <form method="POST">
+                            <div class="form-group">
+                                <input type="hidden" name="taskId" value=<?php echo $row[3];?>>
+                                <label for="issueId">User Story:</label>
+                                <input type="text" class="form-control" name="issueId">
+                            </div>
+                            <button type="submit" name="lier" class="btn btn-primary">Lier</button>
+                        </form>
+                    </div>
+                    <br>
                     <!--MODIFIER UNE TÂCHE  -->
                     <button type="button" class="btn  btn-dark" data-toggle="collapse" data-target=<?php echo "#modifier".$i;?> >
                         Modifier la tâche
@@ -160,14 +183,13 @@ else {
                             <button type="submit" name="modifier" class="btn btn-primary">Modifier</button>
                         </form>
                     </div>
-                    <!--BOUTON DELETE-->
+                    <!-- DELETE-->
                     <br><br>
                     <form method="POST">
                         <input type="hidden" name="taskId" value="<?php echo $row[3];?>">
-                        <button type="submit" name="delete" class="btn btn-secondary" ">Supprimer</button>
+                        <button type="submit" name="delete" class="btn btn-secondary">Supprimer</button>
                     </form>
                     <!--FIN Des ACTIONS FORMULAIRE-->
-
                 </td>
             </tr>
             <?php
@@ -180,6 +202,7 @@ else {
 <?php
 echo $addMessage;
 echo $assignMessage;
+echo $issueAddMessage;
 echo $deleteMessage;
 echo $modifyTaskMessage;
 $connexion=null;
