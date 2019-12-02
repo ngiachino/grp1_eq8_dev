@@ -34,7 +34,8 @@ $result = mysqli_query($conn, $query);
 </div>
 <!--CAROUSSEL -->
 <div class="container">
-<?php $row = mysqli_fetch_row($result); ?>
+<?php $sprintsNb = mysqli_num_rows($result);
+$row = mysqli_fetch_row($result);?>
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
@@ -48,11 +49,15 @@ $result = mysqli_query($conn, $query);
                     <div class="card-body">
                         <p class="card-text">Date de début : <?php echo $row[1]?></p>
                         <p class="card-text">Date de fin : <?php echo $row[2]?></p>
+                        <?php if($sprintsNb >0){?>
                         <form method="POST">
                             <input type="hidden" name="id" value="<?php echo $row[3];?>">
                             <button type="submit" name="delete" class="btn btn-secondary">Supprimer</button>
                         </form>
                         <button class="btn btn-primary" data-toggle="modal" data-target="#modifySprintModal<?php echo $row[3];?>">Modifier</button>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </div>
             </div>

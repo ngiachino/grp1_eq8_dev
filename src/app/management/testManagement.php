@@ -25,10 +25,11 @@ function startAddTest($idProjet){
 }
 function addTest($idProjet,$description,$etat,$date){
     $conn = connect();
-    $query = "INSERT INTO `test` (ID_PROJET, DATE_DEBUT, ETAT, DESCRIPTION)
-        VALUES ('$idProjet','$date','$etat','$description')";
-    mysqli_query($conn, $query);
-    header("Location: tests.php");
+    $sql = $conn->prepare("INSERT INTO `test` (ID_PROJET, DATE_DEBUT, ETAT, DESCRIPTION)
+    VALUES (?,?,?,?)");
+    $sql->bind_param("isss",$idProjet,$date,$etat,$description);
+    $sql->execute();
+    header("Location:tests.php");
 }
 
 function startDeleteTest($idProjet){
@@ -41,7 +42,7 @@ function deleteTest($idProjet,$testID){
     $conn = connect();
     $query = "DELETE FROM `test` WHERE ID_TEST = '$testID' AND ID_PROJET = '$idProjet'";
     mysqli_query($conn, $query);
-    header("Location: tests.php");
+    header("Location:tests.php");
 }
 function startModifyTest($idProjet){
     if(isset($_POST['modify'])){
@@ -54,18 +55,11 @@ function startModifyTest($idProjet){
 }
 function modifyTest($idProjet,$testDescription,$testEtat,$testDate,$testID){
     $conn = connect();
-    //test que l'utilisateur n'a pas déjà créé un projet du même nom
-    $sqlTest1 = "SELECT ID_TEST FROM `test` WHERE ID_PROJET = '$idProjet' AND ID_TEST != '$testID'";
-    $result1 = mysqli_query($conn, $sqlTest1);
-
-    if (mysqli_num_rows($result1) > 0) {
-        return "Ce test existe déjà";
-    } else {
-        $sql = "UPDATE test
-        SET DESCRIPTION='$testDescription', DATE_DEBUT='$testDate', ETAT='$testEtat' 
-        WHERE ID_TEST = '$testID'";
-        mysqli_query($conn, $sql);
-        header("Location: tests.php");
-        return "Votre test a bien été modifiée";
-    }
+    $sql = $conn->prepare("UPDATE test
+    SET DESCRIPTION=?, DATE_DEBUT=?, ETAT=?
+    WHERE ID_TEST = ?");
+    $sql->bind_param("sssi",$testDescription,$testDate,$testEtat,$testID);
+    $sql->execute();
+    header("Location: tests.php");
+    return "Votre test a bien été modifiée";
 }

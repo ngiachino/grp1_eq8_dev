@@ -17,9 +17,11 @@ function startProject(){
 
     $projectTitle = $_GET['title'];
     $projectOwner = $_GET['owner'];
-    $query2 = "SELECT ID_PROJET FROM projet JOIN utilisateur ON projet.ID_MANAGER = utilisateur.ID_USER WHERE NOM_PROJET ='$projectTitle' AND NOM_USER='$projectOwner'";
-    $result2 = mysqli_query($conn, $query2);
-    $projectId = mysqli_fetch_row($result2)[0];
+    $sql = $conn->prepare("SELECT ID_PROJET FROM projet JOIN utilisateur ON projet.ID_MANAGER = utilisateur.ID_USER WHERE NOM_PROJET =? AND NOM_USER=?");
+    $sql->bind_param("ss",$projectTitle,$projectOwner);
+    $sql->execute();
+    $result = $sql->get_result();
+    $projectId = mysqli_fetch_row($result)[0];
     $_SESSION['projectId'] = $projectId;
     return $projectId;
 }
@@ -46,14 +48,18 @@ function addMember($projectId,$userName)
         return "<span>Vous devez indiquer un pseudo ou un mail</span></br>";
     } else {
         //Test que l'utilisateur n'est pas déjà dans le projet
-        $query = "SELECT ID_MEMBRE FROM membre JOIN utilisateur ON membre.ID_MEMBRE = utilisateur.ID_USER WHERE (NOM_MEMBRE ='$userName' OR MAIL_USER='$userName') AND ID_PROJET = '$projectId'";
-        $result = mysqli_query($conn, $query);
+        $sql = $conn->prepare("SELECT ID_MEMBRE FROM membre JOIN utilisateur ON membre.ID_MEMBRE = utilisateur.ID_USER WHERE (NOM_MEMBRE =? OR MAIL_USER=?) AND ID_PROJET = ?");
+        $sql->bind_param("ssi",$userName,$userName,$projectId);
+        $sql->execute();
+        $result = $sql->get_result();
         if (mysqli_num_rows($result) != 0) {
             return "<span>Cet utilisateur fait déjà parti du projet</span></br>";
         } else {
             //Test que l'utilisateur existe (mail ou pseudo)
-            $query = "SELECT ID_USER,NOM_USER FROM utilisateur WHERE NOM_USER ='$userName' OR MAIL_USER = '$userName'";
-            $result = mysqli_query($conn, $query);
+            $sql = $conn->prepare("SELECT ID_USER,NOM_USER FROM utilisateur WHERE NOM_USER =? OR MAIL_USER =?");
+            $sql->bind_param("ss",$userName,$userName);
+            $sql->execute();
+            $result = $sql->get_result();
             if (mysqli_num_rows($result) == 0) {
                 return "<span>Ce pseudo/mail ne correspond à aucun utilisateur</span></br>";
             } //Ajout de l'utilisateur au projet
@@ -61,9 +67,10 @@ function addMember($projectId,$userName)
                 $row = mysqli_fetch_row($result);
                 $memberName = $row[1];
                 $memberId = $row[0];
-                $query = "INSERT INTO membre (ID_MEMBRE, ID_PROJET, NOM_MEMBRE)
-                    VALUES ('$memberId','$projectId','$memberName')";
-                mysqli_query($conn, $query);
+                $sql = $conn->prepare("INSERT INTO membre (ID_MEMBRE, ID_PROJET, NOM_MEMBRE)
+                VALUES (?,?,?)");
+                $sql->bind_param("iis",$memberId,$projectId,$memberName);
+                $sql->execute();
             }
         }
     }

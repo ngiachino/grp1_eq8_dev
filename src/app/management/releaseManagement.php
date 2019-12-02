@@ -22,9 +22,11 @@ function startAddRelease($idProjet){
 }
 function addRelease($idProjet,$description,$version,$lien,$date){
     $conn = connect();
-    $query = "INSERT INTO `release` (VERSION,DESCRIPTION,DATE_RELEASE,URL_DOCKER,ID_PROJET)
-        VALUES ('$version','$description','$date','$lien','$idProjet')";
-    mysqli_query($conn, $query);
+    $sql = $conn->prepare("INSERT INTO `release` (VERSION,DESCRIPTION,DATE_RELEASE,URL_DOCKER,ID_PROJET)
+    VALUES (?,?,?,?,?)");
+    $sql->bind_param("ssssi",$version,$description,$date,$lien,$idProjet);
+    $sql->execute();
+    return $sql->get_result();
 }
 
 function startDeleteRelease($idProjet){
@@ -50,18 +52,12 @@ function startModifyRelease($projectID){
 }
 function modifyRelease($projectID,$releaseID,$releaseVersion,$releaseLink,$releaseDescription,$releaseDate){
     $conn = connect();
-    //test que l'utilisateur n'a pas déjà créé un projet du même nom
-    $sqlTest1 = "SELECT ID_RELEASE FROM `release` WHERE VERSION = '$releaseVersion' AND ID_PROJET = '$projectID' AND ID_RELEASE != '$releaseID'";
-    $result1 = mysqli_query($conn, $sqlTest1);
-    if (mysqli_num_rows($result1) > 0) {
-        return "Ce numéro de version existe déjà";
-    } else {
-        $sql = "UPDATE `release`
-        SET VERSION='$releaseVersion',DESCRIPTION='$releaseDescription',
-        DATE_RELEASE='$releaseDate',URL_DOCKER='$releaseLink' 
-        WHERE ID_RELEASE = '$releaseID'";
-        mysqli_query($conn, $sql);
-        return "Votre release a bien été modifiée";
-    }
+    $sql = $conn->prepare("UPDATE `release`
+    SET VERSION=?,DESCRIPTION=?,
+    DATE_RELEASE=?,URL_DOCKER=? 
+    WHERE ID_RELEASE = ?");
+    $sql->bind_param("ssssi",$releaseVersion,$releaseDescription,$releaseDate,$releaseLink,$releaseID);
+    $sql->execute();
+    return "Votre release a bien été modifiée";
 }
 ?>

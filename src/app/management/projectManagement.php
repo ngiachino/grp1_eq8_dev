@@ -36,7 +36,6 @@ function startAddProject(){
         $userID = $_SESSION['userID'];
         return addProject($projectName,$projectDesc,$userName,$userID,true);
     }
-    return null;
 }
 
 function addProject($projectName,$projectDesc,$userName,$userID,$processIsolation){
@@ -46,19 +45,24 @@ function addProject($projectName,$projectDesc,$userName,$userID,$processIsolatio
         return "Vous devez remplir tous les champs";
     } else {
         //test que l'utilisateur n'a pas déjà créé un projet du même nom
-        $sqlTest1 = "SELECT ID_PROJET FROM projet WHERE NOM_PROJET = '$projectName' AND ID_MANAGER = '$userID'";
-        $result1 = mysqli_query($conn, $sqlTest1);
+        $sql = $conn->prepare("SELECT ID_PROJET FROM projet WHERE NOM_PROJET = ? AND ID_MANAGER = ?");
+        $sql->bind_param("si",$projectName,$userID);
+        $sql->execute();
+        $result1 = $sql->get_result();
 
         if (mysqli_num_rows($result1) > 0) {
             return "Vous avez déjà créé un projet du même nom";
         } else {
-            $sql = "INSERT INTO projet (NOM_PROJET, ID_MANAGER, DESCRIPTION)
-            VALUES ('$projectName','$userID','$projectDesc')";
+            $sql = $conn->prepare("INSERT INTO projet (NOM_PROJET, ID_MANAGER, DESCRIPTION)
+            VALUES (?,?,?)");
+            $sql->bind_param("sis",$projectName,$userID,$projectDesc);
+            $sql->execute();
 
-            $sql2 = "INSERT INTO membre (ID_MEMBRE, ID_PROJET, NOM_MEMBRE)
-            VALUES ('$userID',LAST_INSERT_ID(),'$userName')";
-            mysqli_query($conn, $sql);
-            mysqli_query($conn, $sql2);
+            $sql = $conn->prepare("INSERT INTO membre (ID_MEMBRE, ID_PROJET, NOM_MEMBRE)
+            VALUES (?,LAST_INSERT_ID(),?)");
+            $sql->bind_param("is",$userID,$userName);
+            $sql->execute();
+
             if($processIsolation){
                 header("Location: profil.php");
             }
@@ -111,15 +115,18 @@ function modifyProject($projectID,$projectName,$projectDesc){
     $conn = connect();
     $userName = $_SESSION['userName'];
     //teste qu'un projet de même ID n'a pas déjà été créée
-    $sqlTest1 = "SELECT ID_PROJET FROM `projet` WHERE NOM_PROJET = '$projectName'AND ID_PROJET != '$projectID'";
-    $result1 = mysqli_query($conn, $sqlTest1);
+    $sql = $conn->prepare("SELECT ID_PROJET FROM `projet` WHERE NOM_PROJET = ? AND ID_PROJET != ?");
+    $sql->bind_param("si",$projectName,$projectID);
+    $sql->execute();
+    $result1 = $sql->get_result();
     if (mysqli_num_rows($result1) > 0) {
         return "Ce projet existe déjà";
     } else {
-        $sql = "UPDATE `projet`
-        SET NOM_PROJET = '$projectName', DESCRIPTION = '$projectDesc'
-        WHERE ID_PROJET = '$projectID'";
-        mysqli_query($conn, $sql);
+        $sql = $conn->prepare("UPDATE `projet`
+        SET NOM_PROJET = ?, DESCRIPTION = ?
+        WHERE ID_PROJET = ?");
+        $sql->bind_param("ssi",$projectName,$projectDesc,$projectID);
+        $sql->execute();
         header("Location:projet.php?title=$projectName&owner=$userName");
         return "Votre projet a bien été modifié";
     }
