@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 --
 
 --Create DB
-CREATE DATABASE IF NOT EXISTS `cdp` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+CREATE DATABASE `cdp`;
 USE `cdp`;
 
 -- --------------------------------------------------------
