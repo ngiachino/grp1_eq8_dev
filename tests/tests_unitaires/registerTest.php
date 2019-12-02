@@ -1,6 +1,6 @@
 <?php
-    include_once 'DBconnectTravis.php';
-    include_once '../../src/app/management/registerManagement.php';
+    include_once 'tests/tests_unitaires/DBconnectTravis.php';
+    include_once 'src/app/management/registerManagement.php';
     use PHPUnit\Framework\TestCase;
     /**
     * @group testsUnitaires
