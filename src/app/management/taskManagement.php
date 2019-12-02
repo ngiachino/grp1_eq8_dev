@@ -147,10 +147,12 @@ function deleteTask($conn)
 }
 function getIssuesTask($conn, $taskId, $sprintId, $projectId){
     //je récupère les issues d'une tâches
-    $queryIssues= "SELECT tache.ID_USER_STORY, issue.DESCRIPTION 
-                   FROM tache JOIN issue ON tache.ID_USER_STORY = issue.ID_USER_STORY
-                   WHERE tache.ID_PROJET = '$projectId' AND ID_SPRINT = '$sprintId' AND ID_TACHE = '$taskId' ";
+    $queryIssues= "SELECT ID_USER_STORY, DESCRIPTION 
+                   FROM issue
+                   WHERE ID_PROJET = '$projectId' AND ID_TACHE = '$taskId' ";
      $result = mysqli_query($conn, $queryIssues);
+     if(!($result))
+         echo "Error: " . $queryIssues . "<br>" . $conn->error . "<br>";
      return $result;
 }
 
