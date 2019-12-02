@@ -1,0 +1,17 @@
+language: php
+
+sudo: required
+
+php:
+  - nightly
+
+dist: trusty
+
+services:
+  - mysql
+  
+before_install:
+  - mysql -u root < src/database/init_db.sql
+
+script:
+  - phpunit tests/tests_unitaires/.
