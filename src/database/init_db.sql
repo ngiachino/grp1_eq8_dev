@@ -13,10 +13,10 @@ START TRANSACTION;
 SET time_zone = "+00:00";
 
 --
--- Base de données :  `cdp`
+-- Base de données: `cdp`
 --
 
---Create DB
+-- Create DB
 CREATE DATABASE `cdp`;
 USE `cdp`;
 
