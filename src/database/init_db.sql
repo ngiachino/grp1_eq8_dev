@@ -45,7 +45,7 @@ CREATE TABLE `issue` (
   `DIFFICULTE` varchar(10) NOT NULL COMMENT '"Les valeurs de la difficulté sont Basse, Moyenne, Haute "',
   `DESCRIPTION` varchar(500) NOT NULL,
   `ID_PROJET` int(50) NOT NULL,
-  `ID_TACHE` int(11) NOT NULL
+  `ID_TACHE` int(11) NOT NULL DEFAULT -1
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='La table des Issues';
 
 -- --------------------------------------------------------
@@ -55,11 +55,11 @@ CREATE TABLE `issue` (
 --
 
 CREATE TABLE `membre` (
-  `ID_MEMBRE` int(50) UNSIGNED NOT NULL DEFAULT 0,
-  `ID_PROJET` int(50) UNSIGNED NOT NULL DEFAULT 0,
+  `ID_MEMBRE` int(50) UNSIGNED NOT NULL DEFAULT -1,
+  `ID_PROJET` int(50) UNSIGNED NOT NULL DEFAULT -1,
   `NOM_MEMBRE` varchar(50) NOT NULL,
-  `ID_SPRINT` int(50) UNSIGNED NOT NULL DEFAULT 0,
-  `ID_TACHE` int(50) UNSIGNED NOT NULL DEFAULT 0
+  `ID_SPRINT` int(50) UNSIGNED NOT NULL DEFAULT -1,
+  `ID_TACHE` int(50) UNSIGNED NOT NULL DEFAULT -1
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
