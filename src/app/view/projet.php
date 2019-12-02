@@ -90,10 +90,10 @@ $row = mysqli_fetch_row($result12);
                 <ul>
                     <?php $i = 0;
                         while($member = mysqli_fetch_row($result1)) { ?>
-                        <li class="d-flex"><?php echo '- '.$member[2] ?>
+                        <li class="d-flex"><?php echo '- '.$member[0] ?>
                             <form method="post">
-                                <input class="" type="hidden" name="name" value="<?php echo $member[2];?>">
-                                <input class="btn pt-1" type="<?php if($member[2] == $_GET['owner']){echo "hidden";} else{echo "submit";} ?>" name="deleteUser" id="deleteUser<?php echo $i;?>"" value="&#x274C;">
+                                <input class="" type="hidden" name="name" value="<?php echo $member[0];?>">
+                                <input class="btn pt-1" type="<?php if($member[0] == $_GET['owner']){echo "hidden";} else{echo "submit";} ?>" name="deleteUser" id="deleteUser<?php echo $i;?>"" value="&#x274C;">
                             </form>
                         </li>
                     <?php $i++;

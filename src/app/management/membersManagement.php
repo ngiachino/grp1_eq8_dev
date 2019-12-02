@@ -29,7 +29,7 @@ function startProject(){
 function showMembers($projectId){
     $conn = connect();
 
-    $query = "SELECT * FROM membre WHERE ID_PROJET = '$projectId'";
+    $query = "SELECT DISTINCT NOM_MEMBRE FROM membre WHERE ID_PROJET = '$projectId'";
     return mysqli_query($conn, $query);
 }
 
