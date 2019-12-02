@@ -129,8 +129,19 @@ else {
                 </th>
                 </td>
                 <!--USER STORIES-->
-
                 <td>
+                    <span>
+                            <?php
+                            $resultIssues = getIssuesTask($conn, $taskId, $sprintId, $projectId);
+                            while($rowIssue = mysqli_fetch_row($resultIssues)){
+                                $issueId = $rowIssue[0];
+                                $issueDescription = $rowIssue[1];
+                                ?>
+                                <ul class="list-group">
+                                    <li class="list-group-item"> <?php echo $issueId.'-'.$issueDescription; ?>
+                                </ul>
+                            <?php  } ?>
+                    </span>
                 </td>
                 <!--ACTION-->
                 <td>
