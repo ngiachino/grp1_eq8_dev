@@ -9,9 +9,10 @@ function addTask($conn,$projectId,$sprintId)
             return " Veuillez remplir tous les champs!";
         }
         else{
+        //test l'existence de la tache
         $query = "INSERT INTO `tache`(`ID_PROJET`, `ID_SPRINT`,`ID_USER_STORY`, `DESCRIPTION`, 
                                      `DUREE_TACHE`, `IS_DONE`, `IS_CLOSED`) 
-                         VALUES (  '$projectId','$sprintId','1','$description','$duration',
+                         VALUES (  '$projectId','$sprintId','-1','$description','$duration',
                                     '0','0' )";
         if (!(mysqli_query($conn, $query))) {
             echo "Error: " . $query . "<br>" . $conn->error . "<br>";
@@ -66,25 +67,34 @@ function addUSStask($connexion, $sprintId, $projectId){
       if(empty($_POST['issueId'])){
           return "Veuillez indiquez la USS";
       }
-      $taskId = $_POST['taskId'];
+      $taskId = $_POST['taskIdentificateur'];
       $issueId = $_POST['issueId'];
       //Verification de l'existance de la USS qu'on veut lier à la tâche
-      $queryExistUss = "SELECT ID_USER_STORY, DESCRIPTION FROM issue WHERE ID_USER_STORY = '$issueId' and ID_PROJET = $projectId ";
+      $queryExistUss = "SELECT ID_USER_STORY, PRIORITE, DIFFICULTE, DESCRIPTION FROM issue 
+                        WHERE ID_USER_STORY = '$issueId' and ID_PROJET = $projectId  AND ID_TACHE != $taskId 
+                        ORDER BY ID_USER_STORY
+                        DESC LIMIT 1 ";
       $exist = mysqli_query($connexion, $queryExistUss);
-      if(mysqli_num_rows($exist)== 0 ) {
-          return "L'identifiant de cette User story n'existe pas";
+      if(mysqli_num_rows($exist)== 0 || !($exist)) {
+          return "L'identifiant de cette User story n'existe pas ou alors elle est déjà liée à la tâche";
       }
+
+        $resultIssue = mysqli_fetch_row($exist);
+        $issueId = $resultIssue[0];
+        $priorite = $resultIssue[1];
+        $difficulte = $resultIssue[2];
+        $description = $resultIssue[3];
       //AJOUTER
-      $queryAppendUS = "UPDATE tache SET ID_USER_STORY = ID_USER_STORY+'$issueId'
-                        WHERE   ID_PROJET = '$projectId' AND ID_SPRINT = '$sprintId' AND ID_TACHE = '$taskId'";
-      $appendResult = mysqli_query($connexion, $queryAppendUS);
-      if(!($appendResult))
-      {
-          echo "Error: ".$queryAppendUS. "<br>" . $connexion->error . "<br>";
+      $queryInsert = "INSERT INTO `issue`(`ID_USER_STORY`, `PRIORITE`,`DIFFICULTE`, `DESCRIPTION`, 
+                                     `ID_PROJET`, `ID_TACHE`) 
+                         VALUES (  '$issueId','$priorite','$difficulte','$description',
+                                    '$projectId','$taskId')";
+      if (!(mysqli_query($connexion, $queryInsert))) {
+              echo "Error: " . $queryInsert . "<br>" . $connexion->error . "<br>";
           return "Impossible de relier la tâche à l'US";
       }
-      else{
-          return "La tache a été reliée à la US";
+      else {
+          return $issueId."La tache a été reliée à la US";
       }
   }
   return;
@@ -104,7 +114,6 @@ function getMemberTask($connexion,$taskId, $sprintId, $projectId)
      { return $result;}
      return;
 }
-
 function modifyTask($conn, $projectId, $sprintId)
 {
     if(isset($_POST['modifier'])){
@@ -176,7 +185,22 @@ function deleteTask($conn)
 
 }
 
-
+function getIssuesTask($conn, $taskId, $sprintId, $projectId){
+    //je récupère les issues d'une tâches
+    $queryIssues= "SELECT tache.ID_USER_STORY, issue.DESCRIPTION 
+                   FROM tache JOIN issue ON tache.ID_USER_STORY = issue.ID_USER_STORY
+                   WHERE tache.ID_PROJET = '$projectId' AND ID_SPRINT = '$sprintId' AND ID_TACHE = '$taskId' ";
+    $result = mysqli_query($conn, $queryIssues);
+    if(!$result) {
+        echo "Error: " . $queryIssues . "<br>" . $conn->error . "<br>";
+        return "erreur  lors de la récuperation des User stories";
+    }
+    else
+    {
+        return $result;
+    }
+    return;
+}
 
 
 

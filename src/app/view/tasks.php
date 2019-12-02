@@ -23,7 +23,7 @@ $issueAddMessage =addUSStask($conn, $sprintId, $projectId);
 $deleteMessage='';
 
 
-$query = "SELECT tache.DESCRIPTION, tache.DUREE_TACHE, tache.IS_DONE, tache.ID_TACHE
+$query = "SELECT DISTINCT tache.DESCRIPTION, tache.DUREE_TACHE, tache.IS_DONE, tache.ID_TACHE
               FROM tache  
               WHERE tache.ID_PROJET = '$projectId'
                     AND tache.ID_SPRINT = '$sprintId'
@@ -129,6 +129,7 @@ else {
                 </th>
                 </td>
                 <!--USER STORIES-->
+
                 <td>
                 </td>
                 <!--ACTION-->
@@ -157,7 +158,7 @@ else {
                         <!-- Le formulaire d'ajout d'une US -->
                         <form method="POST">
                             <div class="form-group">
-                                <input type="hidden" name="taskId" value=<?php echo $row[3];?>>
+                                <input type="hidden" name="taskIdentificateur" value=<?php echo $row[3];?>>
                                 <label for="issueId">User Story:</label>
                                 <input type="text" class="form-control" name="issueId">
                             </div>
