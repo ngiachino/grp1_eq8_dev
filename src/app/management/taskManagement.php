@@ -143,3 +143,15 @@ function getIssuesTask($conn, $taskId, $projectId){
      $result = mysqli_query($conn, $queryIssues);
      return $result;
 }
+function deleteMember($conn, $projectId, $sprintId){
+    if(isset($_POST['deleteMember'])){
+        $idMember = $_POST['memberId'];
+        $taskId = $_POST['taskId'];
+        $queryDeleteMember ="DELETE FROM membre 
+                             WHERE ID_TACHE = '$taskId'AND 
+                                   ID_PROJET = '$projectId' AND 
+                                   ID_SPRINT = '$sprintId' AND 
+                                   ID_MEMBRE = '$idMember'";
+        mysqli_query($conn, $queryDeleteMember);
+    }
+}
