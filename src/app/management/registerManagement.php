@@ -19,12 +19,16 @@ function register($pseudoInsc,$mailInsc,$pswdInsc,$pswdConfirmInsc){
         return "Les mots de passe ne sont pas identiques";
     }
     //test que le mail n'est pas déjà utilisé
-    $sqlTest1 = "SELECT ID_USER FROM utilisateur WHERE MAIL_USER = '$mailInsc'";
-    $result1 = $conn->query($sqlTest1);
+    $sqlTest1 = $conn->prepare("SELECT ID_USER FROM utilisateur WHERE MAIL_USER =?");
+    $sqlTest1->bind_param("s",$mailInsc);
+    $sqlTest1->execute();
+    $result1 = $sqlTest1->get_result();
 
     //test que le pseudo n'est pas déjà utilisé
-    $sqlTest2 = "SELECT ID_USER FROM utilisateur WHERE NOM_USER = '$pseudoInsc'";
-    $result2 = $conn->query($sqlTest2);
+    $sqlTest2 = $conn->prepare("SELECT ID_USER FROM utilisateur WHERE NOM_USER = ?");
+    $sqlTest2->bind_param("s",$pseudoInsc);
+    $sqlTest2->execute();
+    $result2 = $sqlTest2->get_result();
     if($result1->num_rows > 0){
         return "Ce mail est déjà associé à un compte";
     }
@@ -32,9 +36,10 @@ function register($pseudoInsc,$mailInsc,$pswdInsc,$pswdConfirmInsc){
         return "Ce pseudo est déjà associé à un compte";
     }
     else{
-        $sql = "INSERT INTO utilisateur (NOM_USER, PASSWORD_USER, MAIL_USER)
-        VALUES ('$pseudoInsc','$pswdInsc','$mailInsc')";
-        $conn->query($sql);
+        $sql = $conn->prepare("INSERT INTO utilisateur (NOM_USER, PASSWORD_USER, MAIL_USER)
+        VALUES (?,?,?)");
+        $sql->bind_param("sss",$pseudoInsc,$pswdInsc,$mailInsc);
+        $sql->execute();
         return "Votre compte a bien été créé";
     }
 }

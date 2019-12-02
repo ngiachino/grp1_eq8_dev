@@ -57,7 +57,7 @@ startRegister();
                 <h2>Inscription</h2>
                 <div>
                     <label for="pseudoInsc">Pseudo</label>
-                    <input class="form-control" type="text" name="pseudoInsc" id="pseudoInsc">
+                    <input class="form-control" type="text" name="pseudoInsc" pattern="[A-Za-z0-9]*" title="Seuls les caractères alphanumériques sont autorisés" id="pseudoInsc">
                 </div>
                 <div>
                     <label for="mailInsc">Email</label>

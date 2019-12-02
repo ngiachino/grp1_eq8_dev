@@ -8,8 +8,10 @@ function startIssues(){
 
 function showIssues($idProjet){
     $conn = connect();
-    $query = "SELECT ID_USER_STORY,PRIORITE,DIFFICULTE,DESCRIPTION FROM issue WHERE ID_PROJET = '$idProjet' ORDER BY ID_USER_STORY";
-    return mysqli_query($conn, $query);
+    $sql = $conn->prepare("SELECT ID_USER_STORY,PRIORITE,DIFFICULTE,DESCRIPTION FROM issue WHERE ID_PROJET = ? ORDER BY ID_USER_STORY");
+    $sql->bind_param("i",$idProjet);
+    $sql->execute();
+    return $sql->get_result();
 }
 
 function startAddIssue($idProjet){
@@ -23,9 +25,10 @@ function startAddIssue($idProjet){
 
 function addIssue($idProjet,$description,$priority,$difficulty){
     $conn = connect();
-    $query = "INSERT INTO issue (PRIORITE, DIFFICULTE, DESCRIPTION, ID_PROJET)
-        VALUES ('$priority','$difficulty','$description','$idProjet')";
-    mysqli_query($conn, $query);
+    $sql = $conn->prepare("INSERT INTO issue (PRIORITE, DIFFICULTE, DESCRIPTION, ID_PROJET)
+    VALUES (?,?,?,?)");
+    $sql->bind_param("sisi",$priority,$difficulty,$description,$idProjet);
+    $sql->execute();
     return "Votre issue a été créée";
 }
 
@@ -41,15 +44,18 @@ function startModifyIssue($projectID){
 function modifyIssue($projectID,$idUS,$priority,$difficulty,$description){
     $conn = connect();
     //test qu'une US de même description n'a pas déjà été créée
-    $sqlTest1 = "SELECT ID_USER_STORY FROM `issue` WHERE ID_PROJET = '$projectID' AND DESCRIPTION = '$description' AND ID_USER_STORY != '$idUS'";
-    $result1 = mysqli_query($conn, $sqlTest1);
+    $sqlTest1 = $conn->prepare("SELECT ID_USER_STORY FROM `issue` WHERE ID_PROJET = ? AND DESCRIPTION = ? AND ID_USER_STORY != ?");
+    $sqlTest1->bind_param("isi",$projectID,$description,$idUS);
+    $sqlTest1->execute();
+    $result1 = $sqlTest1->get_result();
     if (mysqli_num_rows($result1) > 0) {
         return "Cette US existe déjà";
     } else {
-        $sql = "UPDATE `issue`
-        SET PRIORITE = '$priority', DIFFICULTE = '$difficulty', DESCRIPTION = '$description'
-        WHERE ID_USER_STORY = '$idUS'";
-        mysqli_query($conn, $sql);
+        $sql = $conn->prepare("UPDATE `issue`
+        SET PRIORITE = ?, DIFFICULTE = ?, DESCRIPTION = ?
+        WHERE ID_USER_STORY = ?");
+        $sql->bind_param("sisi",$priority,$difficulty,$description,$idUS);
+        $sql->execute();
         return "Votre issue a bien été modifiée";
     }
 }
@@ -63,7 +69,8 @@ function startDeleteIssue($idProjet){
 
 function deleteIssue($issueID, $idProjet){
     $conn = connect();
-    $query = "DELETE FROM issue WHERE ID_USER_STORY = '$issueID' AND ID_PROJET = '$idProjet'";
-    mysqli_query($conn, $query);
+    $sql = $conn->prepare("DELETE FROM issue WHERE ID_USER_STORY = ? AND ID_PROJET = ?");
+    $sql->bind_param("ii",$issueID,$idProjet);
+    $sql->execute();
     return "Votre issue a été supprimée";
 }

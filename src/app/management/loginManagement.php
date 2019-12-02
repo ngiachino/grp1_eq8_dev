@@ -16,8 +16,10 @@ function connexion($nameCo,$pswdCo){
     }
     else{
         //test que le mail n'est pas déjà utilisé
-        $sql = "SELECT ID_USER,NOM_USER FROM utilisateur WHERE (MAIL_USER = '$nameCo' OR NOM_USER = '$nameCo') AND PASSWORD_USER = '$pswdCo'";
-        $result = $conn->query($sql);
+        $sql = $conn->prepare("SELECT ID_USER,NOM_USER FROM utilisateur WHERE (MAIL_USER = ? OR NOM_USER =?) AND PASSWORD_USER = ?");
+        $sql->bind_param("sss",$nameCo,$nameCo,$pswdCo);
+        $sql->execute();
+        $result = $sql->get_result();
         if($result->num_rows == 0){
             return "Le compte et le mot de passe ne correspondent pas";
         }
