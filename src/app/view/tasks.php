@@ -44,7 +44,7 @@ else {
 </head>
 <body>
 <?php include 'navbar.php'; ?>
-<div class="container-fluid">
+<div class="container">
     <!--AFFICHER LE NUMERO DE SPRINT -->
     <div class="row">
         <div class="col-md-3">
@@ -75,7 +75,7 @@ else {
 <br>
 
 <!--AFFICHAGE DES TÂCHES COURRANTES DU SPRINT-->
-<div class="container-fluid">
+<div class="container">
     <table class="table" id="taskList" summary="Table des tâches du projet">
         <thead class="thead-dark">
         <tr>
@@ -122,38 +122,15 @@ else {
                             while($rowMembers = mysqli_fetch_row($resultMember)){
                                 ?>
                                 <ul class="list-group">
-                                      <?php
-                                      deleteMember($conn,$projectId, $sprintId);
-                                      $memberName = $rowMembers[0];
-                                      $memberId = $rowMembers[1];
-                                      ?>
-                                        <form method="POST">
-                                             <li class="list-group-item"> <?php echo $memberName; ?>
-                                                  <input type="hidden" name="taskId" value=<?php echo $taskId;?>>
-                                                  <input type="hidden" name="memberId" value=<?php echo $memberId;?>>
-                                                 <button type="submit" class="fa fa-times" name="deleteMember">
-                                                </button>
-                                        </form>
+                                    <li class="list-group-item"> <?php echo $rowMembers[0]; ?>
                                 </ul>
                             <?php  } ?>
                     </span>
                 </th>
                 </td>
                 <!--USER STORIES-->
+
                 <td>
-                    <span>
-                    <?php
-                    $resultIssues = getIssuesTask($conn, $taskId, $sprintId, $projectId);
-                    while($rowIssue = mysqli_fetch_row($resultIssues)){
-                        $issueId = $rowIssue[0];
-                        $issueDescription = $rowIssue[1];
-                        ?>
-                        <!--Bouton delete-->
-                        <ul class="list-group">
-                            <li class="list-group-item"><?php echo $issueId.'-'.$issueDescription; ?>
-                        </ul>
-                    <?php  } ?>
-                    </span>
                 </td>
                 <!--ACTION-->
                 <td>
@@ -229,7 +206,6 @@ echo $assignMessage;
 echo $issueAddMessage;
 echo $deleteMessage;
 echo $modifyTaskMessage;
-echo $deleteIssueMessage;
 $connexion=null;
 ?>
 
