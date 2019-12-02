@@ -1,5 +1,5 @@
 <?php
-    include_once '../../src/database/DBconnect.php';
+    include_once 'DBconnectTravis.php';
     include_once '../../src/app/management/projectManagement.php';
     include_once '../../src/app/management/registerManagement.php';
     use PHPUnit\Framework\TestCase;
