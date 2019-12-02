@@ -22,40 +22,30 @@ function addTask($conn,$projectId,$sprintId)
 function assignTask($conn,$projectId, $sprintId)
 {
     if (isset($_POST['assigner'])) {
+        if (!(empty($_POST['userName'])) || !(empty($_POST['taskId'])) ){
         $userName = $_POST['userName'];
         $taskId = $_POST['taskId'];
-        if (empty($userName)|| empty($taskId)){
-            return " Veuillez remplir tous les champs!";
-        }
-        else {
-            $queryExistMember = "SELECT ID_MEMBRE
+        $queryExistMember = "SELECT ID_MEMBRE
                                  from membre join utilisateur 
                                              on membre.ID_MEMBRE = utilisateur.ID_USER 
                                 WHERE NOM_USER = '$userName' AND ID_TACHE != '$taskId' ";
-            $resultMember = mysqli_query($conn, $queryExistMember);
-            if(!($resultMember)) {
-                echo "Error: " . $queryExistMember . "<br>" . $conn->error . "<br>";
-            }
-            if ( mysqli_num_rows($resultMember)!= 0){
-                // il est membre du projet et du sprint mais cette tâche ne lui est pas encore affectée
-                $row =  mysqli_fetch_row($resultMember);
-                $userId= $row[0];
+        $resultMember = mysqli_query($conn, $queryExistMember);
+            if (mysqli_num_rows($resultMember) != 0) {
+                $row = mysqli_fetch_row($resultMember);
+                $userId = $row[0];
                 $queryAssign = " INSERT INTO membre 
-                                VALUES ('$userId', '$projectId','$userName'
-                                        ,'$sprintId', '$taskId')";
-                if (!(mysqli_query($conn,$queryAssign))){
-                   return "la tâche n'a pas été assignée!";
-                }
-            } else
-             {  return "Cette tâche est déjà assigné à cet utilisateur ou 
-                        alors l'utilisateur ne fait pas partie du projet"; }
+                                    VALUES ('$userId', '$projectId','$userName'
+                                            ,'$sprintId', '$taskId')";
+                mysqli_query($conn, $queryAssign);
+                return "La tache a été assignée!";
+            }
         }
     }
 }
-function addUSStask($connexion, $sprintId, $projectId){
+function addUSStask($connexion, $projectId){
   if(isset($_POST['lier'])){
       if(empty($_POST['issueId'])){
-          return "Veuillez indiquez la USS";
+         return "Veuillez indiquez la USS";
       }
       $taskId = $_POST['taskIdentificateur'];
       $issueId = $_POST['issueId'];
@@ -85,7 +75,7 @@ function addUSStask($connexion, $sprintId, $projectId){
 
 function getMemberTask($connexion,$taskId, $sprintId, $projectId)
 {
-    $queryMemberName = "SELECT NOM_MEMBRE 
+    $queryMemberName = "SELECT NOM_MEMBRE, ID_MEMBRE 
                         FROM membre
                         WHERE ID_PROJET = '$projectId' 
                               AND ID_SPRINT = '$sprintId' 
@@ -145,15 +135,23 @@ function deleteTask($conn)
         return "LA suppresion la tâche a été faite! ";
     }
 }
-function getIssuesTask($conn, $taskId, $sprintId, $projectId){
+function getIssuesTask($conn, $taskId, $projectId){
     //je récupère les issues d'une tâches
     $queryIssues= "SELECT ID_USER_STORY, DESCRIPTION 
                    FROM issue
                    WHERE ID_PROJET = '$projectId' AND ID_TACHE = '$taskId' ";
      $result = mysqli_query($conn, $queryIssues);
-     if(!($result))
-         echo "Error: " . $queryIssues . "<br>" . $conn->error . "<br>";
      return $result;
 }
-
-
+function deleteMember($conn, $projectId, $sprintId){
+    if(isset($_POST['deleteMember'])){
+        $idMember = $_POST['memberId'];
+        $taskId = $_POST['taskId'];
+        $queryDeleteMember ="DELETE FROM membre 
+                             WHERE ID_TACHE = '$taskId'AND 
+                                   ID_PROJET = '$projectId' AND 
+                                   ID_SPRINT = '$sprintId' AND 
+                                   ID_MEMBRE = '$idMember'";
+        mysqli_query($conn, $queryDeleteMember);
+    }
+}
