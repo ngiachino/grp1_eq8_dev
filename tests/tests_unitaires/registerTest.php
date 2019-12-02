@@ -1,5 +1,5 @@
 <?php
-    include_once 'tests/tests_unitaires/DBconnectTravis.php';
+    include_once 'src/database/DBconnect.php';
     include_once 'src/app/management/registerManagement.php';
     use PHPUnit\Framework\TestCase;
     /**
@@ -9,7 +9,7 @@
     class RegisterTest extends TestCase{
         /** @test */
         public function testRegister(){
-            $conn = connectTravis();
+            $conn = connect();
             $this->clear();
 
             $res = register("TestAccount","TestAccount@test.fr","test","test");
@@ -39,7 +39,7 @@
             $this->clear();
         }
         private function clear(){
-            $conn = connectTravis();
+            $conn = connect();
             $sql = "DELETE FROM utilisateur WHERE NOM_USER = 'TestAccount' OR MAIL_USER = 'TestAccount@test.fr' OR NOM_USER = 'TestAccount2' OR MAIL_USER = 'TestAccount@test.fr'";
             $conn->query($sql);
         }

@@ -1,5 +1,5 @@
 <?php
-    include_once 'tests/tests_unitaires/DBconnectTravis.php';
+    include_once 'src/database/DBconnect.php';
     include_once 'src/app/management/projectManagement.php';
     include_once 'src/app/management/registerManagement.php';
     use PHPUnit\Framework\TestCase;
@@ -10,7 +10,7 @@
     class ProjectTest extends TestCase{
         /** @test */
         public function testAddProject(){
-            $conn = connectTravis();
+            $conn = connect();
             $this->clear();
            
             $userName = "TestAccount";
@@ -35,7 +35,7 @@
 
         }
         public function testDeleteProject(){
-            $conn = connectTravis();
+            $conn = connect();
             $this->clear();
 
             $userName = "TestAccount";
@@ -61,7 +61,7 @@
             $this->assertEquals($result->num_rows, 0);
         }
         private function clear(){
-            $conn = connectTravis();
+            $conn = connect();
             $sql = "DELETE FROM utilisateur WHERE NOM_USER = 'TestAccount' OR MAIL_USER = 'TestAccount@test.fr'";
             $conn->query($sql);
             $sql = "DELETE FROM membre WHERE NOM_MEMBRE = 'TestAccount'";
