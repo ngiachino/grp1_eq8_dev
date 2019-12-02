@@ -1,38 +1,15 @@
-version: '3'
-
+version: '3.7'
 services:
-    phpmyadmin:
-        image: phpmyadmin/phpmyadmin:latest
-        container_name: phpmyadmin
-        depends_on:
-            - database
-        ports:
-            - 8080:80
-        environment:
-            - PMA_ARBITRARY=1
-        restart: always
-
-    database:
-        build:
+    db:
+        build: 
             context: .
-            dockerfile: Dockerfile.bdd
-        container_name: mysql
+            dockerfile: Dockerfile_DB
+        command: --default-authentication-plugin=mysql_native_password
         environment:
-            MYSQL_ROOT_PASSWORD: aan
-            MYSQL_DATABASE: cdp
-            MYSQL_PASSWORD: aan
+            - MYSQL_ROOT_PASSWORD=root
         ports:
-            - 9906:3306
-
-    web:
-        build:
-            context: .
-        container_name: php
+            - '3306:3306'
+    app:
+        build: .
         ports:
-            - 8100:80
-        depends_on:
-            - database
-        links:
-            - database
-        volumes:
-            - ./:/var/www/html/
+            - '80:80'

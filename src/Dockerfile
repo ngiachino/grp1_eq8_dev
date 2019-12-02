@@ -1,3 +1,12 @@
-FROM php:7.2.2-apache
-COPY . /var/www/html
-RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
+FROM php:7.3-apache
+
+RUN docker-php-ext-install opcache
+RUN docker-php-ext-install mysqli
+
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+
+WORKDIR /var/www/html/
+
+COPY . .
+
+COPY database/logs.docker.php database/logs.local.php
