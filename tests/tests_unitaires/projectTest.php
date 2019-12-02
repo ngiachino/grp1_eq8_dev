@@ -10,7 +10,7 @@
     class ProjectTest extends TestCase{
         /** @test */
         public function testAddProject(){
-            $conn = connect();
+            $conn = connectTravis();
             $this->clear();
            
             $userName = "TestAccount";
@@ -35,7 +35,7 @@
 
         }
         public function testDeleteProject(){
-            $conn = connect();
+            $conn = connectTravis();
             $this->clear();
 
             $userName = "TestAccount";
@@ -61,7 +61,7 @@
             $this->assertEquals($result->num_rows, 0);
         }
         private function clear(){
-            $conn = connect();
+            $conn = connectTravis();
             $sql = "DELETE FROM utilisateur WHERE NOM_USER = 'TestAccount' OR MAIL_USER = 'TestAccount@test.fr'";
             $conn->query($sql);
             $sql = "DELETE FROM membre WHERE NOM_MEMBRE = 'TestAccount'";

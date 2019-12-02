@@ -11,7 +11,7 @@
     class IssueTest extends TestCase{
         /** @test */
         public function testAddIssue(){
-            $conn = connect();
+            $conn = connectTravis();
             $this->clear();
             $userName = "TestAccount";
 
@@ -37,7 +37,7 @@
 
         }
         public function testDeleteIssue(){
-            $conn = connect();
+            $conn = connectTravis();
             $this->clear();
             $userName = "TestAccount";
 
@@ -67,7 +67,7 @@
             $this->assertEquals($result->num_rows, 0);
         }
         public function testModifyIssue(){
-            $conn = connect();
+            $conn = connectTravis();
             $this->clear();
             $userName = "TestAccount";
 
@@ -103,7 +103,7 @@
             $this->clear();
         }
         private function clear(){
-            $conn = connect();
+            $conn = connectTravis();
             $sql = "DELETE FROM utilisateur WHERE NOM_USER = 'TestAccount' OR MAIL_USER = 'TestAccount@test.fr'";
             $conn->query($sql);
             $sql = "DELETE FROM membre WHERE NOM_MEMBRE = 'TestAccount'";

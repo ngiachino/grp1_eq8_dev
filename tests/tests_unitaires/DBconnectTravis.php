@@ -1,5 +1,5 @@
 <?php
-function connect(){
+function connectTravis(){
     include "credentialsTravis.php";
     $conn = new mysqli($dbserver, $dbuser, $password, $dbname);
     if ($conn->connect_error) {
