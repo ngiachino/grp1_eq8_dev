@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  lun. 02 déc. 2019 à 12:12
+-- Généré le :  lun. 02 déc. 2019 à 12:42
 -- Version du serveur :  10.4.8-MariaDB
 -- Version de PHP :  7.3.11
 
@@ -46,7 +46,8 @@ CREATE TABLE `issue` (
   `PRIORITE` varchar(10) NOT NULL COMMENT '"Les valeurs de la priorité sont Basse, Moyenne, Haute "',
   `DIFFICULTE` varchar(10) NOT NULL COMMENT '"Les valeurs de la difficulté sont Basse, Moyenne, Haute "',
   `DESCRIPTION` varchar(500) NOT NULL,
-  `ID_PROJET` int(50) NOT NULL
+  `ID_PROJET` int(50) NOT NULL,
+  `ID_TACHE` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='La table des Issues';
 
 -- --------------------------------------------------------
@@ -193,7 +194,7 @@ ALTER TABLE `documentation`
 -- Index pour la table `issue`
 --
 ALTER TABLE `issue`
-  ADD PRIMARY KEY (`ID_USER_STORY`,`ID_PROJET`);
+  ADD PRIMARY KEY (`ID_USER_STORY`,`ID_PROJET`,`ID_TACHE`) USING BTREE;
 
 --
 -- Index pour la table `membre`
