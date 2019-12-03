@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  lun. 02 déc. 2019 à 12:42
+-- Généré le :  mar. 03 déc. 2019 à 17:45
 -- Version du serveur :  10.4.8-MariaDB
 -- Version de PHP :  7.3.11
 
@@ -32,6 +32,18 @@ CREATE TABLE `documentation` (
   `DESCRIPTION` varchar(500) NOT NULL,
   `LIEN` varchar(100) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='La table des Documentations';
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `historique`
+--
+
+CREATE TABLE `historique` (
+  `ID_HISTORIQUE` int(11) NOT NULL,
+  `ID_PROJET` int(50) NOT NULL,
+  `DESCRIPTION` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -67,7 +79,7 @@ CREATE TABLE `membre` (
 --
 
 INSERT INTO `membre` (`ID_MEMBRE`, `ID_PROJET`, `NOM_MEMBRE`, `ID_SPRINT`, `ID_TACHE`) VALUES
-(157, 143, 'TestAccountSelenium', 0, 0);
+(213, 190, 'TestAccountSelenium', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -87,7 +99,7 @@ CREATE TABLE `projet` (
 --
 
 INSERT INTO `projet` (`ID_PROJET`, `NOM_PROJET`, `ID_MANAGER`, `DESCRIPTION`) VALUES
-(143, 'Projet Selenium', 157, 'test');
+(190, 'Projet Test Selenium', 213, 'Projet pour tester Selenium');
 
 -- --------------------------------------------------------
 
@@ -109,7 +121,7 @@ CREATE TABLE `release` (
 --
 
 INSERT INTO `release` (`ID_RELEASE`, `ID_PROJET`, `VERSION`, `DESCRIPTION`, `DATE_RELEASE`, `URL_DOCKER`) VALUES
-(25, 143, '1.0', 'Release 1 - Github', '2019-12-14', 'https://github.com/ngiachino/grp1_eq8_dev/releases/tag/0.1.0');
+(31, 190, '1.0', 'Description pour test Selenium', '2019-12-28', 'https://github.com/ngiachino/grp1_eq8_dev/releases/tag/0.1.0');
 
 -- --------------------------------------------------------
 
@@ -166,7 +178,7 @@ CREATE TABLE `test` (
 CREATE TABLE `utilisateur` (
   `ID_USER` int(50) UNSIGNED NOT NULL,
   `NOM_USER` varchar(20) NOT NULL,
-  `PASSWORD_USER` varchar(50) NOT NULL,
+  `PASSWORD_USER` varchar(255) NOT NULL,
   `MAIL_USER` varchar(50) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -175,8 +187,8 @@ CREATE TABLE `utilisateur` (
 --
 
 INSERT INTO `utilisateur` (`ID_USER`, `NOM_USER`, `PASSWORD_USER`, `MAIL_USER`) VALUES
-(158, 'TestAccountSelenium2', 'test', 'selenium2@s.s'),
-(157, 'TestAccountSelenium', 'test', 'selenium@s.s');
+(214, 'TestAccountSelenium2', '$2y$10$9gY8VpIo.HkdwJxZuEHph.qa5xuSKHKft6/3VAjCxtHJWNbYph2V2', 'test2@test.fr'),
+(213, 'TestAccountSelenium', '$2y$10$6Zj9Bp8OyWK.NIiK8du3yeIPCLx/tYvuEwW6RgwpHSPFkGdG4Neb.', 'test@test.fr');
 
 --
 -- Index pour les tables déchargées
@@ -187,6 +199,12 @@ INSERT INTO `utilisateur` (`ID_USER`, `NOM_USER`, `PASSWORD_USER`, `MAIL_USER`) 
 --
 ALTER TABLE `documentation`
   ADD PRIMARY KEY (`ID_DOCUMENTATION`);
+
+--
+-- Index pour la table `historique`
+--
+ALTER TABLE `historique`
+  ADD PRIMARY KEY (`ID_HISTORIQUE`);
 
 --
 -- Index pour la table `issue`
@@ -242,34 +260,40 @@ ALTER TABLE `utilisateur`
 --
 
 --
+-- AUTO_INCREMENT pour la table `historique`
+--
+ALTER TABLE `historique`
+  MODIFY `ID_HISTORIQUE` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT pour la table `issue`
 --
 ALTER TABLE `issue`
-  MODIFY `ID_USER_STORY` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"Identifiant de la user story"', AUTO_INCREMENT=82;
+  MODIFY `ID_USER_STORY` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"Identifiant de la user story"', AUTO_INCREMENT=105;
 
 --
 -- AUTO_INCREMENT pour la table `projet`
 --
 ALTER TABLE `projet`
-  MODIFY `ID_PROJET` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"Identifiant du projet"', AUTO_INCREMENT=159;
+  MODIFY `ID_PROJET` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"Identifiant du projet"', AUTO_INCREMENT=191;
 
 --
 -- AUTO_INCREMENT pour la table `release`
 --
 ALTER TABLE `release`
-  MODIFY `ID_RELEASE` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `ID_RELEASE` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT pour la table `sprint`
 --
 ALTER TABLE `sprint`
-  MODIFY `ID_SPRINT` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"identifiant et numéro du sprint"', AUTO_INCREMENT=38;
+  MODIFY `ID_SPRINT` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"identifiant et numéro du sprint"', AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT pour la table `tache`
 --
 ALTER TABLE `tache`
-  MODIFY `ID_TACHE` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"Identifiant de la tâche"', AUTO_INCREMENT=6;
+  MODIFY `ID_TACHE` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"Identifiant de la tâche"', AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT pour la table `test`
@@ -281,5 +305,5 @@ ALTER TABLE `test`
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `ID_USER` int(50) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=174;
+  MODIFY `ID_USER` int(50) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=215;
 COMMIT;

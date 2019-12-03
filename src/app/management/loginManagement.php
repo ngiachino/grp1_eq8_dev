@@ -15,20 +15,26 @@ function connexion($nameCo,$pswdCo){
         return "Vous devez remplir tous les champs";
     }
     else{
-        //test que le mail n'est pas déjà utilisé
-        $sql = $conn->prepare("SELECT ID_USER,NOM_USER FROM utilisateur WHERE (MAIL_USER = ? OR NOM_USER =?) AND PASSWORD_USER = ?");
-        $sql->bind_param("sss",$nameCo,$nameCo,$pswdCo);
+        //test que le mail ou le pseudo et le mot de passe correspondent
+        $sql = $conn->prepare("SELECT ID_USER,NOM_USER,PASSWORD_USER FROM utilisateur WHERE (MAIL_USER = ? OR NOM_USER =?)");
+        $sql->bind_param("ss",$nameCo,$nameCo);
         $sql->execute();
         $result = $sql->get_result();
         if($result->num_rows == 0){
-            return "Le compte et le mot de passe ne correspondent pas";
+            return "Ce compte n'existe pas";
         }
         else{
             $data = mysqli_fetch_assoc($result);
-            $_SESSION['userName'] = $data['NOM_USER'];
-            $_SESSION['userID'] = $data['ID_USER'];
-            header("Location:app/view/profil.php");
-            return "Vous êtes connecté !";
+            if(password_verify($pswdCo,$data['PASSWORD_USER'])){
+                $_SESSION['userName'] = $data['NOM_USER'];
+                $_SESSION['userID'] = $data['ID_USER'];
+                header("Location:app/view/profil.php");
+                return "Vous êtes connecté !";
+            }
+            else{
+                return "Le mot de passe n'est pas valide";
+            }
+            
         }
     }
 }

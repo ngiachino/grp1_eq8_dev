@@ -40,7 +40,7 @@ class TestMemberAddDelete(unittest.TestCase):
     time.sleep(5)
     self.driver.find_element(By.CSS_SELECTOR, ".d-inline-block").click()
     time.sleep(5)
-    self.driver.find_element(By.ID, "deleteUser1").click()
+    self.driver.find_element(By.ID, "TestAccountSelenium2").click()
     self.driver.find_element(By.LINK_TEXT, "Se déconnecter").click()
     time.sleep(5)
     self.driver.find_element(By.ID, "nameCo").click()

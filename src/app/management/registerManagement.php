@@ -36,9 +36,10 @@ function register($pseudoInsc,$mailInsc,$pswdInsc,$pswdConfirmInsc){
         return "Ce pseudo est déjà associé à un compte";
     }
     else{
+        $hash = password_hash($pswdInsc, PASSWORD_DEFAULT);
         $sql = $conn->prepare("INSERT INTO utilisateur (NOM_USER, PASSWORD_USER, MAIL_USER)
         VALUES (?,?,?)");
-        $sql->bind_param("sss",$pseudoInsc,$pswdInsc,$mailInsc);
+        $sql->bind_param("sss",$pseudoInsc,$hash,$mailInsc);
         $sql->execute();
         return "Votre compte a bien été créé";
     }

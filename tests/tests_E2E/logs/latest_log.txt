@@ -5,6 +5,6 @@ test_releaseClickOnLink (test_releaseClickOnLink.TestReleaseClickOnLink) ... ok
 test_sprintAddModifyDelete (test_sprintAddModifyDelete.TestSprintAddModifyDelete) ... ok
 
 ----------------------------------------------------------------------
-Ran 5 tests in 184.607s
+Ran 5 tests in 185.784s
 
 OK
