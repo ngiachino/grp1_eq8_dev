@@ -65,7 +65,11 @@ startModifyTest($idProjet);
             <input type="date" class="form-control" form="newTestForm" name="date" required>
         </td>
         <td>
-            <input type="number" class="form-control" name="etat" form="newTestForm" placeholder="Etat" min="1" step="1" required>
+            <select class="form-control" name="etat" form="newTestForm">
+                <option value="Non testé">Non testé</option>
+                <option value="Réussite">Réussite</option>
+                <option value="Echec">Echec</option>
+            </select>
         </td>
         <td>
             <input class="btn btn-dark" type="submit" name="submit" value="Créer" form="newTestForm">
@@ -100,7 +104,11 @@ while($row = mysqli_fetch_row($result)){
                         </div>
                         <div class="form-group">
                             <label for="testEtat">Etat du test</label>
-                            <input type="number" class="form-control" value="<?php echo $row[1];?>" id="testEtat" name="etat" min="1" step="1" required>
+                            <select class="form-control" name="etat">
+                                <option value="Non testé">Non testé</option>
+                                <option value="Réussite">Réussite</option>
+                                <option value="Echec">Echec</option>
+                            </select>
                         </div>
                         <div class="modal-footer">
                             <button type="submit" name="modify" class="btn btn-primary">Modifier</button>
