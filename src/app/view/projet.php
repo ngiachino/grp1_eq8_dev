@@ -1,6 +1,7 @@
 <?php
 include '../management/membersManagement.php';
 include '../management/projectManagement.php';
+include_once '../management/historiqueManagement.php';
 
 $projectId = startProject();
 $message = startAddMember($projectId);
@@ -10,6 +11,7 @@ $messageModif = startModifyProject($projectId);
 $result1 = showMembers($projectId);
 $result12 = getCurrentProject($projectId);
 $row = mysqli_fetch_row($result12);
+$historiques = showHistorique($projectId);
 ?>
 
 
@@ -69,6 +71,24 @@ $row = mysqli_fetch_row($result12);
                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modifyProjectModal">Modifier</button>
                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delProjectModal">Supprimer</button>
                 <div>Description : <?php echo $row[3];?></div>
+                <div>Historique :</div>
+                </br>
+                <div>
+                    <ul class="list-group list-group-flush" id="historique">
+                    <?php $i=0;
+                        while($i<5){
+                            if($historique = mysqli_fetch_row($historiques)){
+                                echo "<li class='list-group-item'>".$historique[0]."</li>";
+                            
+                            }
+                            else{
+                                echo "<li class='list-group-item'>------------</li>";
+                            }
+                            $i++;
+                        }
+                        ?>
+                    </ul>
+                </div>
             </div>
         </div>
 

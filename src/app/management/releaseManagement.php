@@ -1,4 +1,6 @@
 <?php
+include_once 'historiqueManagement.php';
+
 function startRelease(){
     session_start();
     if($_SESSION['projectId'] == null){
@@ -26,6 +28,7 @@ function addRelease($idProjet,$description,$version,$lien,$date){
     VALUES (?,?,?,?,?)");
     $sql->bind_param("ssssi",$version,$description,$date,$lien,$idProjet);
     $sql->execute();
+    addHistorique($idProjet,"La release ".$version." a été créée");
     return $sql->get_result();
 }
 
@@ -39,6 +42,7 @@ function deleteRelease($idProjet,$releaseID){
     $conn = connect();
     $query = "DELETE FROM `release` WHERE ID_RELEASE = '$releaseID' AND ID_PROJET = '$idProjet'";
     mysqli_query($conn, $query);
+    addHistorique($idProjet,"Une release a été supprimée");
 }
 function startModifyRelease($projectID){
     if(isset($_POST['modify'])){
@@ -58,6 +62,7 @@ function modifyRelease($projectID,$releaseID,$releaseVersion,$releaseLink,$relea
     WHERE ID_RELEASE = ?");
     $sql->bind_param("ssssi",$releaseVersion,$releaseDescription,$releaseDate,$releaseLink,$releaseID);
     $sql->execute();
+    addHistorique($projectID,"La release ".$releaseVersion." a été modifiée");
     return "Votre release a bien été modifiée";
 }
 ?>

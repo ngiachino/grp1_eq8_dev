@@ -1,4 +1,6 @@
 <?php
+include_once 'historiqueManagement.php';
+
 function startTests(){
     session_start();
 
@@ -29,6 +31,7 @@ function addTest($idProjet,$description,$etat,$date){
     VALUES (?,?,?,?)");
     $sql->bind_param("isss",$idProjet,$date,$etat,$description);
     $sql->execute();
+    addHistorique($idProjet,"Un test a été créé");
     header("Location:tests.php");
 }
 
@@ -42,6 +45,7 @@ function deleteTest($idProjet,$testID){
     $conn = connect();
     $query = "DELETE FROM `test` WHERE ID_TEST = '$testID' AND ID_PROJET = '$idProjet'";
     mysqli_query($conn, $query);
+    addHistorique($idProjet,"Un test a été supprimé");
     header("Location:tests.php");
 }
 function startModifyTest($idProjet){
@@ -60,6 +64,7 @@ function modifyTest($idProjet,$testDescription,$testEtat,$testDate,$testID){
     WHERE ID_TEST = ?");
     $sql->bind_param("sssi",$testDescription,$testDate,$testEtat,$testID);
     $sql->execute();
+    addHistorique($idProjet,"Un test a été modifié");
     header("Location: tests.php");
     return "Votre test a bien été modifiée";
 }

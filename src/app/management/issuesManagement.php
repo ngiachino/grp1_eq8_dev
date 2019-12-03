@@ -1,4 +1,6 @@
 <?php
+include_once 'historiqueManagement.php';
+
 function startIssues(){
     if($_SESSION['projectId'] == null){
         header("Location:../../index.php");
@@ -29,6 +31,7 @@ function addIssue($idProjet,$description,$priority,$difficulty){
     VALUES (?,?,?,?)");
     $sql->bind_param("sisi",$priority,$difficulty,$description,$idProjet);
     $sql->execute();
+    addHistorique($idProjet,"Une issue a été créée");
     return "Votre issue a été créée";
 }
 
@@ -56,6 +59,7 @@ function modifyIssue($projectID,$idUS,$priority,$difficulty,$description){
         WHERE ID_USER_STORY = ?");
         $sql->bind_param("sisi",$priority,$difficulty,$description,$idUS);
         $sql->execute();
+        addHistorique($projectID,"Une issue a été modifiée");
         return "Votre issue a bien été modifiée";
     }
 }
@@ -72,5 +76,6 @@ function deleteIssue($issueID, $idProjet){
     $sql = $conn->prepare("DELETE FROM issue WHERE ID_USER_STORY = ? AND ID_PROJET = ?");
     $sql->bind_param("ii",$issueID,$idProjet);
     $sql->execute();
+    addHistorique($idProjet,"Une issue a été supprimée");
     return "Votre issue a été supprimée";
 }

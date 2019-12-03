@@ -1,4 +1,5 @@
 <?php
+include_once 'historiqueManagement.php';
 
 function startProfil(){
     $conn = connect();
@@ -127,6 +128,7 @@ function modifyProject($projectID,$projectName,$projectDesc){
         WHERE ID_PROJET = ?");
         $sql->bind_param("ssi",$projectName,$projectDesc,$projectID);
         $sql->execute();
+        addHistorique($projectID,"Le projet a été modifié");
         header("Location:projet.php?title=$projectName&owner=$userName");
         return "Votre projet a bien été modifié";
     }
