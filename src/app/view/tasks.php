@@ -19,8 +19,8 @@ $sprintId = $_GET['sprintId'];
 $addMessage = addTask($conn,$projectId, $sprintId);
 $assignMessage = assignTask($conn,$projectId, $sprintId );
 $modifyTaskMessage = modifyTask($conn, $projectId, $sprintId);
-$issueAddMessage =addUSStask($conn, $sprintId, $projectId);
-$deleteMessage='';
+$issueAddMessage = addIssueTask($conn, $projectId);
+
 
 
 $query = "SELECT DISTINCT tache.DESCRIPTION, tache.DUREE_TACHE, tache.IS_DONE, tache.ID_TACHE
@@ -28,11 +28,7 @@ $query = "SELECT DISTINCT tache.DESCRIPTION, tache.DUREE_TACHE, tache.IS_DONE, t
               WHERE tache.ID_PROJET = '$projectId'
                     AND tache.ID_SPRINT = '$sprintId'
                     ";
-if(!(mysqli_query($conn, $query)))
-{  echo "Error: " . $query . "<br>" . $conn->error . "<br>";}
-else {
-    $result = mysqli_query($conn, $query);
-}
+$result = mysqli_query($conn, $query);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -60,11 +56,11 @@ else {
         <form method="POST">
             <div class="form-group">
                 <label for="taskDescription">Description de la tâche:</label>
-                <input type="text" class="form-control" name="taskDescription">
+                <input type="text" class="form-control" id="taskDescription" name="taskDescription"/>
             </div>
             <div class="form-group">
                 <label for="taskDuration">Durée de la tâche: </label>
-                <input type="text" class="form-control" name="taskDuration">
+                <input type="text" class="form-control" id="taskDuration" name="taskDuration">
             </div>
             <button type="submit" name="submit" class="btn btn-primary">Submit</button>
         </form>
@@ -76,7 +72,7 @@ else {
 
 <!--AFFICHAGE DES TÂCHES COURRANTES DU SPRINT-->
 <div class="container-fluid">
-    <table class="table" id="taskList" summary="Table des tâches du projet">
+    <table class="table" id="taskList">
         <thead class="thead-dark">
         <tr>
             <th scope="col">Numéro </th>
@@ -112,7 +108,7 @@ else {
                 <td><?php
                     //LES MEMBRES
                     $taskId = $row[3];
-                    $deleteMessage = deleteTask($conn, $taskId);
+                    $deleteMessage = deleteTask($conn);
                     ?>
                     <!-- Afficher les membres  de la tâche -->
                     <span>
@@ -121,45 +117,46 @@ else {
                             $resultMember = getMemberTask($conn, $taskId, $sprintId, $projectId);
                             while($rowMembers = mysqli_fetch_row($resultMember)){
                                 ?>
-                                <ul class="list-group">
+
                                       <?php
                                       deleteMember($conn,$projectId, $sprintId);
                                       $memberName = $rowMembers[0];
                                       $memberId = $rowMembers[1];
                                       ?>
                                         <form method="POST">
+                                            <ul class="list-group">
                                              <li class="list-group-item"> <?php echo $memberName; ?>
                                                   <input type="hidden" name="taskId" value=<?php echo $taskId;?>>
                                                   <input type="hidden" name="memberId" value=<?php echo $memberId;?>>
                                                  <button type="submit" class="fa fa-times" name="deleteMember">
-                                                </button>
+                                            </ul>
                                         </form>
-                                </ul>
                             <?php  } ?>
                     </span>
-                </th>
                 </td>
                 <!--USER STORIES-->
                 <td>
                     <span>
                     <?php
-                    $deleteIssueMessage =deleteIssueFromTask($conn,$projectId);
-                    $resultIssues = getIssuesTask($conn, $taskId, $sprintId, $projectId);
+                    deleteIssueFromTask($conn,$projectId);
+                    $resultIssues = getIssuesTask($conn, $taskId, $projectId);
                     while($rowIssue = mysqli_fetch_row($resultIssues)){
                         $issueId = $rowIssue[0];
                         $issueDescription = $rowIssue[1];
                         ?>
                         <!--Bouton delete-->
+                        <form method="POST">
                         <ul class="list-group">
-                            <form method="POST">
+
                                  <li class="list-group-item"><?php echo $issueId.'-'.$issueDescription; ?>
                                      <input type="hidden" name="issueId" value=<?php echo $issueId;?>>
                                      <input type="hidden" name="taskId" value=<?php echo $taskId;?>>
                                  <button type="submit" class="fa fa-trash" name="deleteIssue">
                                 </button>
-                             </form>
+
 
                         </ul>
+                        </form>
                     <?php  } ?>
                     </span>
                 </td>
@@ -175,7 +172,7 @@ else {
                             <input type="hidden" name="taskId" value=<?php echo $row[3];?>>
                             <div class="form-group">
                                 <label for="userName">User:</label>
-                                <input type="text" class="form-control" name="userName">
+                                <input type="text" class="form-control" id="userName" name="userName">
                             </div>
                             <button type="submit" name="assigner" class="btn btn-primary">Assigner</button>
                         </form>
@@ -191,7 +188,7 @@ else {
                             <div class="form-group">
                                 <input type="hidden" name="taskIdentificateur" value=<?php echo $row[3];?>>
                                 <label for="issueId">User Story:</label>
-                                <input type="text" class="form-control" name="issueId">
+                                <input type="text" class="form-control" id="issueId" name="issueId">
                             </div>
                             <button type="submit" name="lier" class="btn btn-primary">Lier</button>
                         </form>
@@ -207,10 +204,10 @@ else {
                             <div class="form-group">
                                 <input type="hidden" name="taskId" value="<?php echo $row[3];?>">
                                 <label for="descriptionTask">Description:</label>
-                                    <input type="text" class="form-control" name="descriptionTask" placeholder=<?php echo $row[0];?>>
+                                    <input type="text" class="form-control" id="descriptionTask" name="descriptionTask" placeholder=<?php echo $row[0];?>>
                                 <br>
                                 <label for="durationTask">Durée:</label>
-                                   <input type="text" class="form-control" name="durationTask" placeholder=<?php echo $row[1];?>>
+                                   <input type="text" class="form-control" id="durationTask" name="durationTask" placeholder=<?php echo $row[1];?>>
                             </div>
                             <button type="submit" name="modifier" class="btn btn-primary">Modifier</button>
                         </form>
@@ -232,12 +229,6 @@ else {
     </table>
 </div>
 <?php
-echo $addMessage;
-echo $assignMessage;
-echo $issueAddMessage;
-echo $deleteMessage;
-echo $modifyTaskMessage;
-echo $deleteIssueMessage;
 $connexion=null;
 ?>
 

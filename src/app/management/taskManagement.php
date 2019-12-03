@@ -42,7 +42,7 @@ function assignTask($conn,$projectId, $sprintId)
         }
     }
 }
-function addUSStask($connexion, $projectId){
+function addIssueTask($connexion, $projectId){
   if(isset($_POST['lier'])){
       if(empty($_POST['issueId'])){
          return "Veuillez indiquez la USS";
@@ -140,8 +140,7 @@ function getIssuesTask($conn, $taskId, $projectId){
     $queryIssues= "SELECT ID_USER_STORY, DESCRIPTION 
                    FROM issue
                    WHERE ID_PROJET = '$projectId' AND ID_TACHE = '$taskId' ";
-     $result = mysqli_query($conn, $queryIssues);
-     return $result;
+     return mysqli_query($conn, $queryIssues);
 }
 
 function deleteIssueFromTask($conn, $projectId){
