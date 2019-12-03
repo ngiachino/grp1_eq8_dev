@@ -8,7 +8,6 @@ $result = showTests($idProjet);
 startAddTest($idProjet);
 startDeleteTest($idProjet);
 startModifyTest($idProjet);
-
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +16,7 @@ startModifyTest($idProjet);
 <head>
     <?php include './defaultHead.php'; ?>
     <title>Tests - GoProject</title>
-    <link href="../../assets/css/profil.css" rel="stylesheet">
+    <link href="../../assets/css/tests.css" rel="stylesheet">
 </head>
 
 
@@ -26,7 +25,13 @@ startModifyTest($idProjet);
 
 <form method="POST" id="newTestForm"></form>
 <h1>Les Tests</h1>
+</br>
+<?php $percentage = getSuccessPercent($idProjet);?>
+<div class="progress" id="testBar">
+  <div class="progress-bar" role="progressbar" style="width:<?php echo $percentage;?>%"><?php echo $percentage;?>%</div>
+</div>
 
+</br>
 <table class="table" id="testsList">
     <thead class="thead-dark">
     <tr>

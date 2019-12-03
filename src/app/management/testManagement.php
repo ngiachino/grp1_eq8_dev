@@ -68,3 +68,22 @@ function modifyTest($idProjet,$testDescription,$testEtat,$testDate,$testID){
     header("Location: tests.php");
     return "Votre test a bien été modifiée";
 }
+
+function getSuccessPercent($idProjet){
+    $conn = connect();
+    $query = "SELECT ETAT FROM `test` WHERE ID_PROJET = '$idProjet'";
+    $result = mysqli_query($conn, $query);
+    $num_rows = mysqli_num_rows($result);
+    if($num_rows==0){
+        return 0;
+    }
+    else{
+        $num_success = 0;
+        while($row = mysqli_fetch_row($result)){
+            if($row[0] == "Réussite"){
+                $num_success++;
+            }
+        }
+        return round(($num_success*100)/$num_rows);
+    }
+}
