@@ -1,9 +1,11 @@
 <?php
 include '../management/projectManagement.php';
 include '../../database/DBconnect.php';
+include_once '../management/utils.php';
+
 session_start();
 $result1 = startProfil();
-$message = startAddProject();
+$addMessage = startAddProject();
 $userTasks = getUserTasks();
 ?>
 
@@ -129,10 +131,10 @@ $userTasks = getUserTasks();
 
 <span class="m-4">
 <?php
-echo $message;
+//echo $addMessage;
+writeMessage();
 ?>
 </span>
-
 
 </body>
 </html>

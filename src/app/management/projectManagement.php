@@ -1,5 +1,6 @@
 <?php
 include_once 'historiqueManagement.php';
+include_once 'utils.php';
 
 function startProfil(){
     $conn = connect();
@@ -22,11 +23,9 @@ function getCurrentProject($projectId){
     $result = mysqli_query($conn, $queryProjet);
     if(!($result)) {
         echo "Error: " . $queryProjet . "<br>" . $conn->error . "<br>";
-        return null;
+        $result = null;
     }
-    else {
-        return $result;
-    }
+    return $result;
 }
 
 function startAddProject(){
@@ -35,7 +34,7 @@ function startAddProject(){
         $projectDesc = $_POST['description'];
         $userName = $_SESSION['userName'];
         $userID = $_SESSION['userID'];
-        return addProject($projectName,$projectDesc,$userName,$userID,true);
+        addProject($projectName,$projectDesc,$userName,$userID,true);
     }
 }
 
@@ -43,7 +42,7 @@ function addProject($projectName,$projectDesc,$userName,$userID,$processIsolatio
     $conn = connect();
     //test que tous les champs sont remplis
     if (empty($projectName) || empty($projectDesc)) {
-        return "Vous devez remplir tous les champs";
+        aggregateMessage("Vous devez remplir tous les champs");
     } else {
         //test que l'utilisateur n'a pas déjà créé un projet du même nom
         $sql = $conn->prepare("SELECT ID_PROJET FROM projet WHERE NOM_PROJET = ? AND ID_MANAGER = ?");
@@ -52,8 +51,9 @@ function addProject($projectName,$projectDesc,$userName,$userID,$processIsolatio
         $result1 = $sql->get_result();
 
         if (mysqli_num_rows($result1) > 0) {
-            return "Vous avez déjà créé un projet du même nom";
+            aggregateMessage("Vous avez déjà créé un projet du même nom");
         } else {
+
             $sql = $conn->prepare("INSERT INTO projet (NOM_PROJET, ID_MANAGER, DESCRIPTION)
             VALUES (?,?,?)");
             $sql->bind_param("sis",$projectName,$userID,$projectDesc);
@@ -64,10 +64,11 @@ function addProject($projectName,$projectDesc,$userName,$userID,$processIsolatio
             $sql->bind_param("is",$userID,$userName);
             $sql->execute();
 
+
             if($processIsolation){
                 header("Location: profil.php");
             }
-            return "Votre projet a bien été créé";
+            aggregateMessage("Votre projet a bien été créé");
         }
     }
 }
@@ -99,7 +100,7 @@ function deleteProject($idProject,$processIsolation){
     if($processIsolation){
         header("Location: profil.php");
     }
-    return "Votre projet a bien été supprimé";
+    aggregateMessage("Votre projet a bien été supprimé");
 }
 
 function startModifyProject($projectID)
@@ -107,21 +108,21 @@ function startModifyProject($projectID)
     if (isset($_POST['modify'])) {
         $projectName = $_POST['name'];
         $projectDesc = $_POST['description'];
-        return modifyProject($projectID, $projectName, $projectDesc);
+        modifyProject($projectID, $projectName, $projectDesc);
     }
-    return null;
 }
 
 function modifyProject($projectID,$projectName,$projectDesc){
     $conn = connect();
     $userName = $_SESSION['userName'];
+
     //teste qu'un projet de même ID n'a pas déjà été créée
     $sql = $conn->prepare("SELECT ID_PROJET FROM `projet` WHERE NOM_PROJET = ? AND ID_PROJET != ?");
     $sql->bind_param("si",$projectName,$projectID);
     $sql->execute();
     $result1 = $sql->get_result();
     if (mysqli_num_rows($result1) > 0) {
-        return "Ce projet existe déjà";
+        aggregateMessage("Ce projet existe déjà");
     } else {
         $sql = $conn->prepare("UPDATE `projet`
         SET NOM_PROJET = ?, DESCRIPTION = ?
@@ -130,14 +131,13 @@ function modifyProject($projectID,$projectName,$projectDesc){
         $sql->execute();
         addHistorique($projectID,"Le projet a été modifié");
         header("Location:projet.php?title=$projectName&owner=$userName");
-        return "Votre projet a bien été modifié";
+        aggregateMessage("Votre projet a bien été modifié");
     }
 }
 
-function getUserTasks()
-{   $conn = connect();
+function getUserTasks(){
+    $conn = connect();
     $userID = $_SESSION['userID'];
-
     $idCurrentSprint = getCurrentSprint($conn);
     $queryTask ="SELECT tache.DESCRIPTION, membre.ID_SPRINT, NOM_PROJET, DATE_DEBUT, DATE_FIN
                  FROM membre JOIN tache ON membre.ID_TACHE = tache.ID_TACHE

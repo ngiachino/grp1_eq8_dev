@@ -14,7 +14,7 @@ function startRegister(){
 function checkMailUsed($conn, $mailInsc){
     //test que le mail n'est pas déjà utilisé
     $sqlTest = $conn->prepare("SELECT ID_USER FROM utilisateur WHERE MAIL_USER = ?");
-    $message = "Ce pseudo est déjà associé à un compte";
+    $message = "Ce mail est déjà associé à un compte";
     return checkFieldsUsed($sqlTest, $mailInsc, $message);
 }
 
@@ -31,7 +31,6 @@ function checkFieldsUsed($sqlTest, $pseudoInsc, $message){
     $result = $sqlTest->get_result();
 
     if($result->num_rows > 0){
-        //return "Ce pseudo est déjà associé à un compte";
         aggregateMessage($message);
         return true;
     }
