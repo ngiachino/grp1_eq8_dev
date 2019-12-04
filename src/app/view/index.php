@@ -78,5 +78,13 @@ startRegister();
         </div>
     </div>
 </div>
+
+<span class="m-4">
+<?php
+//echo $addMessage;
+writeMessage();
+?>
+</span>
+
 </body>
 </html>

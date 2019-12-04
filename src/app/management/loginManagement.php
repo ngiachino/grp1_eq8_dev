@@ -1,4 +1,6 @@
 <?php
+include_once 'general.php';
+
 function startConnexion(){
     if(isset($_POST['submitCo'])){
         $nameCo = $_POST['nameCo'];
@@ -12,7 +14,8 @@ function connexion($nameCo,$pswdCo){
     
     //test que tous les champs sont remplis
     if(empty($nameCo) || empty($pswdCo)){
-        return "Vous devez remplir tous les champs";
+        aggregateMessage("Vous devez remplir tous les champs");
+        //return "Vous devez remplir tous les champs";
     }
     else{
         //test que le mail ou le pseudo et le mot de passe correspondent
@@ -21,7 +24,8 @@ function connexion($nameCo,$pswdCo){
         $sql->execute();
         $result = $sql->get_result();
         if($result->num_rows == 0){
-            return "Ce compte n'existe pas";
+            aggregateMessage("Ce compte n'existe pas");
+            //return "Ce compte n'existe pas";
         }
         else{
             $data = mysqli_fetch_assoc($result);
@@ -29,13 +33,13 @@ function connexion($nameCo,$pswdCo){
                 $_SESSION['userName'] = $data['NOM_USER'];
                 $_SESSION['userID'] = $data['ID_USER'];
                 header("Location:app/view/profil.php");
-                return "Vous êtes connecté !";
+                //return "Vous êtes connecté !";
+                aggregateMessage("Vous êtes connecté !");
             }
             else{
-                return "Le mot de passe n'est pas valide";
+                //return "Le mot de passe n'est pas valide";
+                aggregateMessage("Le mot de passe n'est pas valide");
             }
-            
         }
     }
 }
-?>
