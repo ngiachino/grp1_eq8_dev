@@ -29,7 +29,6 @@ function startProject(){
 
 function showMembers($projectId){
     $conn = connect();
-
     $query = "SELECT DISTINCT NOM_MEMBRE FROM membre WHERE ID_PROJET = '$projectId'";
     return mysqli_query($conn, $query);
 }
@@ -39,7 +38,9 @@ function startAddMember($projectId){
         $userName = $_POST['userName'];
         return addMember($projectId,$userName);
     }
+    return null;
 }
+
 function addMember($projectId,$userName)
 {
     $conn = connect();
@@ -73,6 +74,7 @@ function addMember($projectId,$userName)
                 $sql->bind_param("iis",$memberId,$projectId,$memberName);
                 $sql->execute();
                 addHistorique($projectId,$memberName." a rejoint le projet");
+                return null;
             }
         }
     }
@@ -84,10 +86,10 @@ function startDeleteMember($projectId){
         deleteMember($projectId,$userToDelete);
     }
 }
+
 function deleteMember($projectId,$userToDelete){
     $conn = connect();
     $query = "DELETE FROM membre WHERE NOM_MEMBRE = '$userToDelete' AND ID_PROJET = '$projectId'";
     mysqli_query($conn,$query);
     addHistorique($projectId,$userToDelete." a quitté le projet");
 }
-?>

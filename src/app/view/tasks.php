@@ -20,7 +20,7 @@ $addMessage = addTask($conn,$projectId, $sprintId);
 $assignMessage = assignTask($conn,$projectId, $sprintId );
 $modifyTaskMessage = modifyTask($conn, $projectId, $sprintId);
 $issueAddMessage = addIssueTask($conn, $projectId);
-
+$deleteMessage = deleteTask($conn);
 
 
 $query = "SELECT DISTINCT tache.DESCRIPTION, tache.DUREE_TACHE, tache.IS_DONE, tache.ID_TACHE
@@ -88,82 +88,73 @@ $result = mysqli_query($conn, $query);
         <tbody>
         <?php
         $i = 1;
-        while($row = mysqli_fetch_row($result)){
+        while ($row = mysqli_fetch_row($result)) {
             ?>
             <tr>
-                <th scope="row"><?php echo $i;?>
-                </th>
-
+                <th scope="row"><?php echo $i;?></th>
                 <td><?php echo $row[0];?></td>
                 <td><?php echo $row[1];?></td>
                 <!--ETAT-->
                 <td><?php
-                    if($row[2] == 1)
-                      {  echo "DONE";}
-                    else{
+                    if($row[2] == 1) {
+                        echo "DONE";
+                    }
+                    else {
                         echo "UNDONE";
                     }?>
                 </td>
                 <!--MEMBRES-->
-                <td><?php
-                    //LES MEMBRES
-                    $taskId = $row[3];
-                    $deleteMessage = deleteTask($conn);
-                    ?>
-                    <!-- Afficher les membres  de la tâche -->
-                    <span>
-                            <?php
-                            $taskId = $row[3];
-                            $resultMember = getMemberTask($conn, $taskId, $sprintId, $projectId);
-                            while($rowMembers = mysqli_fetch_row($resultMember)){
-                                ?>
+                <td>
+                    <ul>
+                        <?php
+                        //LES MEMBRES
+                        $taskId = $row[3];
+                        startDeleteMember($conn, $projectId, $sprintId, $taskId);
+                        $taskMembers = getMemberTask($conn, $taskId, $sprintId, $projectId);
 
-                                      <?php
-                                      deleteMember($conn,$projectId, $sprintId);
-                                      $memberName = $rowMembers[0];
-                                      $memberId = $rowMembers[1];
-                                      ?>
-                                        <form method="POST">
-                                            <ul class="list-group">
-                                             <li class="list-group-item"> <?php echo $memberName; ?>
-                                                  <input type="hidden" name="taskId" value=<?php echo $taskId;?>>
-                                                  <input type="hidden" name="memberId" value=<?php echo $memberId;?>>
-                                                 <button type="submit" class="fa fa-times" name="deleteMember">
-                                            </ul>
-                                        </form>
-                            <?php  } ?>
-                    </span>
+                        // Afficher les membres  de la tâche
+                        $j = 0;
+                        while ($member = mysqli_fetch_row($taskMembers)) {
+                            $memberName = $member[0];
+                            ?>
+                            <li class="d-flex">
+                                <form method="post">
+                                    <?php echo '- '.$member[0]; ?>
+                                    <input class="form-control" type="hidden" name="idMember" value="<?php echo $member[1];?>">
+                                    <button type="submit" class="fa fa-times btn btn-danger" name="deleteMember"></button>
+                                </form>
+                            </li>
+                            <?php $j++;
+                        } ?>
+                    </ul>
                 </td>
                 <!--USER STORIES-->
                 <td>
-                    <span>
-                    <?php
-                    deleteIssueFromTask($conn,$projectId);
-                    $resultIssues = getIssuesTask($conn, $taskId, $projectId);
-                    while($rowIssue = mysqli_fetch_row($resultIssues)){
+                    <ul>
+                        <?php
+                        deleteIssueFromTask($conn,$projectId);
+                        $resultIssues = getIssuesTask($conn, $taskId, $projectId);
+                        while ($rowIssue = mysqli_fetch_row($resultIssues)) {
                         $issueId = $rowIssue[0];
                         $issueDescription = $rowIssue[1];
                         ?>
                         <!--Bouton delete-->
-                        <form method="POST">
-                        <ul class="list-group">
 
-                                 <li class="list-group-item"><?php echo $issueId.'-'.$issueDescription; ?>
-                                     <input type="hidden" name="issueId" value=<?php echo $issueId;?>>
-                                     <input type="hidden" name="taskId" value=<?php echo $taskId;?>>
-                                 <button type="submit" class="fa fa-trash" name="deleteIssue">
-                                </button>
-
-
-                        </ul>
-                        </form>
-                    <?php  } ?>
-                    </span>
+                        <li class="list-group-item">
+                            <form method="POST">
+                                <?php echo $issueId.'-'.$issueDescription; ?>
+                                <input type="hidden" name="issueId" value="<?php echo $issueId;?>">
+                                <input type="hidden" name="taskId" value="<?php echo $taskId;?>">
+                                <button type="submit" class="fa fa-trash" name="deleteIssue"></button>
+                            </form>
+                        </li>
+                    </ul>
+                    <?php } ?>
                 </td>
                 <!--ACTION-->
                 <td>
                     <!--MENU ASSIGNER-->
-                    <button type="button" class="btn  btn-dark" data-toggle="collapse" data-target=<?php echo "#demo".$i;?> >
+                    <button type="button" class="btn btn-dark" data-toggle="collapse" data-target="<?php echo "#demo".$i;?>">
                         Assigner la tâche
                     </button>
                     <div id=<?php echo "demo".$i; ?> class="collapse">
@@ -179,7 +170,7 @@ $result = mysqli_query($conn, $query);
                     </div>
                     <br> <br>
                     <!-- AJOUTER -->
-                    <button type="button" class="btn  btn-dark" data-toggle="collapse" data-target=<?php echo "#us".$i;?> >
+                    <button type="button" class="btn btn-dark" data-toggle="collapse" data-target="<?php echo "#us".$i;?>">
                         Ajouter une USS
                     </button>
                     <div id=<?php echo "us".$i; ?> class="collapse">
