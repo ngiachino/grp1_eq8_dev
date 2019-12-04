@@ -1,5 +1,5 @@
 <?php
-include_once 'general.php';
+include_once 'utils.php';
 
 function startRegister(){
     if(isset($_POST['submitInsc'])){

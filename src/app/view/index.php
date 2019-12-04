@@ -3,6 +3,8 @@
 include 'database/DBconnect.php';
 include 'app/management/loginManagement.php';
 include 'app/management/registerManagement.php';
+include_once 'app/management/utils';
+
 session_start();
 session_unset();
 startConnexion();
@@ -81,7 +83,6 @@ startRegister();
 
 <span class="m-4">
 <?php
-//echo $addMessage;
 writeMessage();
 ?>
 </span>

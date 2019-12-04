@@ -1,5 +1,5 @@
 <?php
-include_once 'general.php';
+include_once 'utils.php';
 
 function startConnexion(){
     if(isset($_POST['submitCo'])){
