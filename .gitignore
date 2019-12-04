@@ -1,3 +1,6 @@
 /.idea/
 /src/database/logs.local.php
 /tests/tests_E2E/logs/*
+/tests/tests_E2E/__pycache__
+/tests/tests_E2E/__pycache__/*
+/src/uploads/*
