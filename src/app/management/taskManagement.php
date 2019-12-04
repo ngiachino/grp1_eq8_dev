@@ -10,9 +10,10 @@ function addTask($conn,$projectId,$sprintId)
     }
     else {
         //test l'existence de la tache
+        $taskState = $_POST['taskState'];
         $query = "INSERT INTO `tache`(`ID_PROJET`, `ID_SPRINT`,`ID_USER_STORY`, 
                                           `DESCRIPTION`,`DUREE_TACHE`, `IS_DONE`) 
-                         VALUES ('$projectId','$sprintId','-1','$description','$duration','0')";
+                         VALUES ('$projectId','$sprintId','-1','$description','$duration','$taskState')";
         mysqli_query($conn, $query);
         return " Tâche ajoutée ";
     }
@@ -173,4 +174,19 @@ function deleteMember($conn, $projectId, $sprintId, $taskId, $memberId){
                                    ID_SPRINT = '$sprintId' AND
                                    ID_MEMBRE = '$memberId'";
     mysqli_query($conn, $queryDeleteMember);
+}
+
+function editTaskEtat($conn, $projectId, $sprintId ){
+    if(isset($_POST['editTaskState']))
+    {
+        if(empty($_POST['taskState'])){return "Veuillez choisir un état";}
+        $taskId = $_POST['taskId'];
+        $taskState = $_POST['taskState'];
+        $queryEditTaskState = "UPDATE tache
+                               SET IS_DONE ='$taskState'
+                               WHERE ID_TACHE = '$taskId'AND 
+                                     ID_PROJET = '$projectId' AND 
+                                     ID_SPRINT = '$sprintId' ";
+        mysqli_query($conn, $queryEditTaskState);
+    }
 }

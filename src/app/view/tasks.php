@@ -20,6 +20,7 @@ $addMessage = addTask($conn,$projectId, $sprintId);
 $assignMessage = assignTask($conn,$projectId, $sprintId );
 $modifyTaskMessage = modifyTask($conn, $projectId, $sprintId);
 $issueAddMessage = addIssueTask($conn, $projectId);
+$editStateTaskMessage = editTaskEtat($conn, $projectId, $sprintId );
 $deleteMessage = deleteTask($conn);
 
 
@@ -61,6 +62,7 @@ $result = mysqli_query($conn, $query);
             <div class="form-group">
                 <label for="taskDuration">Durée de la tâche: </label>
                 <input type="text" class="form-control" id="taskDuration" name="taskDuration">
+                <input type="hidden" name="taskState" value="TO DO">
             </div>
             <button type="submit" name="submit" class="btn btn-primary">Submit</button>
         </form>
@@ -69,7 +71,6 @@ $result = mysqli_query($conn, $query);
 </div>
 <br>
 <br>
-
 <!--AFFICHAGE DES TÂCHES COURRANTES DU SPRINT-->
 <div class="container-fluid">
     <table class="table" id="taskList">
@@ -84,7 +85,6 @@ $result = mysqli_query($conn, $query);
             <th scope="col">Action</th>
         </tr>
         </thead>
-
         <tbody>
         <?php
         $i = 1;
@@ -95,13 +95,29 @@ $result = mysqli_query($conn, $query);
                 <td><?php echo $row[0];?></td>
                 <td><?php echo $row[1];?></td>
                 <!--ETAT-->
-                <td><?php
-                    if($row[2] == 1) {
-                        echo "DONE";
-                    }
-                    else {
-                        echo "UNDONE";
-                    }?>
+                <td>
+                    <?php
+                    echo $row[2];
+                    ?>
+                    <!--<i class="fas fa-edit"></i>-->
+                    <i  class="fas fa-edit" data-toggle="collapse" data-target="<?php echo "#state".$i;?>">
+                    </i>
+                    <br>
+                    <div id=<?php echo "state".$i; ?> class="collapse">
+                        <form method="POST">
+                            <input type="hidden" name="taskId" value=<?php echo $row[3];?>>
+                            <div class="form-group">
+                                <label for="taskState"></label>
+                                <br>
+                                <select class="form-control-sm" name="taskState" id="taskState" >
+                                    <option value="TO DO">TO DO</option>
+                                    <option value="ON GOING">ON GOING</option>
+                                    <option value="DONE">DONE</option>
+                                </select>
+                            </div>
+                            <button type="submit" name="editTaskState" class="btn btn-secondary btn-sm">Valider</button>
+                        </form>
+                    </div>
                 </td>
                 <!--MEMBRES-->
                 <td>
