@@ -12,3 +12,8 @@ function writeMessage(){
         echo $message;
     }
 }
+
+function getMessage(){
+    global $messages;
+    return $messages;
+}

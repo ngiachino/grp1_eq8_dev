@@ -1,4 +1,4 @@
-ass <?php
+<?php
 include_once 'src/database/DBconnect.php';
 include_once 'src/app/management/registerManagement.php';
 use PHPUnit\Framework\TestCase;

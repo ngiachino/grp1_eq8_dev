@@ -3,7 +3,7 @@
 include 'database/DBconnect.php';
 include 'app/management/loginManagement.php';
 include 'app/management/registerManagement.php';
-include_once 'app/management/utils';
+include_once 'app/management/utils.php';
 
 session_start();
 session_unset();
