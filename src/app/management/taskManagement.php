@@ -97,12 +97,13 @@ function modifyTask($conn, $projectId, $sprintId)
                 return modifyDurationTask($conn, $taskId, $projectId, $sprintId, $_POST['durationTask']);
             }
             else{
-                $modifyTaskMessage= modifyDescriptionTask($conn, $taskId, $projectId, $sprintId, $_POST['descriptionTask']);
-                $modifyTaskMessage= $modifyTaskMessage.modifyDurationTask($conn, $taskId, $projectId, $sprintId, $_POST['durationTask']);
-                return $modifyTaskMessage;
+                return $modifyTaskMessage= modifyDescriptionTask($conn, $taskId, $projectId, $sprintId, $_POST['descriptionTask'])
+                    .modifyDurationTask($conn, $taskId, $projectId, $sprintId, $_POST['durationTask']);
             }
         }
+        return null;
     }
+    return null;
 }
 
 function modifyDescriptionTask($conn, $taskId, $projectId, $sprintId, $description)

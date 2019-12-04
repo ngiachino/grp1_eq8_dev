@@ -99,8 +99,8 @@ $result = mysqli_query($conn, $query);
                 <!--ETAT-->
                 <td>
                     <!-- EDIT FORM DE L ETAT-->
-                    <i  class="fas fa-edit float-left" data-toggle="collapse" data-target="<?php echo "#state".$i;?>">
-                    </i>
+                    <span  class="fas fa-edit float-left font-italic" data-toggle="collapse" data-target="<?php echo "#state".$i;?>">
+                    </span>
                     <?php
                     echo $row[2];
                     ?>
