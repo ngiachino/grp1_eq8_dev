@@ -28,6 +28,7 @@ USE `cdp`;
 
 CREATE TABLE `documentation` (
   `ID_DOCUMENTATION` int(50) UNSIGNED NOT NULL,
+  `ID_PROJET` int(11) NOT NULL,
   `TITRE` varchar(100) NOT NULL,
   `DESCRIPTION` varchar(500) NOT NULL,
   `LIEN` varchar(100) NOT NULL
@@ -79,7 +80,7 @@ CREATE TABLE `membre` (
 --
 
 INSERT INTO `membre` (`ID_MEMBRE`, `ID_PROJET`, `NOM_MEMBRE`, `ID_SPRINT`, `ID_TACHE`) VALUES
-(213, 190, 'TestAccountSelenium', 0, 0);
+(1, 1, 'TestAccountSelenium', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -99,7 +100,7 @@ CREATE TABLE `projet` (
 --
 
 INSERT INTO `projet` (`ID_PROJET`, `NOM_PROJET`, `ID_MANAGER`, `DESCRIPTION`) VALUES
-(190, 'Projet Test Selenium', 213, 'Projet pour tester Selenium');
+(1, 'Projet Test Selenium', 1, 'Projet pour tester Selenium');
 
 -- --------------------------------------------------------
 
@@ -121,7 +122,7 @@ CREATE TABLE `release` (
 --
 
 INSERT INTO `release` (`ID_RELEASE`, `ID_PROJET`, `VERSION`, `DESCRIPTION`, `DATE_RELEASE`, `URL_DOCKER`) VALUES
-(31, 190, '1.0', 'Description pour test Selenium', '2019-12-28', 'https://github.com/ngiachino/grp1_eq8_dev/releases/tag/0.1.0');
+(1, 1, '1.0', 'Description pour test Selenium', '2019-12-28', 'https://github.com/ngiachino/grp1_eq8_dev/releases/tag/0.1.0');
 
 -- --------------------------------------------------------
 
@@ -187,8 +188,8 @@ CREATE TABLE `utilisateur` (
 --
 
 INSERT INTO `utilisateur` (`ID_USER`, `NOM_USER`, `PASSWORD_USER`, `MAIL_USER`) VALUES
-(214, 'TestAccountSelenium2', '$2y$10$9gY8VpIo.HkdwJxZuEHph.qa5xuSKHKft6/3VAjCxtHJWNbYph2V2', 'test2@test.fr'),
-(213, 'TestAccountSelenium', '$2y$10$6Zj9Bp8OyWK.NIiK8du3yeIPCLx/tYvuEwW6RgwpHSPFkGdG4Neb.', 'test@test.fr');
+(2, 'TestAccountSelenium2', '$2y$10$9gY8VpIo.HkdwJxZuEHph.qa5xuSKHKft6/3VAjCxtHJWNbYph2V2', 'test2@test.fr'),
+(1, 'TestAccountSelenium', '$2y$10$6Zj9Bp8OyWK.NIiK8du3yeIPCLx/tYvuEwW6RgwpHSPFkGdG4Neb.', 'test@test.fr');
 
 --
 -- Index pour les tables déchargées
@@ -269,41 +270,41 @@ ALTER TABLE `historique`
 -- AUTO_INCREMENT pour la table `issue`
 --
 ALTER TABLE `issue`
-  MODIFY `ID_USER_STORY` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"Identifiant de la user story"', AUTO_INCREMENT=105;
+  MODIFY `ID_USER_STORY` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"Identifiant de la user story"', AUTO_INCREMENT=0;
 
 --
 -- AUTO_INCREMENT pour la table `projet`
 --
 ALTER TABLE `projet`
-  MODIFY `ID_PROJET` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"Identifiant du projet"', AUTO_INCREMENT=191;
+  MODIFY `ID_PROJET` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"Identifiant du projet"', AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `release`
 --
 ALTER TABLE `release`
-  MODIFY `ID_RELEASE` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `ID_RELEASE` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `sprint`
 --
 ALTER TABLE `sprint`
-  MODIFY `ID_SPRINT` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"identifiant et numéro du sprint"', AUTO_INCREMENT=40;
+  MODIFY `ID_SPRINT` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"identifiant et numéro du sprint"', AUTO_INCREMENT=0;
 
 --
 -- AUTO_INCREMENT pour la table `tache`
 --
 ALTER TABLE `tache`
-  MODIFY `ID_TACHE` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"Identifiant de la tâche"', AUTO_INCREMENT=9;
+  MODIFY `ID_TACHE` int(50) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"Identifiant de la tâche"', AUTO_INCREMENT=0;
 
 --
 -- AUTO_INCREMENT pour la table `test`
 --
 ALTER TABLE `test`
-  MODIFY `ID_TEST` int(50) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID_TEST` int(50) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
 
 --
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `ID_USER` int(50) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=215;
+  MODIFY `ID_USER` int(50) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;

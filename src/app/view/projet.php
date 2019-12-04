@@ -35,31 +35,31 @@ $historiques = showHistorique($projectId);
     <div class="row mb-2">
         <div class="col-sm">
             <a class="projectComponent" id="issues" href="issues.php">
-                <h2>Les issues</h2>
+                <h2>Issues</h2>
             </a>
         </div>
 
         <div class="col-sm">
             <a class="projectComponent" id="sprints" href="sprints.php">
-                <h2>Les sprints</h2>
+                <h2>Sprints</h2>
             </a>
         </div>
 
         <div class="col-sm">
             <a class="projectComponent" id="releases" href="release.php">
-                <h2>Les releases</h2>
+                <h2>Releases</h2>
             </a>
         </div>
 
         <div class="col-sm">
             <a class="projectComponent" id="tests" href="tests.php">
-                <h2>Les tests</h2>
+                <h2>Tests</h2>
             </a>
         </div>
 
         <div class="col-sm">
-            <a class="projectComponent" id="doc" href="#">
-                <h2>La doc</h2>
+            <a class="projectComponent" id="documentation" href="documentation.php">
+                <h2>Documents</h2>
             </a>
         </div>
     </div>
@@ -73,16 +73,16 @@ $historiques = showHistorique($projectId);
                 <div>Description : <?php echo $row[3];?></div>
                 <div>Historique :</div>
                 </br>
-                <div>
+                <div class="scrollable">
                     <ul class="list-group list-group-flush" id="historique">
                     <?php $i=0;
-                        while($i<5){
+                        while($i<10){
                             if($historique = mysqli_fetch_row($historiques)){
                                 echo "<li class='list-group-item'>".$historique[0]."</li>";
                             
                             }
                             else{
-                                echo "<li class='list-group-item'>------------</li>";
+                                echo "<li class='list-group-item'>-</li>";
                             }
                             $i++;
                         }
