@@ -49,7 +49,7 @@ $result = mysqli_query($conn, $query);
             <h2>Sprint <?php echo $sprintId ?></h2> </div>
         <!--BARRE DE PROGRESSION D UN SPRINT -->
     </div>
-    <button type="button" class="btn btn-lg  btn-dark" data-toggle="collapse" data-target="#demo">
+    <button type="button" class="btn btn-lg btn-dark" data-toggle="collapse" data-target="#demo">
         Ajouter une tâche
     </button>
     <!--CREER UNE TACHE-->
@@ -99,7 +99,7 @@ $result = mysqli_query($conn, $query);
                 <!--ETAT-->
                 <td>
                     <!-- EDIT FORM DE L ETAT-->
-                    <span  class="fas fa-edit float-left font-italic" data-toggle="collapse" data-target="<?php echo "#state".$i;?>">
+                    <span class="fas fa-edit float-left" data-toggle="collapse" data-target="<?php echo "#state".$i;?>">
                     </span>
                     <?php
                     echo $row[2];
@@ -110,7 +110,7 @@ $result = mysqli_query($conn, $query);
                             <div class="form-group">
                                 <label for="taskState">Nouvel Etat :</label>
                                 <br>
-                                <select class="form-control-sm" name="taskState" id="taskState" >
+                                <select class="form-control form-control-sm" name="taskState" id="taskState" >
                                     <option value="TO DO">TO DO</option>
                                     <option value="ON GOING">ON GOING</option>
                                     <option value="DONE">DONE</option>
@@ -136,7 +136,7 @@ $result = mysqli_query($conn, $query);
                                     <div class="form-group">
                                         <label for="userName">User:</label>
                                         <br>
-                                        <input type="text" class="form-control-sm" id="userName" name="userName">
+                                        <input type="text" class="form-control form-control-sm" id="userName" name="userName">
                                     </div>
                                     <button type="submit" name="assigner" class="btn btn-secondary btn-sm float-left" >Assigner</button>
                                 </form>
@@ -162,7 +162,7 @@ $result = mysqli_query($conn, $query);
                                     <td >
                                         <form method="post">
                                             <?php echo $member[0]; ?>
-                                              <button type="submit" class="fas fa-times btn bg-transparent btn-sm float-left" style="color:red;" name="deleteMember"></button>
+                                              <button type="submit" class="fas fa-times btn bg-transparent btn-sm float-left taskDeleteMember" style="color:red;" name="deleteMember"></button>
                                             <input class="form-control" type="hidden" name="idMember" value="<?php echo $member[1];?>">
                                         </form>
                                     </td>
@@ -185,7 +185,7 @@ $result = mysqli_query($conn, $query);
 
                                 <label for="issueId">User Story:</label>
                                     <br>
-                                <input type="text" class="form-control-sm" id="issueId" name="issueId">
+                                <input type="text" class="form-control form-control-sm" id="issueId" name="issueId">
                             </div>
                             <button type="submit" name="lier" class="btn btn-secondary btn-sm float-left">Lier</button>
                         </form>
