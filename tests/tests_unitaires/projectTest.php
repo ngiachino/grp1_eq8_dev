@@ -2,6 +2,7 @@
     include_once 'src/database/DBconnect.php';
     include_once 'src/app/management/projectManagement.php';
     include_once 'src/app/management/registerManagement.php';
+    include_once 'src/app/management/utils.php';
     use PHPUnit\Framework\TestCase;
     /**
     * @group testsUnitaires
@@ -20,14 +21,14 @@
             $row = mysqli_fetch_assoc($result);
             $userID = $row["ID_USER"];
 
-            $res = addProject("TestProjet","Exemple de description",$userName,$userID,false);
-            $this->assertEquals($res,"Votre projet a bien été créé");
+            addProject("TestProjet","Exemple de description",$userName,$userID,false);
+            $this->assertContains("Votre projet a bien été créé", getMessage());
             $sql = "SELECT ID_PROJET FROM projet WHERE NOM_PROJET = 'TestProjet' AND ID_MANAGER = '$userID'";
             $result = $conn->query($sql);
             $this->assertEquals($result->num_rows, 1);
 
-            $res = addProject("TestProjet","Exemple de description2",$userName,$userID,false);
-            $this->assertEquals($res,"Vous avez déjà créé un projet du même nom");
+            addProject("TestProjet","Exemple de description2",$userName,$userID,false);
+            $this->assertContains("Vous avez déjà créé un projet du même nom", getMessage());
             $sql = "SELECT ID_PROJET FROM projet WHERE NOM_PROJET = 'TestProjet' AND ID_MANAGER = '$userID'";
             $result = $conn->query($sql);
             $this->assertEquals($result->num_rows, 1);
@@ -50,8 +51,8 @@
             $result = $conn->query($sql);
             $row = mysqli_fetch_assoc($result);
             $projectID = $row["ID_PROJET"];
-            $res = deleteProject($projectID,false);
-            $this->assertEquals($res,"Votre projet a bien été supprimé");
+            deleteProject($projectID,false);
+            $this->assertContains("Votre projet a bien été supprimé", getMessage());
             $sql = "SELECT ID_PROJET FROM projet WHERE NOM_PROJET = 'TestProjet' AND ID_MANAGER = '$userID'";
             $result = $conn->query($sql);
             $this->assertEquals($result->num_rows, 0);
@@ -60,6 +61,7 @@
             $result = $conn->query($sql);
             $this->assertEquals($result->num_rows, 0);
         }
+
         private function clear(){
             $conn = connect();
             $sql = "DELETE FROM utilisateur WHERE NOM_USER = 'TestAccount' OR MAIL_USER = 'TestAccount@test.fr'";
