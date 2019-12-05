@@ -13,19 +13,9 @@
         public function testAddIssue(){
             $conn = connect();
             $this->clear();
-            $userName = "TestAccount";
 
-            register($userName,"TestAccount@test.fr","test","test");
-            $sql = "SELECT ID_USER FROM utilisateur WHERE NOM_USER = 'TestAccount'";
-            $result = $conn->query($sql);
-            $row = mysqli_fetch_assoc($result);
-            $userID = $row["ID_USER"];
-
-            addProject("TestProjet","Exemple de description",$userName,$userID,false);
-            $sql = "SELECT ID_PROJET FROM projet WHERE NOM_PROJET = 'TestProjet'";
-            $result = $conn->query($sql);
-            $row = mysqli_fetch_assoc($result);
-            $idProjet = $row["ID_PROJET"];
+            $userID=$this->createAccount($conn);
+            $idProjet = $this->createProject($conn,$userID);
 
             $res = addIssue($idProjet,"Description de test","HIGH",2);
             $this->assertEquals($res,"Votre issue a été créée");
@@ -39,25 +29,10 @@
         public function testDeleteIssue(){
             $conn = connect();
             $this->clear();
-            $userName = "TestAccount";
 
-            register($userName,"TestAccount@test.fr","test","test");
-            $sql = "SELECT ID_USER FROM utilisateur WHERE NOM_USER = 'TestAccount'";
-            $result = $conn->query($sql);
-            $row = mysqli_fetch_assoc($result);
-            $userID = $row["ID_USER"];
-
-            addProject("TestProjet","Exemple de description",$userName,$userID,false);
-            $sql = "SELECT ID_PROJET FROM projet WHERE NOM_PROJET = 'TestProjet'";
-            $result = $conn->query($sql);
-            $row = mysqli_fetch_assoc($result);
-            $idProjet = $row["ID_PROJET"];
-
-            addIssue($idProjet,"Description de test","HIGH",2);
-            $sql = "SELECT ID_USER_STORY FROM issue WHERE ID_PROJET = '$idProjet'";
-            $result = $conn->query($sql);
-            $row = mysqli_fetch_assoc($result);
-            $issueID = $row["ID_USER_STORY"];
+            $userID=$this->createAccount($conn);
+            $idProjet = $this->createProject($conn,$userID);
+            $issueID = $this->createIssue($conn,$idProjet);
 
             $res = deleteIssue($issueID, $idProjet);
             $this->assertEquals($res,"Votre issue a été supprimée");
@@ -69,26 +44,11 @@
         public function testModifyIssue(){
             $conn = connect();
             $this->clear();
-            $userName = "TestAccount";
 
-            register($userName,"TestAccount@test.fr","test","test");
-            $sql = "SELECT ID_USER FROM utilisateur WHERE NOM_USER = 'TestAccount'";
-            $result = $conn->query($sql);
-            $row = mysqli_fetch_assoc($result);
-            $userID = $row["ID_USER"];
-
-            addProject("TestProjet","Exemple de description",$userName,$userID,false);
-            $sql = "SELECT ID_PROJET FROM projet WHERE NOM_PROJET = 'TestProjet'";
-            $result = $conn->query($sql);
-            $row = mysqli_fetch_assoc($result);
-            $idProjet = $row["ID_PROJET"];
-
-            addIssue($idProjet,"Description de test","HIGH",2);
-            $sql = "SELECT ID_USER_STORY FROM issue WHERE ID_PROJET = '$idProjet'";
-            $result = $conn->query($sql);
-            $row = mysqli_fetch_assoc($result);
-            $issueID = $row["ID_USER_STORY"];
-
+            $userID=$this->createAccount($conn);
+            $idProjet = $this->createProject($conn,$userID);
+            $issueID = $this->createIssue($conn,$idProjet);
+            
             $res = modifyIssue($idProjet,$issueID,"LOW",2,"Description de test");
             $this->assertEquals($res,"Votre issue a bien été modifiée");
 
@@ -101,6 +61,29 @@
             $this->assertEquals($result->num_rows, 1);
 
             $this->clear();
+        }
+
+        private function createAccount($conn){
+            register("TestAccount","TestAccount@test.fr","test","test");
+            $sql = "SELECT ID_USER FROM utilisateur WHERE NOM_USER = 'TestAccount'";
+            $result = $conn->query($sql);
+            $row = mysqli_fetch_assoc($result);
+            return $row["ID_USER"];
+        }
+        private function createProject($conn,$userID){
+            addProject("TestProjet","Exemple de description","TestAccount",$userID,false);
+            $sql = "SELECT ID_PROJET FROM projet WHERE NOM_PROJET = 'TestProjet'";
+            $result = $conn->query($sql);
+            $row = mysqli_fetch_assoc($result);
+            return $row["ID_PROJET"];
+        }
+
+        private function createIssue($conn,$idProjet){
+            addIssue($idProjet,"Description de test","HIGH",2);
+            $sql = "SELECT ID_USER_STORY FROM issue WHERE ID_PROJET = '$idProjet'";
+            $result = $conn->query($sql);
+            $row = mysqli_fetch_assoc($result);
+            return $row["ID_USER_STORY"];
         }
         private function clear(){
             $conn = connect();
