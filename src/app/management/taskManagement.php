@@ -1,7 +1,7 @@
 <?php
 function addTask($conn,$projectId,$sprintId)
 {     if (isset($_POST['submit']))
-{
+    {
     $description = $_POST['taskDescription'];
     $duration = $_POST['taskDuration'];
     if (empty($description)|| empty($duration))
@@ -17,7 +17,7 @@ function addTask($conn,$projectId,$sprintId)
         mysqli_query($conn, $query);
         return " Tâche ajoutée ";
     }
-}
+    }
     return null;
 }
 
@@ -85,6 +85,7 @@ function getMemberTask($connexion,$taskId, $sprintId, $projectId)
                               AND ID_TACHE = '$taskId' ";
     return mysqli_query($connexion, $queryMemberName);
 }
+
 function modifyTask($conn, $projectId, $sprintId)
 {
     if(isset($_POST['modifier'])){
@@ -97,13 +98,12 @@ function modifyTask($conn, $projectId, $sprintId)
                 return modifyDurationTask($conn, $taskId, $projectId, $sprintId, $_POST['durationTask']);
             }
             else{
-                return $modifyTaskMessage= modifyDescriptionTask($conn, $taskId, $projectId, $sprintId, $_POST['descriptionTask'])
-                    .modifyDurationTask($conn, $taskId, $projectId, $sprintId, $_POST['durationTask']);
+                $modifyTaskMessage= modifyDescriptionTask($conn, $taskId, $projectId, $sprintId, $_POST['descriptionTask']);
+                $modifyTaskMessage= $modifyTaskMessage.modifyDurationTask($conn, $taskId, $projectId, $sprintId, $_POST['durationTask']);
+                return $modifyTaskMessage;
             }
         }
-        return null;
     }
-    return null;
 }
 
 function modifyDescriptionTask($conn, $taskId, $projectId, $sprintId, $description)
@@ -191,3 +191,31 @@ function editTaskEtat($conn, $projectId, $sprintId ){
         mysqli_query($conn, $queryEditTaskState);
     }
 }
+function getAllTasks($conn, $projectId, $sprintId){
+    $queryGet = "SELECT DISTINCT tache.DESCRIPTION, tache.DUREE_TACHE, tache.IS_DONE, tache.ID_TACHE
+                 FROM tache  
+                 WHERE tache.ID_PROJET = '$projectId'
+                    AND tache.ID_SPRINT = '$sprintId'
+                    ";
+    return mysqli_query($conn, $queryGet);
+}
+
+function getTaskWithSpecificState($conn, $projectId, $sprintId){
+    if(isset($_POST['choseState'])) {
+        $state = $_POST['nameState'];
+        if($state== "ALL"){
+            return getAllTasks($conn, $projectId,$sprintId);
+        }
+        $queryGet = "SELECT DISTINCT tache.DESCRIPTION, tache.DUREE_TACHE, tache.IS_DONE, tache.ID_TACHE
+                     FROM tache  
+                     WHERE tache.ID_PROJET = '$projectId'
+                          AND tache.ID_SPRINT = '$sprintId'
+                          AND tache.IS_DONE = '$state'";
+        $result = mysqli_query($conn, $queryGet);
+    }
+    else{
+        $result = getAllTasks($conn,$projectId,$sprintId);
+    }
+    return $result;
+}
+
