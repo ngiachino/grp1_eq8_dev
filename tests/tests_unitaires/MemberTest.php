@@ -3,6 +3,7 @@
     include_once 'src/app/management/projectManagement.php';
     include_once 'src/app/management/registerManagement.php';
     include_once 'src/app/management/membersManagement.php';
+    include_once 'utils.php';
     use PHPUnit\Framework\TestCase;
     /**
     * @group testsUnitaires
@@ -13,25 +14,12 @@
         public function testAddMember(){
             $conn = connect();
             $this->clear();
-            $userName = "TestAccount";
-            $userName2 = "TestAccount2";
 
-            register($userName,"TestAccount@test.fr","test","test");
-            $sql = "SELECT ID_USER FROM utilisateur WHERE NOM_USER = 'TestAccount'";
-            $result = $conn->query($sql);
-            $row = mysqli_fetch_assoc($result);
-            $userID = $row["ID_USER"];
+            $userID=createAccount($conn);
+            $idProjet = createProject($conn,$userID);
+            register("TestAccount2","TestAccount2@test.fr","test","test");
 
-            register($userName2,"TestAccount2@test.fr","test","test");
-
-            addProject("TestProjet","Exemple de description",$userName,$userID,false);
-            $sql = "SELECT ID_PROJET FROM projet WHERE NOM_PROJET = 'TestProjet'";
-            $result = $conn->query($sql);
-            $row = mysqli_fetch_assoc($result);
-            $idProjet = $row["ID_PROJET"];
-
-
-            $res = addMember($idProjet,$userName);
+            $res = addMember($idProjet,"TestAccount");
             $this->assertEquals($res,"<span>Cet utilisateur fait déjà parti du projet</span></br>");
             $sql = "SELECT ID_MEMBRE FROM membre WHERE ID_PROJET = '$idProjet'";
             $result = $conn->query($sql);
@@ -43,7 +31,7 @@
             $result = $conn->query($sql);
             $this->assertEquals($result->num_rows, 1);
 
-            $res = addMember($idProjet,$userName2);
+            $res = addMember($idProjet,"TestAccount2");
             $this->assertEquals($res,"L'utilisateur a bien été ajouté");
             $sql = "SELECT ID_MEMBRE FROM membre WHERE ID_PROJET = '$idProjet'";
             $result = $conn->query($sql);
@@ -55,26 +43,13 @@
         public function testDeleteMember(){
             $conn = connect();
             $this->clear();
-            $userName = "TestAccount";
-            $userName2 = "TestAccount2";
 
-            register($userName,"TestAccount@test.fr","test","test");
-            $sql = "SELECT ID_USER FROM utilisateur WHERE NOM_USER = 'TestAccount'";
-            $result = $conn->query($sql);
-            $row = mysqli_fetch_assoc($result);
-            $userID = $row["ID_USER"];
+            $userID=createAccount($conn);
+            $idProjet = createProject($conn,$userID);
+            register("TestAccount2","TestAccount2@test.fr","test","test");
+            addMember($idProjet,"TestAccount2");
 
-            register($userName2,"TestAccount2@test.fr","test","test");
-
-            addProject("TestProjet","Exemple de description",$userName,$userID,false);
-            $sql = "SELECT ID_PROJET FROM projet WHERE NOM_PROJET = 'TestProjet'";
-            $result = $conn->query($sql);
-            $row = mysqli_fetch_assoc($result);
-            $idProjet = $row["ID_PROJET"];
-
-            addMember($idProjet,$userName2);
-
-            $res = deleteMember($idProjet,$userName2);
+            $res = deleteMember($idProjet,"TestAccount2");
             $this->assertEquals($res,"L'utilisateur a été supprimé du projet");
             $sql = "SELECT ID_MEMBRE FROM membre WHERE ID_PROJET = '$idProjet'";
             $result = $conn->query($sql);

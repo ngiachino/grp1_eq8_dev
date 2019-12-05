@@ -72,7 +72,7 @@ function modifyDocumentation($idProjet,$title,$description,$documentID){
     $link = mysqli_fetch_row($result)[0];
     $target_dir = "../../uploads/";
     $target_file = $target_dir . $idProjet . basename($_FILES["fileToUpload"]["name"]);
-    if($link != $target_file AND basename($_FILES["fileToUpload"]["name"]) != NULL){
+    if($link != $target_file && basename($_FILES["fileToUpload"]["name"]) != NULL){
         unlink($link); //Delete the file
         upload($idProjet);
         $sql = $conn->prepare("UPDATE `documentation`

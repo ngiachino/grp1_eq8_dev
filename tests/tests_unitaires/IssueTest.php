@@ -3,6 +3,7 @@
     include_once 'src/app/management/projectManagement.php';
     include_once 'src/app/management/registerManagement.php';
     include_once 'src/app/management/issuesManagement.php';
+    include_once 'utils.php';
     use PHPUnit\Framework\TestCase;
     /**
     * @group testsUnitaires
@@ -14,8 +15,8 @@
             $conn = connect();
             $this->clear();
 
-            $userID=$this->createAccount($conn);
-            $idProjet = $this->createProject($conn,$userID);
+            $userID=createAccount($conn);
+            $idProjet = createProject($conn,$userID);
 
             $res = addIssue($idProjet,"Description de test","HIGH",2);
             $this->assertEquals($res,"Votre issue a été créée");
@@ -30,8 +31,8 @@
             $conn = connect();
             $this->clear();
 
-            $userID=$this->createAccount($conn);
-            $idProjet = $this->createProject($conn,$userID);
+            $userID=createAccount($conn);
+            $idProjet = createProject($conn,$userID);
             $issueID = $this->createIssue($conn,$idProjet);
 
             $res = deleteIssue($issueID, $idProjet);
@@ -45,8 +46,8 @@
             $conn = connect();
             $this->clear();
 
-            $userID=$this->createAccount($conn);
-            $idProjet = $this->createProject($conn,$userID);
+            $userID=createAccount($conn);
+            $idProjet = createProject($conn,$userID);
             $issueID = $this->createIssue($conn,$idProjet);
             
             $res = modifyIssue($idProjet,$issueID,"LOW",2,"Description de test");
@@ -62,22 +63,6 @@
 
             $this->clear();
         }
-
-        private function createAccount($conn){
-            register("TestAccount","TestAccount@test.fr","test","test");
-            $sql = "SELECT ID_USER FROM utilisateur WHERE NOM_USER = 'TestAccount'";
-            $result = $conn->query($sql);
-            $row = mysqli_fetch_assoc($result);
-            return $row["ID_USER"];
-        }
-        private function createProject($conn,$userID){
-            addProject("TestProjet","Exemple de description","TestAccount",$userID,false);
-            $sql = "SELECT ID_PROJET FROM projet WHERE NOM_PROJET = 'TestProjet'";
-            $result = $conn->query($sql);
-            $row = mysqli_fetch_assoc($result);
-            return $row["ID_PROJET"];
-        }
-
         private function createIssue($conn,$idProjet){
             addIssue($idProjet,"Description de test","HIGH",2);
             $sql = "SELECT ID_USER_STORY FROM issue WHERE ID_PROJET = '$idProjet'";

@@ -14,7 +14,7 @@ function startProfil(){
     JOIN utilisateur ON projet.ID_MANAGER = utilisateur.ID_USER
     JOIN membre ON projet.ID_PROJET = membre.ID_PROJET
     WHERE ID_MEMBRE = '$userID'";
-    return mysqli_query($conn, $query);
+    return mysqli_query($conn,$query);
 }
 
 function getCurrentProject($projectId){
@@ -34,11 +34,11 @@ function startAddProject(){
         $projectDesc = $_POST['description'];
         $userName = $_SESSION['userName'];
         $userID = $_SESSION['userID'];
-        addProject($projectName, $projectDesc, $userName, $userID,true);
+        addProject($projectName,$projectDesc,$userName,$userID,true);
     }
 }
 
-function addProject($projectName, $projectDesc, $userName, $userID, $processIsolation){
+function addProject($projectName,$projectDesc,$userName,$userID,$processIsolation){
     $conn = connect();
     //test que tous les champs sont remplis
     if (empty($projectName) || empty($projectDesc)) {
@@ -56,13 +56,14 @@ function addProject($projectName, $projectDesc, $userName, $userID, $processIsol
 
             $sql = $conn->prepare("INSERT INTO projet (NOM_PROJET, ID_MANAGER, DESCRIPTION)
             VALUES (?,?,?)");
-            $sql->bind_param("sis",$projectName,$userID, $projectDesc);
+            $sql->bind_param("sis",$projectName,$userID,$projectDesc);
             $sql->execute();
 
             $sql = $conn->prepare("INSERT INTO membre (ID_MEMBRE, ID_PROJET, NOM_MEMBRE)
             VALUES (?,LAST_INSERT_ID(),?)");
             $sql->bind_param("is",$userID,$userName);
             $sql->execute();
+
 
             if($processIsolation){
                 header("Location: profil.php");
@@ -111,7 +112,7 @@ function startModifyProject($projectID)
     }
 }
 
-function modifyProject($projectID, $projectName, $projectDesc){
+function modifyProject($projectID,$projectName,$projectDesc){
     $conn = connect();
     $userName = $_SESSION['userName'];
 
@@ -126,7 +127,7 @@ function modifyProject($projectID, $projectName, $projectDesc){
         $sql = $conn->prepare("UPDATE `projet`
         SET NOM_PROJET = ?, DESCRIPTION = ?
         WHERE ID_PROJET = ?");
-        $sql->bind_param("ssi",$projectName,$projectDesc, $projectID);
+        $sql->bind_param("ssi",$projectName,$projectDesc,$projectID);
         $sql->execute();
         addHistorique($projectID,"Le projet a été modifié");
         header("Location:projet.php?title=$projectName&owner=$userName");
@@ -138,11 +139,11 @@ function getUserTasks(){
     $conn = connect();
     $userID = $_SESSION['userID'];
     $idCurrentSprint = getCurrentSprint($conn);
-    $queryTask = "SELECT tache.DESCRIPTION, membre.ID_SPRINT, NOM_PROJET, DATE_DEBUT, DATE_FIN
+    $queryTask ="SELECT tache.DESCRIPTION, membre.ID_SPRINT, NOM_PROJET, DATE_DEBUT, DATE_FIN
                  FROM membre JOIN tache ON membre.ID_TACHE = tache.ID_TACHE
                              JOIN projet ON membre.ID_PROJET = projet.ID_PROJET
                              JOIN sprint ON membre.ID_SPRINT = sprint.ID_SPRINT 
-                WHERE membre.ID_SPRINT = '$idCurrentSprint' and membre.ID_MEMBRE = '$userID'";
+                WHERE membre.ID_SPRINT = $idCurrentSprint and membre.ID_MEMBRE = $userID";
     return mysqli_query($conn, $queryTask);
 }
 
@@ -157,6 +158,6 @@ function getCurrentSprint($conn){
         return null;
     }
     else{
-        return mysqli_fetch_row($sprintId)[0];
+        return  mysqli_fetch_row($sprintId)[0];
     }
 }

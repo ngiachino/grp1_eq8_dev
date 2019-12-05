@@ -1,7 +1,7 @@
 version: '3.7'
 services:
     db:
-        build: 
+        build:
             context: .
             dockerfile: Dockerfile_DB
         command: --default-authentication-plugin=mysql_native_password

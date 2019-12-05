@@ -13,21 +13,16 @@
         public function testAddProject(){
             $conn = connect();
             $this->clear();
-           
-            $userName = "TestAccount";
-            register($userName,"TestAccount@test.fr","test","test");
-            $sql = "SELECT ID_USER FROM utilisateur WHERE NOM_USER = 'TestAccount'";
-            $result = $conn->query($sql);
-            $row = mysqli_fetch_assoc($result);
-            $userID = $row["ID_USER"];
 
-            addProject("TestProjet","Exemple de description",$userName,$userID,false);
+            $userID=createAccount($conn);
+
+            addProject("TestProjet","Exemple de description","TestAccount",$userID,false);
             $this->assertContains("Votre projet a bien été créé", getMessage());
             $sql = "SELECT ID_PROJET FROM projet WHERE NOM_PROJET = 'TestProjet' AND ID_MANAGER = '$userID'";
             $result = $conn->query($sql);
             $this->assertEquals($result->num_rows, 1);
 
-            addProject("TestProjet","Exemple de description2",$userName,$userID,false);
+            addProject("TestProjet","Exemple de description2","TestAccount",$userID,false);
             $this->assertContains("Vous avez déjà créé un projet du même nom", getMessage());
             $sql = "SELECT ID_PROJET FROM projet WHERE NOM_PROJET = 'TestProjet' AND ID_MANAGER = '$userID'";
             $result = $conn->query($sql);
@@ -39,14 +34,9 @@
             $conn = connect();
             $this->clear();
 
-            $userName = "TestAccount";
-            register($userName,"TestAccount@test.fr","test","test");
-            $sql = "SELECT ID_USER FROM utilisateur WHERE NOM_USER = 'TestAccount'";
-            $result = $conn->query($sql);
-            $row = mysqli_fetch_assoc($result);
-            $userID = $row["ID_USER"];
+            $userID=createAccount($conn);
 
-            addProject("TestProjet","Exemple de description",$userName,$userID,false);
+            addProject("TestProjet","Exemple de description","TestAccount",$userID,false);
             $sql = "SELECT ID_PROJET FROM projet WHERE NOM_PROJET = 'TestProjet' AND ID_MANAGER = '$userID'";
             $result = $conn->query($sql);
             $row = mysqli_fetch_assoc($result);
