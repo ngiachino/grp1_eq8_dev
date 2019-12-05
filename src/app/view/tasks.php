@@ -58,15 +58,23 @@ $result = mysqli_query($conn, $query);
         <form method="POST">
             <div class="form-group">
                 <label for="taskDescription">Description de la tâche:</label>
-                <input type="text" class="form-control" id="taskDescription" name="taskDescription"/>
+                <textarea class="form-control" id="taskDescription" name="taskDescription"></textarea>
             </div>
-
-            <div class="form-group">
-                <label for="taskDuration">Durée de la tâche: </label>
-                <input type="text" class="form-control" id="taskDuration" name="taskDuration">
-                <input type="hidden" name="taskState" value="TO DO">
+            <div class="form-row">
+                <div class="col-md-4 mb-3">
+                    <label for="taskDuration">Durée de la tâche: </label>
+                    <input type="number" class="form-control" id="taskDuration" name="taskDuration" step="0.5">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="taskState">Etat de la tâche: </label>
+                    <select class="form-control form-control-sm" name="taskState" id="taskState" >
+                        <option value="TO DO">TO DO</option>
+                        <option value="ON GOING">ON GOING</option>
+                        <option value="DONE">DONE</option>
+                    </select>
+                </div>
             </div>
-            <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" name="submit" class="btn btn-primary">Créer</button>
         </form>
         <!--FIN DU FORMULAIRE-->
     </div>
@@ -74,24 +82,23 @@ $result = mysqli_query($conn, $query);
 <br>
 <br>
 <!--AFFICHAGE DES TÂCHES COURRANTES DU SPRINT-->
-<div class="container">
-    <table class="table" id="taskList">
-        <thead class="thead-dark">
-        <tr>
-            <th scope="col">Numéro </th>
-            <th scope="col">Description</th>
-            <th scope="col">Durée</th>
-            <th scope="col">Etat</th>
-            <th scope="col">Membre</th>
-            <th scope ="col">User Stories</th>
-            <th scope="col">Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php
+
+<table class="table" id="taskList">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">Numéro </th>
+        <th scope="col">Description</th>
+        <th scope="col">Durée</th>
+        <th scope="col">Etat</th>
+        <th scope="col">Membre</th>
+        <th scope ="col">User Stories</th>
+        <th scope="col">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php
         $i = 1;
-        while ($row = mysqli_fetch_row($result)) {
-            ?>
+        while ($row = mysqli_fetch_row($result)) {?>
             <tr>
                 <th scope="row"><?php echo $i;?></th>
                 <td><?php echo $row[0];?></td>
@@ -228,8 +235,7 @@ $result = mysqli_query($conn, $query);
                     </form>
                     <br>
                     <!--MODIFIER UNE TÂCHE  -->
-                    <button class="fas fa-edit btn btn-light float-left " data-toggle="collapse" data-target=<?php echo "#modifier".$i;?> >
-                    </button>
+                    <button class="fas fa-edit btn btn-light float-left " data-toggle="collapse" data-target=<?php echo "#modifier".$i;?>></button>
                     <div id=<?php echo "modifier".$i; ?> class="collapse">
                         <!-- Le formulaire d'attribution de la tâche -->
                         <br><br>
@@ -255,7 +261,6 @@ $result = mysqli_query($conn, $query);
         ?>
         </tbody>
     </table>
-</div>
 <?php
 $connexion=null;
 ?>
