@@ -10,7 +10,7 @@ function startIssues(){
 
 function showIssues($idProjet){
     $conn = connect();
-    $sql = $conn->prepare("SELECT ID_USER_STORY,PRIORITE,DIFFICULTE,DESCRIPTION FROM issue WHERE ID_PROJET = ? ORDER BY ID_USER_STORY");
+    $sql = $conn->prepare("SELECT DISTINCT ID_USER_STORY,PRIORITE,DIFFICULTE,DESCRIPTION FROM issue WHERE ID_PROJET = ? ORDER BY ID_USER_STORY");
     $sql->bind_param("i",$idProjet);
     $sql->execute();
     return $sql->get_result();
