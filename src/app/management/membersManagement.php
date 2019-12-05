@@ -1,5 +1,4 @@
 <?php
-include '../../database/DBconnect.php';
 include_once 'historiqueManagement.php';
 
 function startProject(){
@@ -74,7 +73,7 @@ function addMember($projectId,$userName)
                 $sql->bind_param("iis",$memberId,$projectId,$memberName);
                 $sql->execute();
                 addHistorique($projectId,$memberName." a rejoint le projet");
-                return null;
+                return "L'utilisateur a bien été ajouté";
             }
         }
     }
@@ -92,4 +91,5 @@ function deleteMember($projectId,$userToDelete){
     $query = "DELETE FROM membre WHERE NOM_MEMBRE = '$userToDelete' AND ID_PROJET = '$projectId'";
     mysqli_query($conn,$query);
     addHistorique($projectId,$userToDelete." a quitté le projet");
+    return "L'utilisateur a été supprimé du projet";
 }

@@ -110,5 +110,7 @@
             $conn->query($sql);
             $sql = "DELETE FROM issue WHERE DESCRIPTION = 'Description de test'";
             $conn->query($sql);
+            $sql = "DELETE FROM projet WHERE NOM_PROJET = 'TestProjet'";
+            $conn->query($sql);
         }
     }

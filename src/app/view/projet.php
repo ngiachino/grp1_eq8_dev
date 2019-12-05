@@ -1,7 +1,8 @@
 <?php
-include '../management/membersManagement.php';
-include '../management/projectManagement.php';
-include_once '../management/historiqueManagement.php';
+include_once 'src/database/DBconnect.php';
+include 'src/management/membersManagement.php';
+include 'src/management/projectManagement.php';
+include_once 'src/management/historiqueManagement.php';
 
 $projectId = startProject();
 $message = startAddMember($projectId);

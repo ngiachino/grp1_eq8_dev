@@ -40,7 +40,7 @@ class RegisterTest extends TestCase{
     }
     private function clear(){
         $conn = connect();
-        $sql = "DELETE FROM utilisateur WHERE NOM_USER = 'TestAccount' OR MAIL_USER = 'TestAccount@test.fr' OR NOM_USER = 'TestAccount2' OR MAIL_USER = 'TestAccount@test.fr'";
+        $sql = "DELETE FROM utilisateur WHERE NOM_USER = 'TestAccount' OR MAIL_USER = 'TestAccount@test.fr' OR NOM_USER = 'TestAccount2' OR MAIL_USER = 'TestAccount2@test.fr'";
         $conn->query($sql);
     }
 }

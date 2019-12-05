@@ -68,7 +68,7 @@
             $conn->query($sql);
             $sql = "DELETE FROM membre WHERE NOM_MEMBRE = 'TestAccount'";
             $conn->query($sql);
-            $sql = "DELETE FROM projet WHERE DESCRIPTION = 'Exemple de description'";
+            $sql = "DELETE FROM projet WHERE NOM_PROJET = 'TestProjet'";
             $conn->query($sql);
         }
     }
