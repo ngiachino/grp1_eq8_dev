@@ -16,7 +16,6 @@ function showDocumentation($idProjet){
     return mysqli_query($conn, $query);
 }
 
-
 function startAddDocumentation($idProjet){
     if (isset($_POST['submit'])) {
         $title = $_POST['title'];
@@ -24,6 +23,7 @@ function startAddDocumentation($idProjet){
         addDocumentation($idProjet,$title,$description);
     }
 }
+
 function addDocumentation($idProjet,$title,$description){
     $conn = connect();
     $link = upload($idProjet);
@@ -44,6 +44,7 @@ function startDeleteDocumentation($idProjet){
         deleteDocumentation($idProjet,$documentID);
     }
 }
+
 function deleteDocumentation($idProjet,$documentID){
     $conn = connect();
     $queryTest = "SELECT LIEN FROM `documentation` WHERE ID_DOCUMENTATION = '$documentID'";
@@ -57,6 +58,7 @@ function deleteDocumentation($idProjet,$documentID){
     addHistorique($idProjet,"Un document a été supprimé");
     header("Location:documentation.php");
 }
+
 function startModifyDocumentation($idProjet){
     if(isset($_POST['modify'])){
         $title = $_POST['title'];
@@ -65,6 +67,7 @@ function startModifyDocumentation($idProjet){
         modifyDocumentation($idProjet,$title,$description,$documentID);
     }
 }
+
 function modifyDocumentation($idProjet,$title,$description,$documentID){
     $conn = connect();
     $queryTest = "SELECT LIEN FROM `documentation` WHERE ID_DOCUMENTATION = '$documentID'";
@@ -88,7 +91,7 @@ function modifyDocumentation($idProjet,$title,$description,$documentID){
         $sql->bind_param("ssi",$title,$description,$documentID);
         $sql->execute();
     }
-    addHistorique($projectID,"Le document ". $title ."a été modifié");
+    addHistorique($idProjet,"Le document ". $title ."a été modifié");
     header("Location:documentation.php");
 }
 
