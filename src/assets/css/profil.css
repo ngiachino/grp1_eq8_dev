@@ -1,19 +1,4 @@
-#addButton{
-    background-color: rgb(160,60,20);
-    border-color: rgb(160,60,20);
-}
-
-#addButton:hover{
-    background-color: rgb(120,50,20);
-    border-color: rgb(120,50,20);
-}
-
-#addButton:focus{
-    box-shadow: 0 0 0 0.2rem rgba(160,60,20,.5);
-}
-
 a:hover{
-    text-decoration: none;
     background-color: #ececec;
 }
 
@@ -27,7 +12,6 @@ td a:hover{
 
 .table-bordered{
     border: 2px solid black;
-
 }
 
 .listTitle{

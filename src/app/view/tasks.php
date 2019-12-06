@@ -33,7 +33,7 @@ $result= getTaskWithSpecificState($conn,$projectId, $sprintId);
 <head>
     <?php include 'defaultHead.php'; ?>
     <title>Tasks - GoProject</title>
-    <link href="../../assets/css/projet.css" rel="stylesheet">
+    <link href="../../assets/css/tasks.css" rel="stylesheet">
 </head>
 <body>
 <?php include 'navbar.php'; ?>

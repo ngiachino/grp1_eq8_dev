@@ -12,12 +12,3 @@
     margin-left: auto;
     margin-right: auto;
 }
-#addButton{
-    background-color: rgb(160,60,20);
-    border-color: rgb(160,60,20);
-}
-
-#addButton:hover{
-    background-color: rgb(120,50,20);
-    border-color: rgb(120,50,20);
-}
