@@ -98,7 +98,7 @@ while($row = mysqli_fetch_row($result)){
                         </div>
                         <div class="form-group">
                             <label for="documentDescription">Document</label>
-                            </br>
+                            <br>
                             <input type="file" id="documentFileToUpload" name="fileToUpload" accept=".txt,.md,.pdf">
                         </div>
                         <div class="modal-footer">

@@ -4,6 +4,7 @@
     padding-right: 2vh;
     width: 18rem;
 }
+
 .row{
     width: 100%;
 }
@@ -11,4 +12,13 @@
 #openNewSprintForm{
     margin-left: auto;
     margin-right: auto;
+}
+
+a{
+    color: black;
+}
+
+.carousel-control-prev, .carousel-control-next, .carousel-control-prev:hover, .carousel-control-next:hover{
+    background-color: chocolate;
+    opacity: 1;
 }

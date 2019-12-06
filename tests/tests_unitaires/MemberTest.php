@@ -20,7 +20,7 @@
             register("TestAccount2","TestAccount2@test.fr","test","test");
 
             $res = addMember($idProjet,"TestAccount");
-            $this->assertEquals($res,"<span>Cet utilisateur fait déjà parti du projet</span></br>");
+            $this->assertEquals($res,"<span>Cet utilisateur fait déjà partie du projet</span></br>");
             $sql = "SELECT ID_MEMBRE FROM membre WHERE ID_PROJET = '$idProjet'";
             $result = $conn->query($sql);
             $this->assertEquals($result->num_rows, 1);

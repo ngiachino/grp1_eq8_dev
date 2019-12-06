@@ -34,42 +34,14 @@ $result = mysqli_query($conn, $query);
 </div>
 <!--CAROUSSEL -->
 <div class="container">
-<?php $sprintsNb = mysqli_num_rows($result);
-$row = mysqli_fetch_row($result);?>
-<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <div class="containerSprints d-block w-50 mx-auto ">
-                <div class="card">
-                    <a href="tasks.php?projectId=<?php echo $idProjet;?>&sprintId=<?php echo $row[3];?>">
-                        <div class="card-header">
-                            <?php echo $row[0]; ?>
-                        </div>
-                    </a>
-                    <div class="card-body">
-                        <p class="card-text">Date de début : <?php echo $row[1]?></p>
-                        <p class="card-text">Date de fin : <?php echo $row[2]?></p>
-                        <?php if($sprintsNb >0){?>
-                        <form method="POST">
-                            <input type="hidden" name="id" value="<?php echo $row[3];?>">
-                            <button type="submit" name="delete" class="btn btn-secondary">Supprimer</button>
-                        </form>
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#modifySprintModal<?php echo $row[3];?>">Modifier</button>
-                        <?php
-                        }
-                        ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-            <?php
-            while($row = mysqli_fetch_row($result)){
-                ?>
-        <div class="carousel-item">
-                <div class="containerSprints d-block w-50 mx-auto">
+    <?php $sprintsNb = mysqli_num_rows($result);
+    $row = mysqli_fetch_row($result);?>
+    <div id="carouselExampleControls" class="carousel slide" data-interval="false">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="containerSprints d-block w-50 mx-auto ">
                     <div class="card">
-                        <a href="tasks.php?projectId=<?php echo $idProjet;?>&sprintId=<?php echo $row[3];?>">
+                        <a class="text-center" href="tasks.php?projectId=<?php echo $idProjet;?>&sprintId=<?php echo $row[3];?>">
                             <div class="card-header">
                                 <?php echo $row[0]; ?>
                             </div>
@@ -77,57 +49,57 @@ $row = mysqli_fetch_row($result);?>
                         <div class="card-body">
                             <p class="card-text">Date de début : <?php echo $row[1]?></p>
                             <p class="card-text">Date de fin : <?php echo $row[2]?></p>
-                            <form method="POST">
-                                <input type="hidden" name="id" value="<?php echo $row[3];?>">
-                                <button type="submit" name="delete" class="btn btn-secondary">Supprimer</button>
-                            </form>
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#modifySprintModal<?php echo $row[3];?>">Modifier</button>
+                            <?php if($sprintsNb >0){?>
+                                <button class="btn btn-primary d-inline" data-toggle="modal" data-target="#modifySprintModal<?php echo $row[3];?>">Modifier</button>
+                                <form method="POST" class="d-inline">
+                                    <input type="hidden" name="id" value="<?php echo $row[3];?>">
+                                    <button type="submit" name="delete" class="btn btn-secondary">Supprimer</button>
+                                </form>
+                                <?php
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>
-        </div>
+            </div>
+
+            <?php
+            while($row = mysqli_fetch_row($result)){
+                ?>
+                <div class="carousel-item">
+                    <div class="containerSprints d-block w-50 mx-auto">
+                        <div class="card">
+                            <a href="tasks.php?projectId=<?php echo $idProjet;?>&sprintId=<?php echo $row[3];?>">
+                                <div class="card-header">
+                                    <?php echo $row[0]; ?>
+                                </div>
+                            </a>
+                            <div class="card-body">
+                                <p class="card-text">Date de début : <?php echo $row[1]?></p>
+                                <p class="card-text">Date de fin : <?php echo $row[2]?></p>
+                                <form method="POST">
+                                    <input type="hidden" name="id" value="<?php echo $row[3];?>">
+                                    <button type="submit" name="delete" class="btn btn-secondary">Supprimer</button>
+                                </form>
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#modifySprintModal<?php echo $row[3];?>">Modifier</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <?php
             }
             ?>
-
-
-    </div>
-    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
-</div>
-</div>
-<!--CAROUSSEL-->
-    <?php
-    while($row = mysqli_fetch_row($result)){
-        ?>
-        <div class="containerSprints">
-            <div class="card">
-                <a href="tasks.php?projectId=<?php echo $idProjet;?>&sprintId=<?php echo $row[3];?>">
-                    <div class="card-header">
-                        <?php echo $row[0]; ?>
-                    </div>
-                </a>
-                <div class="card-body">
-                    <p class="card-text">Date de début : <?php echo $row[1]?></p>
-                    <p class="card-text">Date de fin : <?php echo $row[2]?></p>
-                    <form method="POST">
-                        <input type="hidden" name="id" value="<?php echo $row[3];?>">
-                        <button type="submit" name="delete" class="btn btn-secondary">Supprimer</button>
-                    </form>
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#modifySprintModal<?php echo $row[3];?>">Modifier</button>
-                </div>
-            </div>
         </div>
-        <?php
-    }
-    ?>
-
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
 
 <div class="modal" tabindex="-1" role="dialog" id="newSprintModal">
     <div class="modal-dialog" role="document">
