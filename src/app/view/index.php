@@ -81,11 +81,21 @@ startRegister();
     </div>
 </div>
 
-<span class="m-4">
 <?php
-writeMessage();
+if (count(getMessage()) > 0){?>
+    <div class="alert alert-warning alert-dismissible fade show w-50 mx-auto mt-4" role="alert">
+        <strong>
+            <?php
+            writeMessage();
+            ?>
+        </strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <?php
+}
 ?>
-</span>
 
 </body>
 </html>
