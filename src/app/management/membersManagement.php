@@ -54,7 +54,7 @@ function addMember($projectId,$userName)
         $sql->execute();
         $result = $sql->get_result();
         if (mysqli_num_rows($result) != 0) {
-            return "<span>Cet utilisateur fait déjà parti du projet</span></br>";
+            return "<span>Cet utilisateur fait déjà partie du projet</span></br>";
         } else {
             //Test que l'utilisateur existe (mail ou pseudo)
             $sql = $conn->prepare("SELECT ID_USER,NOM_USER FROM utilisateur WHERE NOM_USER =? OR MAIL_USER =?");
