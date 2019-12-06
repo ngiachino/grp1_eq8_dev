@@ -153,7 +153,7 @@ CREATE TABLE `tache` (
   `DESCRIPTION` varchar(50) NOT NULL,
   `DUREE_TACHE` float NOT NULL COMMENT '"Durée de la tâche. Ne dépasse pas une journée"',
   `IS_DONE` varchar(20) NOT NULL COMMENT '"Indique si la tâche a été effectuée"',
-  `MEMBRES` varchar(500) NOT NULL DEFAUT ''
+  `MEMBRES` varchar(500) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='La table des tâches';
 
 -- --------------------------------------------------------

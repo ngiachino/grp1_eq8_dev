@@ -77,7 +77,7 @@ $resultSprintDays = getDaysSprint($conn,$projectId,$sprintId);
             </div>
 
             <div class="form-group">
-                <label for="taskDuration">Durée de la tâche: </label>
+                <label for="taskDuration">Durée de la tâche (en jour/homme) :</label>
                 <input type="text" class="form-control" id="taskDuration" name="taskDuration">
                 <input type="hidden" name="taskState" value="TO DO">
             </div>
