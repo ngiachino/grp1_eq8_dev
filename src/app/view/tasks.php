@@ -87,11 +87,11 @@ $resultSprintDays = getDaysSprint($conn,$projectId,$sprintId);
     </div>
 </div>
 <br>
-<!--CHOISIR LE TYPE DE TÄCHE QU'ON VEUT CONSULTER-->
+<!--CHOISIR LE TYPE DE TACHE QU'ON VEUT CONSULTER-->
 <div class="container">
     <form method="POST">
-        <label for="nameState" ></label>
-        <select class="custom-select" id="nameState" name="nameState">
+        <label for="nameState"></label>
+        <select class="form-control w-25 d-inline" id="nameState" name="nameState">
             <option value="" disabled selected>Sélectionnez le type de tâche</option>
             <option value="ALL">ALL</option>
             <option value="TO DO">TO DO</option>
@@ -249,26 +249,26 @@ $resultSprintDays = getDaysSprint($conn,$projectId,$sprintId);
                 <!--ACTION-->
                 <td>
 
-                    <!-- ACTION SUR UNE TACHE-->
-                     <!-- DELETE-->
-                    <form method="POST">
-                        <input type="hidden" name="taskId" value="<?php echo $row[3];?>">
-                        <button type="submit" name="delete" class="fa fa-close btn btn-light "></button>
-                    </form>
-                    <br>
+                  <!-- ACTION SUR UNE TACHE-->
                     <!--MODIFIER UNE TÂCHE  -->
-                    <button class="fas fa-edit btn btn-light float-left " data-toggle="collapse" data-target=<?php echo "#modifier".$i;?> >
+                    <button class="fas fa-edit btn btn-light" data-toggle="collapse" data-target="<?php echo "#modifier".$i;?>">
                     </button>
+                    <!-- DELETE-->
+                    <form method="POST" class="d-inline">
+                        <input type="hidden" name="taskId" value="<?php echo $row[3];?>">
+                        <button type="submit" name="delete" class="fa fa-close btn btn-light d-inline"></button>
+                    </form>
                     <div id=<?php echo "modifier".$i; ?> class="collapse">
                         <!-- Le formulaire d'attribution de la tâche -->
                         <br><br>
                             <form method="POST">
                             <div class="form-group">
-                                <label for="descriptionTask">Description:</label> <br>
-                                    <input type="text" class="form-control-sm" id="descriptionTask" name="descriptionTask" placeholder=<?php echo $row[0];?>>
+                                <label for="descriptionTask">Description:</label>
+                                <br>
+                                <input type="text" class="form-control-sm" id="descriptionTask" name="descriptionTask" placeholder="<?php echo $row[0];?>">
                                 <br>
                                 <label for="durationTask">Durée:</label> <br>
-                                   <input type="text" class="form-control-sm" id="durationTask" name="durationTask" placeholder=<?php echo $row[1];?>>
+                                <input type="text" class="form-control-sm" id="durationTask" name="durationTask" placeholder="<?php echo $row[1];?>">
                                 <input type="hidden" name="taskId" value="<?php echo $row[3];?>">
                             </div>
                             <button type="submit" name="modifier" class="btn btn-secondary btn-sm">Modifier</button>
