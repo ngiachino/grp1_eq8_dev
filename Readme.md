@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/ngiachino/grp1_eq8_dev.svg?branch=master)](https://travis-ci.com/ngiachino/grp1_eq8_dev)
+[![Build Status](https://travis-ci.com/ngiachino/grp1_eq8_dev.svg?branch=master)](https://travis-ci.com/ngiachino/grp1_eq8_dev)[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ngiachino/grp1_eq8_dev/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ngiachino/grp1_eq8_dev/?branch=master)
 
 # Backlog Groupe 1 Equipe 8
 ​
