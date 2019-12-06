@@ -88,8 +88,7 @@ function getMemberTask($connexion,$taskId, $sprintId, $projectId)
 
 function modifyTask($conn, $projectId, $sprintId)
 {
-    if(isset($_POST['modifier'])){
-        if(!empty($_POST['taskId'])) {
+    if(isset($_POST['modifier'])&& !empty($_POST['taskId'])) {
             $taskId= $_POST['taskId'];
             if (!empty($_POST['descriptionTask']) && empty($_POST['durationTask'])) {
                 return modifyDescriptionTask($conn, $taskId, $projectId, $sprintId, $_POST['descriptionTask']);
@@ -98,12 +97,10 @@ function modifyTask($conn, $projectId, $sprintId)
                 return modifyDurationTask($conn, $taskId, $projectId, $sprintId, $_POST['durationTask']);
             }
             else{
-                $modifyTaskMessage= modifyDescriptionTask($conn, $taskId, $projectId, $sprintId, $_POST['descriptionTask']);
-                $modifyTaskMessage= $modifyTaskMessage.modifyDurationTask($conn, $taskId, $projectId, $sprintId, $_POST['durationTask']);
-                return $modifyTaskMessage;
+                return modifyDescriptionTask($conn, $taskId, $projectId, $sprintId, $_POST['descriptionTask'])
+                            .modifyDurationTask($conn, $taskId, $projectId, $sprintId, $_POST['durationTask']);
             }
         }
-    }
 }
 
 function modifyDescriptionTask($conn, $taskId, $projectId, $sprintId, $description)
@@ -218,4 +215,5 @@ function getTaskWithSpecificState($conn, $projectId, $sprintId){
     }
     return $result;
 }
+
 

@@ -64,6 +64,22 @@ function modifySprint($conn,$projectID){
     }
 }
 
+function getSprintData($conn, $projectId, $sprintId){
+    $queryGetSprint = "SELECT * FROM sprint
+                       WHERE ID_PROJET = $projectId 
+                            AND ID_SPRINT = '$sprintId'";
+    return mysqli_query($conn, $queryGetSprint);
+}
+
+function getDaysSprint($conn, $projectId, $sprintId){
+    $today= date("Y-m-d");
+    $queryMinusDate = "SELECT DATEDIFF(DATE_FIN,DATE_DEBUT), DATEDIFF(DATE_FIN,CURDATE())
+                       FROM sprint
+                       WHERE ID_SPRINT='$sprintId'
+                         AND ID_PROJET='$projectId'";
+     return mysqli_query($conn,$queryMinusDate);
+}
+
 
 function getTasksSprint($conn){
 
