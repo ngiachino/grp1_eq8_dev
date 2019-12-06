@@ -136,7 +136,7 @@ CREATE TABLE `sprint` (
   `DATE_DEBUT` date NOT NULL,
   `DATE_FIN` date NOT NULL,
   `NOM_SPRINT` varchar(20) DEFAULT NULL,
-  `ETAT` varchar(10) NOT NULL DEFAULT `TO DO`
+  `ETAT` varchar(10) NOT NULL DEFAULT 'TO DO'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Table des sprints';
 
 -- --------------------------------------------------------
@@ -153,7 +153,7 @@ CREATE TABLE `tache` (
   `DESCRIPTION` varchar(50) NOT NULL,
   `DUREE_TACHE` float NOT NULL COMMENT '"Durée de la tâche. Ne dépasse pas une journée"',
   `IS_DONE` varchar(20) NOT NULL COMMENT '"Indique si la tâche a été effectuée"',
-  `MEMBRES` varchar(500) NOT NULL DEFAUT ``
+  `MEMBRES` varchar(500) NOT NULL DEFAUT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='La table des tâches';
 
 -- --------------------------------------------------------
