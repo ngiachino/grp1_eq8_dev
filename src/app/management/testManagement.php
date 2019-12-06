@@ -22,31 +22,37 @@ function startAddTest($idProjet){
         $description = $_POST['description'];
         $etat = $_POST['etat'];
         $date = $_POST['date'];
-        addTest($idProjet,$description,$etat,$date);
+        addTest($idProjet,$description,$etat,$date,true);
     }
 }
-function addTest($idProjet,$description,$etat,$date){
+function addTest($idProjet,$description,$etat,$date,$processIsolation){
     $conn = connect();
     $sql = $conn->prepare("INSERT INTO `test` (ID_PROJET, DATE_DEBUT, ETAT, DESCRIPTION)
     VALUES (?,?,?,?)");
     $sql->bind_param("isss",$idProjet,$date,$etat,$description);
     $sql->execute();
     addHistorique($idProjet,"Un test a été créé");
-    header("Location:tests.php");
+    if($processIsolation){
+        header("Location:tests.php");
+    }
+    return "Un test a été créé";
 }
 
 function startDeleteTest($idProjet){
     if (isset($_POST['delete'])) {
         $testID = $_POST['id'];
-        deleteTest($idProjet,$testID);
+        deleteTest($idProjet,$testID,true);
     }
 }
-function deleteTest($idProjet,$testID){
+function deleteTest($idProjet,$testID,$processIsolation){
     $conn = connect();
     $query = "DELETE FROM `test` WHERE ID_TEST = '$testID' AND ID_PROJET = '$idProjet'";
     mysqli_query($conn, $query);
     addHistorique($idProjet,"Un test a été supprimé");
-    header("Location:tests.php");
+    if($processIsolation){
+        header("Location:tests.php");
+    }
+    return "Un test a été supprimé";
 }
 function startModifyTest($idProjet){
     if(isset($_POST['modify'])){
@@ -54,10 +60,10 @@ function startModifyTest($idProjet){
         $testEtat = $_POST['etat'];
         $testDate = $_POST['date'];
         $testID = $_POST['id'];
-        modifyTest($idProjet,$testDescription,$testEtat,$testDate,$testID);
+        modifyTest($idProjet,$testDescription,$testEtat,$testDate,$testID,true);
     }
 }
-function modifyTest($idProjet,$testDescription,$testEtat,$testDate,$testID){
+function modifyTest($idProjet,$testDescription,$testEtat,$testDate,$testID,$processIsolation){
     $conn = connect();
     $sql = $conn->prepare("UPDATE test
     SET DESCRIPTION=?, DATE_DEBUT=?, ETAT=?
@@ -65,7 +71,9 @@ function modifyTest($idProjet,$testDescription,$testEtat,$testDate,$testID){
     $sql->bind_param("sssi",$testDescription,$testDate,$testEtat,$testID);
     $sql->execute();
     addHistorique($idProjet,"Un test a été modifié");
-    header("Location: tests.php");
+    if($processIsolation){
+        header("Location: tests.php");
+    }
     return "Votre test a bien été modifiée";
 }
 
