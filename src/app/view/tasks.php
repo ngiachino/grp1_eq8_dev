@@ -22,9 +22,8 @@ $modifyTaskMessage = modifyTask($conn, $projectId, $sprintId);
 $issueAddMessage = addIssueTask($conn, $projectId);
 $editStateTaskMessage = editTaskEtat($conn, $projectId, $sprintId );
 $deleteMessage = deleteTask($conn);
-
-
 $result= getTaskWithSpecificState($conn,$projectId, $sprintId);
+$resultSprintDays = getDaysSprint($conn,$projectId,$sprintId);
 
 ?>
 <!DOCTYPE html>
@@ -37,13 +36,34 @@ $result= getTaskWithSpecificState($conn,$projectId, $sprintId);
 </head>
 <body>
 <?php include 'navbar.php'; ?>
+<br>
 <div class="container">
-    <!--AFFICHER LE NUMERO DE SPRINT -->
-    <div class="row">
-        <div class="col-md-3">
-            <h2>Sprint <?php echo $sprintId ?></h2> </div>
-        <!--BARRE DE PROGRESSION D UN SPRINT -->
+    <div class="card card-body bg-ligh">
+        <!--AFFICHER LE NUMERO DE SPRINT -->
+        <div class="row">
+            <div class="col-md-3">
+                <h2>Sprint <?php echo $sprintId ?></h2>
+            </div>
+            <!--Statistiques -->
+            <div class="col-md-9">
+                <!--BARRE DE PROGRESSION D UN SPRINT-->
+                        <?php
+                        $sprintDays = mysqli_fetch_row($resultSprintDays);
+                        $sprintLeftDays= $sprintDays[1];
+                        $sprintNumberDays =$sprintDays[0];
+                        ?>
+                        <div class="progress">
+                            <div class="progress-bar bg-dark" role="progressbar" style="width: 25%;" aria-valuenow=<?php echo $sprintLeftDays ?> aria-valuemin="0" aria-valuemax=<?php echo $sprintNumberDays ?>>
+                                <?php echo $sprintLeftDays.' jours restant'; ?>
+                            </div>
+                        </div>
+                       <!--CHIFFRES-->
+            </div>
+        </div>
     </div>
+</div>
+<br>
+<div class="container">
     <button type="button" class="btn btn-lg  btn-dark" data-toggle="collapse" data-target="#demo">
         Ajouter une tâche
     </button>
@@ -71,7 +91,7 @@ $result= getTaskWithSpecificState($conn,$projectId, $sprintId);
 <div class="container">
     <form method="POST">
         <label for="nameState" ></label>
-        <select class="mdb-select md-form" id="nameState" name="nameState">
+        <select class="custom-select" id="nameState" name="nameState">
             <option value="" disabled selected>Sélectionnez le type de tâche</option>
             <option value="ALL">ALL</option>
             <option value="TO DO">TO DO</option>
@@ -121,7 +141,7 @@ $result= getTaskWithSpecificState($conn,$projectId, $sprintId);
                             <div class="form-group">
                                 <label for="taskState">Nouvel Etat :</label>
                                 <br>
-                                <select class="form-control-sm" name="taskState" id="taskState" >
+                                <select class="custom-select" name="taskState" id="taskState" >
                                     <option value="TO DO">TO DO</option>
                                     <option value="ON GOING">ON GOING</option>
                                     <option value="DONE">DONE</option>
@@ -143,7 +163,7 @@ $result= getTaskWithSpecificState($conn,$projectId, $sprintId);
                                     <div class="form-group">
                                         <label for="userName">User:</label>
                                         <br>
-                                        <input type="text" class="form-control-sm" id="userName" name="userName">
+                                        <input type="text" class="form-control form-control-sm" id="userName" name="userName">
                                     </div>
                                     <button type="submit" name="assigner" class="btn btn-secondary btn-sm float-left" >Assigner</button>
                                 </form>
@@ -171,7 +191,7 @@ $result= getTaskWithSpecificState($conn,$projectId, $sprintId);
                                     <td >
                                         <form method="post">
                                             <?php echo $member[0]; ?>
-                                              <button type="submit" class="fas fa-times btn bg-transparent btn-sm float-left" style="color:red;" name="deleteMember"></button>
+                                              <button type="submit" class="taskDeleteMember fas fa-times btn  float-left" style="color:red;" name="deleteMember"></button>
                                             <input class="form-control" type="hidden" name="idMember" value="<?php echo $member[1];?>">
                                         </form>
                                     </td>
@@ -194,7 +214,7 @@ $result= getTaskWithSpecificState($conn,$projectId, $sprintId);
 
                                 <label for="issueId">User Story:</label>
                                     <br>
-                                <input type="text" class="form-control-sm" id="issueId" name="issueId">
+                                <input type="text" class="form-control form-control-sm" id="issueId" name="issueId">
                             </div>
                             <button type="submit" name="lier" class="btn btn-secondary btn-sm float-left">Lier</button>
                         </form>
