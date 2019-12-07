@@ -168,10 +168,11 @@ $resultSprintDays = getDaysSprint($conn,$projectId,$sprintId);
                                     <button type="submit" name="assigner" class="btn btn-secondary btn-sm float-left" >Assigner</button>
                                 </form>
                             </div>
-                    <br>
+
                     <!--LISTE DES MEMBRES-->
                     <table class="table table-no-border">
                         <thead>
+                          <th style="border: 0px;"></th>
                         </thead>
                         <tbody>
                             <!-- LIST OF TASK'S MEMBERS-->
@@ -221,7 +222,9 @@ $resultSprintDays = getDaysSprint($conn,$projectId,$sprintId);
                     </div>
                     <br><br>
                      <table class="table table-no-border">
-                         <thead></thead>
+                         <thead>
+                             <th style="border: 0px;"></th>
+                         </thead>
                         <tbody>
                         <?php
                         deleteIssueFromTask($conn,$projectId);
