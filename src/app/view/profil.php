@@ -33,6 +33,7 @@ $userTasks = getUserTasks();
 
 <div class="container">
     <div class="row justify-content-aroud">
+        <!--Liste de projets-->
         <div class = "col-sm-4">
             <table class="table table-bordered table-hover" id="projectsList">
                 <tr>
@@ -63,7 +64,7 @@ $userTasks = getUserTasks();
         <div class="col-sm-4" id="openNewProjectForm">
             <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#newProjectModal" id="addButton">Créer un nouveau projet</button>
         </div>
-
+        <!--Liste des tasks de l'utilisateur-->
         <div class = "col-sm-4">
             <table class="table table-bordered table-hover" id="TasksList">
                 <tr>
@@ -99,7 +100,7 @@ $userTasks = getUserTasks();
         </div>
     </div>
 </div>
-
+<!--Modal pour la création d'un projet-->
 <div class="modal" tabindex="-1" role="dialog" id="newProjectModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

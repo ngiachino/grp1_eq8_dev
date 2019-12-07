@@ -19,3 +19,10 @@ Le dossier **uploads** permet de stocker les documents ajouté à un projet via 
 
 - Le sous-dossier **view** contient le visuel des pages du projet.
 - Le sous-dossier **management** contient les fonctions permettant de gérer le projet. (Par exemple issuesManagement.php contient les fonctions de gestion des issues).
+
+# Commentaires de code
+
+Nous avons pris partie de très peu commenter le code source du projet. Les fonctions et variables du code étant sensées être suffisamment explicites.
+
+Cependant pour les fichiers du dossier **view** (visuel du site), nous avons écrit quelques commentaires pour mieux comprendre quelle partie du code correspond à quel element affiché sur la page.
+Par exemple dans le fichier **/src/view/index.php**, nous avons indiqué quelle partie du code correspond à l'encadré de connexion et quelle partie à l'encadrée d'inscription.

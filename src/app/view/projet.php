@@ -64,7 +64,7 @@ $historiques = showHistorique($projectId);
             </a>
         </div>
     </div>
-
+    <!--Encadré contenant l'Historique et les boutons de modification du projet-->
     <div class="row">
         <div class="col-5">
             <div class="membersList">
@@ -92,7 +92,7 @@ $historiques = showHistorique($projectId);
                 </div>
             </div>
         </div>
-
+         <!--Liste des membres d'un projet-->               
         <div class="col-7">
             <div class="membersList">
                 <form class="form-container d-inline" method="POST">
@@ -124,7 +124,7 @@ $historiques = showHistorique($projectId);
         </div>
     </div>
 </div>
-
+<!--Modal de suppression de projet-->
 <div class="modal" tabindex="-1" role="dialog" id="delProjectModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -143,7 +143,7 @@ $historiques = showHistorique($projectId);
         </div>
     </div>
 </div>
-
+<!--Modal de modification de projet-->
 <div class="modal" tabindex="-1" role="dialog" id="modifyProjectModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

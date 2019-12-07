@@ -36,6 +36,7 @@ startRegister();
 
 <div class="container">
     <div class="row justify-content-around">
+        <!--Encadré de Connexion-->
         <div class="col-sm-5 logInscBox">
             <form class="form-container" method = "POST" id="formCo">
                 <h2>Connexion</h2>
@@ -53,7 +54,7 @@ startRegister();
             </form>
         </div>
         
-
+        <!--Encadré d'inscription-->
         <div class="col-sm-5 logInscBox">
             <form class="form-container" method = "POST" id="formInsc">
                 <h2>Inscription</h2>
