@@ -12,11 +12,14 @@ from selenium.webdriver.common.keys import Keys
 
 class TestIssueAddDelete(unittest.TestCase):
   def setUp(self):
-    self.driver = webdriver.Chrome(executable_path='./chromedriver.exe')
+    self.driver = webdriver.Chrome(executable_path='chromedriver.exe')
     self.vars = {}
 
   def test_issueAddDelete(self):
-    self.driver.get("http://localhost/CDP/src")
+    with open('url.txt', 'r') as file:
+      url = file.read().replace('\n', '')
+      
+    self.driver.get(url)
     self.driver.set_window_size(1900, 1020)
     time.sleep(5)
     self.driver.find_element(By.ID, "nameCo").click()

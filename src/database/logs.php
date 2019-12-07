@@ -1,5 +1,6 @@
 <?php
-$dbserver ='dbserver';
-$dbuser = 'aouldamara';
-$password = 'cdp';
-$dbname = "aouldamara";
+$dbserver ='localhost';
+$dbuser = 'root';
+$password = '';
+$dbname = "cdp";
+?>

@@ -9,4 +9,4 @@ WORKDIR /var/www/html/
 
 COPY . .
 
-COPY database/logs.docker.php database/logs.local.php
+COPY database/logs.docker.php database/logs.php
