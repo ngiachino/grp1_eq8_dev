@@ -121,14 +121,29 @@ function modifyDurationTask($conn, $taskId, $projectId, $sprintId, $duration)
     mysqli_query($conn, $queryUpdate);
     return "La modification de la durée de la tâche a été faite! ";
 }
+function detachTaskFromIssues($conn, $projectId, $taskId)
+{
+    $queryDelete = "DELETE FROM issue WHERE ID_TACHE = '$taskId' and ID_PROJET = '$projectId'";
+    mysqli_query($conn,$queryDelete);
+    return "Suppression du lien entre les issues et la tâche".$taskId;
+}
+function detachTaskFromMembers($conn, $projectId, $sprintId, $taskId)
+{
+    $queryDelete = "DELETE FROM membre WHERE ID_TACHE = '$taskId' and ID_PROJET = '$projectId' and ID_SPRINT='$sprintId'";
+    mysqli_query($conn,$queryDelete);
+    return "Suppression du lien entre les membres et la tâche".$taskId;
+}
 
-function deleteTask($conn)
+function deleteTask($conn, $projectId, $sprintId)
 {
     if (isset($_POST['delete'])) {
         if (empty($_POST['taskId'])) {
             return "Impossible";
         }
         $taskId = $_POST['taskId'];
+        detachTaskFromIssues($conn,$projectId,$sprintId,$taskId);
+        detachTaskFromMembers($conn,$projectId,$sprintId,$taskId);
+
         $query = "DELETE FROM Tache WHERE ID_TACHE = '$taskId'";
         mysqli_query($conn, $query);
         return "La suppresion la tâche a été faite! ";
