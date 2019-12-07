@@ -50,7 +50,7 @@ $result = mysqli_query($conn, $query);
                             <p class="card-text">Date de début : <?php echo $row[1]?></p>
                             <p class="card-text">Date de fin : <?php echo $row[2]?></p>
                             <?php if($sprintsNb >0){?>
-                                <button class="btn btn-primary d-inline" data-toggle="modal" data-target="#modifySprintModal<?php echo $row[3];?>">Modifier</button>
+                                <button class="btn btn-primary d-inline" data-toggle="modal" id="modifySprintModal0" data-target="#modifySprintModal<?php echo $row[3];?>">Modifier</button>
                                 <form method="POST" class="d-inline">
                                     <input type="hidden" name="id" value="<?php echo $row[3];?>">
                                     <button type="submit" name="delete" class="btn btn-secondary">Supprimer</button>
@@ -64,6 +64,7 @@ $result = mysqli_query($conn, $query);
             </div>
 
             <?php
+            $i = 1;
             while($row = mysqli_fetch_row($result)){
                 ?>
                 <div class="carousel-item">
@@ -81,12 +82,13 @@ $result = mysqli_query($conn, $query);
                                     <input type="hidden" name="id" value="<?php echo $row[3];?>">
                                     <button type="submit" name="delete" class="btn btn-secondary">Supprimer</button>
                                 </form>
-                                <button class="btn btn-primary" data-toggle="modal" data-target="#modifySprintModal<?php echo $row[3];?>">Modifier</button>
+                                <button class="btn btn-primary" data-toggle="modal" id="modifySprintModal<?php echo $i;?>" data-target="#modifySprintModal<?php echo $row[3];?>">Modifier</button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <?php
+            $i++;
             }
             ?>
         </div>

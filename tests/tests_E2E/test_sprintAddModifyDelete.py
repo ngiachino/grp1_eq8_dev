@@ -39,7 +39,7 @@ class TestSprintAddModifyDelete(unittest.TestCase):
     self.driver.find_element(By.ID, "sprintEndDate").send_keys("2019-11-29")
     self.driver.find_element(By.NAME, "submit").click()
     time.sleep(3)
-    self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(4)").click()
+    self.driver.find_element(By.ID, "modifySprintModal0").click()
     time.sleep(3)
     self.driver.find_element(By.CSS_SELECTOR, ".form-group:nth-child(4) > #sprintEndDate").click()
     self.driver.find_element(By.CSS_SELECTOR, ".form-group:nth-child(4) > #sprintEndDate").send_keys("2019-11-28")
