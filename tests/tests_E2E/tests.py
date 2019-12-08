@@ -18,14 +18,15 @@ import test_memberAddDelete
 import test_releaseClickOnLink
 import test_sprintAddModifyDelete
 
-def main():
+def main(out):
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(test_ConnexionDeconnexion.TestConnexionDeconnexion))
     suite.addTest(unittest.makeSuite(test_issueAddDelete.TestIssueAddDelete))
     suite.addTest(unittest.makeSuite(test_memberAddDelete.TestMemberAddDelete))
     suite.addTest(unittest.makeSuite(test_releaseClickOnLink.TestReleaseClickOnLink))
     suite.addTest(unittest.makeSuite(test_sprintAddModifyDelete.TestSprintAddModifyDelete))
-    unittest.TextTestRunner(verbosity = 3).run(suite)
+    unittest.TextTestRunner(out,verbosity = 3).run(suite)
 
 if __name__ == '__main__': 
-    main()
+    with open('latest_log.txt', 'w') as out:
+        main(out)

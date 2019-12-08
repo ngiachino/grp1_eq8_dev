@@ -1,0 +1,10 @@
+test_connexionDeconnexion (test_ConnexionDeconnexion.TestConnexionDeconnexion) ... ok
+test_issueAddDelete (test_issueAddDelete.TestIssueAddDelete) ... ok
+test_memberAddDelete (test_memberAddDelete.TestMemberAddDelete) ... ok
+test_releaseClickOnLink (test_releaseClickOnLink.TestReleaseClickOnLink) ... ok
+test_sprintAddModifyDelete (test_sprintAddModifyDelete.TestSprintAddModifyDelete) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 185.044s
+
+OK
