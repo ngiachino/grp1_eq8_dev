@@ -239,3 +239,13 @@ function getCurrentTasksNumber($conn,$projectId, $sprintId)
     $queryNumber = "SELECT DISTINCT count(ID_TACHE) FROM tache WHERE ID_PROJET = $projectId AND ID_SPRINT= $sprintId";
     return mysqli_query($conn,$queryNumber);
 }
+
+function getMembersProject($projectId,$conn){
+    $sql = "SELECT DISTINCT NOM_MEMBRE FROM membre WHERE ID_PROJET = '$projectId'";
+    return mysqli_query($conn,$sql);
+}
+
+function getIssuesProject($projectId,$conn){
+    $sql = "SELECT DISTINCT ID_USER_STORY FROM issue WHERE ID_PROJET = '$projectId'";
+    return mysqli_query($conn,$sql);
+}

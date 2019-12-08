@@ -51,9 +51,10 @@ $resultSprintDays = getDaysSprint($conn,$projectId,$sprintId);
                         $sprintDays = mysqli_fetch_row($resultSprintDays);
                         $sprintLeftDays= $sprintDays[1];
                         $sprintNumberDays =$sprintDays[0];
+                        $daysPercent = ((($sprintNumberDays - $sprintLeftDays) * 100) / $sprintNumberDays);
                         ?>
                         <div class="progress">
-                            <div class="progress-bar bg-dark" role="progressbar" style="width: 25%;" aria-valuenow=<?php echo $sprintLeftDays ?> aria-valuemin="0" aria-valuemax=<?php echo $sprintNumberDays ?>>
+                            <div class="progress-bar bg-dark" role="progressbar" style="width: <?php echo $daysPercent;?>%"?>>
                                 <?php echo $sprintLeftDays.' jours restant'; ?>
                             </div>
                         </div>
@@ -170,9 +171,14 @@ $resultSprintDays = getDaysSprint($conn,$projectId,$sprintId);
                                 <form method="POST">
                                     <input type="hidden" name="taskId" value=<?php echo $row[3];?>>
                                     <div class="form-group">
-                                        <label for="userName">User:</label>
-                                        <br>
-                                        <input type="text" class="form-control form-control-sm" id="userName" name="userName">
+                                    <select class="form-control w-25 d-inline" id="userName" name="userName">
+                                        <?php
+                                            $members = getMembersProject($projectId,$conn);
+                                            while($member = mysqli_fetch_row($members)){
+                                                echo "<option value=$member[0]>$member[0]</option>";
+                                            }
+                                        ?>
+                                    </select>
                                     </div>
                                     <button type="submit" name="assigner" class="btn btn-secondary btn-sm float-left" >Assigner</button>
                                 </form>
@@ -220,15 +226,21 @@ $resultSprintDays = getDaysSprint($conn,$projectId,$sprintId);
                         <form method="POST">
                             <div class="form-group">
                                 <input type="hidden" name="taskIdentificateur" value=<?php echo $row[3];?>>
-
-                                <label for="issueId">User Story:</label>
-                                    <br>
-                                <input type="text" class="form-control form-control-sm" id="issueId" name="issueId">
+                                <select class="form-control w-25 d-inline"  id="issueId" name="issueId">
+                                        <?php
+                                            $i=1;
+                                            $issues = getIssuesProject($projectId,$conn);
+                                            while($issue = mysqli_fetch_row($issues)){
+                                                echo "<option value=$issue[0]>US$i</option>";
+                                                $i++;
+                                            }
+                                        ?>
+                                </select>
                             </div>
                             <button type="submit" name="lier" class="btn btn-secondary btn-sm float-left">Lier</button>
                         </form>
                     </div>
-                    <br><br>
+                    
                      <table class="table table-no-border">
                          <thead>
                              <th style="border: 0px;"></th>
@@ -237,16 +249,18 @@ $resultSprintDays = getDaysSprint($conn,$projectId,$sprintId);
                         <?php
                         deleteIssueFromTask($conn,$projectId);
                         $resultIssues = getIssuesTask($conn, $taskId, $projectId);
+                        $i = 1;
                         while ($rowIssue = mysqli_fetch_row($resultIssues)) {
                         $issueId = $rowIssue[0];
-                        $issueDescription = $rowIssue[1];
+                        $issueNumber = $i;
+                        $i++;
                         ?>
                         <tr>
                         <!--Bouton delete-->
                             <td>
                             <form method="POST">
                                 <button type="submit" class="fas fa-times btn bg-transparent btn-sm float-left" style="color:red;" name="deleteIssue"></button>
-                                <?php echo $issueId.'-'.$issueDescription; ?>
+                                <?php echo "US$issueNumber"; ?>
                                 <input type="hidden" name="issueId" value="<?php echo $issueId;?>">
                                 <input type="hidden" name="taskId" value="<?php echo $taskId;?>">
 
