@@ -150,7 +150,7 @@ CREATE TABLE `tache` (
   `ID_PROJET` int(50) UNSIGNED NOT NULL COMMENT '"identifiant du projet auquel appartient la tâche"',
   `ID_SPRINT` int(50) UNSIGNED NOT NULL COMMENT '"Identifiant du sprint auquel appartient la tâche"',
   `ID_USER_STORY` varchar(50) NOT NULL COMMENT '"Identifiant de la USS qui correspond à la tâche"',
-  `DESCRIPTION` varchar(50) NOT NULL,
+  `DESCRIPTION` varchar(500) NOT NULL,
   `DUREE_TACHE` float NOT NULL COMMENT '"Durée de la tâche. Ne dépasse pas une journée"',
   `IS_DONE` varchar(20) NOT NULL COMMENT '"Indique si la tâche a été effectuée"',
   `MEMBRES` varchar(500) NOT NULL DEFAULT ''

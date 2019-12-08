@@ -74,7 +74,7 @@ $resultSprintDays = getDaysSprint($conn,$projectId,$sprintId);
         <form method="POST">
             <div class="form-group">
                 <label for="taskDescription">Description de la tâche:</label>
-                <textarea class="form-control" id="taskDescription" name="taskDescription"/></textarea>
+                <textarea class="form-control" id="taskDescription" maxlength="500" name="taskDescription"/></textarea>
             </div>
 
             <div class="form-row">
@@ -298,7 +298,7 @@ $resultSprintDays = getDaysSprint($conn,$projectId,$sprintId);
                                         <div class="form-group">
                                             <label for="descriptionTask">Description:</label>
                                             <br>
-                                            <textarea class="form-control" id="descriptionTask" name="descriptionTask"><?php echo $row[0];?></textarea>
+                                            <textarea class="form-control" id="descriptionTask" maxlength="500" name="descriptionTask"><?php echo $row[0];?></textarea>
                                             <br>
                                             <label for="durationTask">Durée:</label> <br>
                                             <input type="number" step="0.5" class="form-control-sm" id="durationTask" name="durationTask" placeholder="<?php echo $row[1];?>">

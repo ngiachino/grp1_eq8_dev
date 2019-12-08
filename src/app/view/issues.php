@@ -58,7 +58,7 @@ $result = showIssues($idProjet);
     <tr>
         <th scope="row"></th>
         <td>
-            <input class="form-control" type="text" name="description" form="newIssueForm" maxlength="500" placeholder="Description" required>
+            <textarea class="form-control" name="description" form="newIssueForm" maxlength="500" placeholder="Description" required></textarea>
         </td>
         <td>
             <select class="form-control" name="priority" form="newIssueForm">
@@ -96,7 +96,7 @@ while($row = mysqli_fetch_row($result)){
                         <input type="hidden" name="id" value="<?php echo $row[0];?>">
                         <div class="form-group">
                             <label for="issueDescription">Description de l'issue</label>
-                            <textarea class="form-control" id="issueDescription" name="description"><?php echo $row[3];?></textarea>
+                            <textarea class="form-control" id="issueDescription" name="description" maxlength="500"><?php echo $row[3];?></textarea>
                         </div>
                         <div class="form-group">
                             <label for="issuePriorite">Priorité de l'issue</label>
