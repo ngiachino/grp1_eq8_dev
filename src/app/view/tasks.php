@@ -16,7 +16,7 @@ else if( $_GET['projectId'] == null || $_GET['sprintId'] == null){
 
 $projectId = $_GET['projectId'];
 $sprintId = $_GET['sprintId'];
-$addMessage = addTask($conn,$projectId, $sprintId);
+$addMessage = startAddTask($conn,$projectId, $sprintId);
 $assignMessage = assignTask($conn,$projectId, $sprintId );
 $modifyTaskMessage = modifyTask($conn, $projectId, $sprintId);
 $issueAddMessage = addIssueTask($conn, $projectId);
@@ -78,10 +78,9 @@ $resultSprintDays = getDaysSprint($conn,$projectId,$sprintId);
 
             <div class="form-group">
                 <label for="taskDuration">Durée de la tâche (en jour/homme) :</label>
-                <input type="text" class="form-control" id="taskDuration" name="taskDuration">
-                <input type="hidden" name="taskState" value="TO DO">
+                <input type="number" step="0.5" class="form-control" id="taskDuration" name="taskDuration">
             </div>
-            <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" name="submit" class="btn btn-dark btn-sm">Ajouter</button>
         </form>
         <!--FIN DU FORMULAIRE-->
     </div>
@@ -168,7 +167,6 @@ $resultSprintDays = getDaysSprint($conn,$projectId,$sprintId);
                                     <button type="submit" name="assigner" class="btn btn-secondary btn-sm float-left" >Assigner</button>
                                 </form>
                             </div>
-
                     <!--LISTE DES MEMBRES-->
                     <table class="table table-no-border">
                         <thead>

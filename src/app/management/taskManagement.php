@@ -1,47 +1,52 @@
 <?php
-function addTask($conn,$projectId,$sprintId)
-{     if (isset($_POST['submit']))
-    {
-    $description = $_POST['taskDescription'];
-    $duration = $_POST['taskDuration'];
-    if (empty($description)|| empty($duration))
-    {
-        return " Veuillez remplir tous les champs!";
+include_once 'historiqueManagement.php';
+function startAddTask($conn,$projectId,$sprintId)
+{
+    if (isset($_POST['submit'])) {
+        $description = $_POST['taskDescription'];
+        $duration = $_POST['taskDuration'];
+        if (empty($description) || empty($duration)) {
+            return "Veuillez remplir tous les champs!";
+        } else {
+            addTask($conn, $projectId, $sprintId, $description, $duration);
+        }
     }
-    else {
-        //test l'existence de la tache
-        $taskState = $_POST['taskState'];
-        $query = "INSERT INTO `tache`(`ID_PROJET`, `ID_SPRINT`,`ID_USER_STORY`, 
-                                          `DESCRIPTION`,`DUREE_TACHE`, `IS_DONE`) 
-                         VALUES ('$projectId','$sprintId','-1','$description','$duration','$taskState')";
-        mysqli_query($conn, $query);
-        return " Tâche ajoutée ";
-    }
-    }
-    return null;
+}
+function addTask($conn,$projectId,$sprintId,$description,$duration)
+{
+    $DefaultTaskState = "TO DO";
+    $query = "INSERT INTO `tache`(`ID_PROJET`, `ID_SPRINT`,`ID_USER_STORY`, 
+                                      `DESCRIPTION`,`DUREE_TACHE`, `IS_DONE`) 
+                     VALUES ('$projectId','$sprintId','-1','$description','$duration','$DefaultTaskState')";
+    mysqli_query($conn, $query);
+    addHistorique($projectId,"Une tâche a été créée");
+    return "Tâche ajoutée ";
 }
 
 function assignTask($conn,$projectId, $sprintId)
 {
-    if (isset($_POST['assigner']) || !(empty($_POST['userName'])) || !(empty($_POST['taskId'])) ) {
-        $userName = $_POST['userName'];
-        $taskId = $_POST['taskId'];
-        $queryExistMember = "SELECT ID_MEMBRE
+    if (isset($_POST['assigner'])) {
+        if (!(empty($_POST['userName'])) || !(empty($_POST['taskId']))) {
+            $userName = $_POST['userName'];
+            $taskId = $_POST['taskId'];
+            $queryExistMember = "SELECT ID_MEMBRE
                                  from membre join utilisateur 
                                              on membre.ID_MEMBRE = utilisateur.ID_USER 
                                 WHERE NOM_USER = '$userName' AND ID_TACHE != '$taskId' ";
-        $resultMember = mysqli_query($conn, $queryExistMember);
-        if (mysqli_num_rows($resultMember) != 0) {
-            $row = mysqli_fetch_row($resultMember);
-            $userId = $row[0];
-            $queryAssign = " INSERT INTO membre 
+            $resultMember = mysqli_query($conn, $queryExistMember);
+            if (mysqli_num_rows($resultMember) != 0) {
+                $row = mysqli_fetch_row($resultMember);
+                $userId = $row[0];
+                $queryAssign = " INSERT INTO membre 
                                     VALUES ('$userId', '$projectId','$userName'
                                             ,'$sprintId', '$taskId')";
-            mysqli_query($conn, $queryAssign);
-            return "La tache a été assignée!";
+                mysqli_query($conn, $queryAssign);
+                return "La tache a été assignée!";
+            }
         }
     }
 }
+
 
 function addIssueTask($connexion, $projectId){
     if(isset($_POST['lier'])){
@@ -229,4 +234,8 @@ function getTaskWithSpecificState($conn, $projectId, $sprintId){
     return $result;
 }
 
-
+function getCurrentTasksNumber($conn,$projectId, $sprintId)
+{
+    $queryNumber = "SELECT DISTINCT count(ID_TACHE) FROM tache WHERE ID_PROJET = $projectId AND ID_SPRINT= $sprintId";
+    return mysqli_query($conn,$queryNumber);
+}
