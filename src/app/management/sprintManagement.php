@@ -1,5 +1,5 @@
 <?php
-function addSprint($conn,$projectID)
+function startAddSprint($conn, $projectId)
 {
     if (isset($_POST['submit'])) {
         $sprintName = $_POST['name'];
@@ -9,22 +9,27 @@ function addSprint($conn,$projectID)
         if (empty($sprintName) || empty($startDate) || empty($endDate)) {
             return "Vous devez remplir tous les champs";
         } else {
-            //test que l'utilisateur n'a pas déjà créé un sprint  du même nom
-            $sql = $conn->prepare("SELECT ID_SPRINT FROM sprint WHERE NOM_SPRINT = ? AND ID_PROJET = ?");
-            $sql->bind_param("si",$sprintName,$projectID);
-            $sql->execute();
-            $result1 = $sql->get_result();
-
-            if (mysqli_num_rows($result1) > 0) {
-                return "Vous avez déjà créé un sprint du même nom";
-            } else {
-                $sql = $conn->prepare("INSERT INTO sprint (NOM_SPRINT, ID_PROJET, DATE_DEBUT, DATE_FIN)
-                VALUES (?,?,?,?)");
-                $sql->bind_param("siss",$sprintName,$projectID,$startDate,$endDate);
-                $sql->execute();
-                return "Votre sprint a bien été crée";
-            }
+            addSprint($conn, $projectId,$sprintName,$startDate,$endDate);
         }
+    }
+}
+
+function addSprint($conn,$projectID,$sprintName, $startDate, $endDate )
+{
+    //test que l'utilisateur n'a pas déjà créé un sprint  du même nom
+    $sql = $conn->prepare("SELECT ID_SPRINT FROM sprint WHERE NOM_SPRINT = ? AND ID_PROJET = ?");
+    $sql->bind_param("si",$sprintName,$projectID);
+    $sql->execute();
+    $result1 = $sql->get_result();
+
+    if (mysqli_num_rows($result1) > 0) {
+        return "Vous avez déjà créé un sprint du même nom";
+    } else {
+        $sql = $conn->prepare("INSERT INTO sprint (NOM_SPRINT, ID_PROJET, DATE_DEBUT, DATE_FIN)
+                                    VALUES (?,?,?,?)");
+        $sql->bind_param("siss",$sprintName,$projectID,$startDate,$endDate);
+        $sql->execute();
+        return "Votre sprint a bien été crée";
     }
 }
 function deleteSprint($conn)
@@ -72,13 +77,13 @@ function getSprintData($conn, $projectId, $sprintId){
 }
 
 function getDaysSprint($conn, $projectId, $sprintId){
-    $today= date("Y-m-d");
     $queryMinusDate = "SELECT DATEDIFF(DATE_FIN,DATE_DEBUT), DATEDIFF(DATE_FIN,CURDATE())
                        FROM sprint
                        WHERE ID_SPRINT='$sprintId'
                          AND ID_PROJET='$projectId'";
      return mysqli_query($conn,$queryMinusDate);
 }
+
 
 
 function getTasksSprint($conn){

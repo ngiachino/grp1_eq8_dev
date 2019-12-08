@@ -9,7 +9,7 @@ if($_SESSION['projectId'] == null){
 }
 
 $idProjet = $_SESSION['projectId'];
-$messageAdd = addSprint($conn, $idProjet);
+$messageAdd = startAddSprint($conn, $idProjet);
 $messageDel = deleteSprint($conn);
 $messageModify = modifySprint($conn, $idProjet);
 $query = "SELECT NOM_SPRINT,DATE_DEBUT,DATE_FIN, ID_SPRINT FROM sprint WHERE ID_PROJET = '$idProjet' ORDER BY DATE_FIN";
