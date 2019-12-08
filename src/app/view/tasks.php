@@ -228,11 +228,11 @@ $resultSprintDays = getDaysSprint($conn,$projectId,$sprintId);
                                 <input type="hidden" name="taskIdentificateur" value=<?php echo $row[3];?>>
                                 <select class="form-control w-25 d-inline"  id="issueId" name="issueId">
                                         <?php
-                                            $i=1;
+                                            $k=1;
                                             $issues = getIssuesProject($projectId,$conn);
                                             while($issue = mysqli_fetch_row($issues)){
                                                 echo "<option value=$issue[0]>US$i</option>";
-                                                $i++;
+                                                $k++;
                                             }
                                         ?>
                                 </select>
@@ -249,11 +249,11 @@ $resultSprintDays = getDaysSprint($conn,$projectId,$sprintId);
                         <?php
                         deleteIssueFromTask($conn,$projectId);
                         $resultIssues = getIssuesTask($conn, $taskId, $projectId);
-                        $i = 1;
+                        $l = 1;
                         while ($rowIssue = mysqli_fetch_row($resultIssues)) {
                         $issueId = $rowIssue[0];
-                        $issueNumber = $i;
-                        $i++;
+                        $issueNumber = $l;
+                        $l++;
                         ?>
                         <tr>
                         <!--Bouton delete-->
@@ -276,30 +276,40 @@ $resultSprintDays = getDaysSprint($conn,$projectId,$sprintId);
 
                   <!-- ACTION SUR UNE TACHE-->
                     <!--MODIFIER UNE TÂCHE  -->
-                    <button class="fas fa-edit btn btn-light" data-toggle="collapse" data-target="<?php echo "#modifier".$i;?>">
+                    <button class="fas fa-edit btn btn-light" data-toggle="modal" data-target="<?php echo "#modifyTaskModal".$i;?>">
                     </button>
                     <!-- DELETE-->
                     <form method="POST" class="d-inline">
                         <input type="hidden" name="taskId" value="<?php echo $row[3];?>">
                         <button type="submit" name="delete" class="fa fa-close btn btn-light d-inline"></button>
                     </form>
-                    <div id=<?php echo "modifier".$i; ?> class="collapse">
-                        <!-- Le formulaire d'attribution de la tâche -->
-                        <br><br>
-                            <form method="POST">
-                            <div class="form-group">
-                                <label for="descriptionTask">Description:</label>
-                                <br>
-                                <textarea class="form-control-sm" id="descriptionTask" name="descriptionTask"><?php echo $row[0];?></textarea>
-                                <br>
-                                <label for="durationTask">Durée:</label> <br>
-                                <input type="number" step="0.5" class="form-control-sm" id="durationTask" name="durationTask" placeholder="<?php echo $row[1];?>">
-                                <input type="hidden" name="taskId" value="<?php echo $row[3];?>">
-                            </div>
-                            <button type="submit" name="modifier" class="btn btn-secondary btn-sm">Modifier</button>
-                        </form>
                     </div>
-
+                        <div class="modal" tabindex="-1" role="dialog" id="modifyTaskModal<?php echo $i;?>">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Modifier tâche</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    <form method="POST">
+                                        <div class="form-group">
+                                            <label for="descriptionTask">Description:</label>
+                                            <br>
+                                            <textarea class="form-control" id="descriptionTask" name="descriptionTask"><?php echo $row[0];?></textarea>
+                                            <br>
+                                            <label for="durationTask">Durée:</label> <br>
+                                            <input type="number" step="0.5" class="form-control-sm" id="durationTask" name="durationTask" placeholder="<?php echo $row[1];?>">
+                                            <input type="hidden" name="taskId" value="<?php echo $row[3];?>">
+                                        </div>
+                                        <button type="submit" name="modifier" class="btn btn-secondary btn-sm">Modifier</button>
+                                    </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     <!--FIN Des ACTIONS FORMULAIRE-->
                 </td>
             </tr>
