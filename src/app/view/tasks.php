@@ -73,12 +73,22 @@ $resultSprintDays = getDaysSprint($conn,$projectId,$sprintId);
         <form method="POST">
             <div class="form-group">
                 <label for="taskDescription">Description de la tâche:</label>
-                <input type="text" class="form-control" id="taskDescription" name="taskDescription"/>
+                <textarea class="form-control" id="taskDescription" name="taskDescription"/></textarea>
             </div>
 
-            <div class="form-group">
-                <label for="taskDuration">Durée de la tâche (en jour/homme) :</label>
-                <input type="number" step="0.5" class="form-control" id="taskDuration" name="taskDuration">
+            <div class="form-row">
+                <div class="col-md-4 mb-3">
+                    <label for="taskDuration">Durée de la tâche (en jour/homme) :</label>
+                    <input type="number" step="0.5" class="form-control" id="taskDuration" name="taskDuration">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="taskState">Etat de la tâche: </label>
+                    <select class="form-control form-control-sm" name="taskState" id="taskState" >
+                        <option value="TO DO">TO DO</option>
+                        <option value="ON GOING">ON GOING</option>
+                        <option value="DONE">DONE</option>
+                    </select>
+                </div>
             </div>
             <button type="submit" name="submit" class="btn btn-dark btn-sm">Ajouter</button>
         </form>
@@ -102,7 +112,7 @@ $resultSprintDays = getDaysSprint($conn,$projectId,$sprintId);
 </div>
 <br>
 <!--AFFICHAGE DES TÂCHES COURRANTES DU SPRINT-->
-<div class="container">
+<div class="taskTable">
     <table class="table" id="taskList">
         <thead class="thead-dark">
         <tr>
@@ -266,10 +276,10 @@ $resultSprintDays = getDaysSprint($conn,$projectId,$sprintId);
                             <div class="form-group">
                                 <label for="descriptionTask">Description:</label>
                                 <br>
-                                <input type="text" class="form-control-sm" id="descriptionTask" name="descriptionTask" placeholder="<?php echo $row[0];?>">
+                                <textarea class="form-control-sm" id="descriptionTask" name="descriptionTask"><?php echo $row[0];?></textarea>
                                 <br>
                                 <label for="durationTask">Durée:</label> <br>
-                                <input type="text" class="form-control-sm" id="durationTask" name="durationTask" placeholder="<?php echo $row[1];?>">
+                                <input type="number" step="0.5" class="form-control-sm" id="durationTask" name="durationTask" placeholder="<?php echo $row[1];?>">
                                 <input type="hidden" name="taskId" value="<?php echo $row[3];?>">
                             </div>
                             <button type="submit" name="modifier" class="btn btn-secondary btn-sm">Modifier</button>
