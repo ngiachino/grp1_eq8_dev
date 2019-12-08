@@ -32,7 +32,7 @@ function assignTask($conn,$projectId, $sprintId)
             $queryExistMember = "SELECT ID_MEMBRE
                                  from membre join utilisateur 
                                              on membre.ID_MEMBRE = utilisateur.ID_USER 
-                                WHERE NOM_USER = '$userName' AND ID_TACHE != '$taskId' ";
+                                WHERE NOM_USER = '$userName' AND ID_TACHE != '$taskId' AND ID_PROJET = '$projectId' ";
             $resultMember = mysqli_query($conn, $queryExistMember);
             if (mysqli_num_rows($resultMember) != 0) {
                 $row = mysqli_fetch_row($resultMember);
