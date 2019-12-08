@@ -13,4 +13,10 @@
             $row = mysqli_fetch_assoc($result);
             return $row["ID_PROJET"];
         }
+    function createSprint($conn, $projectId){
+        $today = date("Y-m-d");
+        $nextWeek = date("Y-m-d", strtotime("+1 week"));
+        return addSprint($conn,$projectId,'sprint test', $today,$nextWeek);
+    }
+
 ?>

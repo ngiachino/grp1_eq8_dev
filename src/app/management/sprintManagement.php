@@ -32,15 +32,20 @@ function addSprint($conn,$projectID,$sprintName, $startDate, $endDate )
         return "Votre sprint a bien été crée";
     }
 }
-function deleteSprint($conn)
-{
+function startDeleteSprint($conn){
     if (isset($_POST['delete'])) {
         $sprintID = $_POST['id'];
-        $query = "DELETE FROM sprint WHERE ID_SPRINT = '$sprintID'";
-        mysqli_query($conn,$query);
+        deleteSprint($conn,$sprintID);
     }
 }
-function modifySprint($conn,$projectID){
+
+function deleteSprint($conn, $sprintId)
+{   echo $sprintId;
+    $query = "DELETE FROM sprint WHERE ID_SPRINT = '$sprintId'";
+    mysqli_query($conn,$query);
+    return "votre sprint a été supprimé";
+}
+function startModifySprint($conn,$projectId){
     if(isset($_POST['modify'])){
         $sprintID = $_POST['id'];
         $sprintName = $_POST['name'];
@@ -50,23 +55,27 @@ function modifySprint($conn,$projectID){
         if (empty($sprintName) || empty($startDate) || empty($endDate)) {
             return "Vous devez remplir tous les champs";
         } else {
-            //test que l'utilisateur n'a pas déjà créé un projet du même nom
-            $sql = $conn->prepare("SELECT ID_SPRINT FROM sprint WHERE NOM_SPRINT = ? AND ID_PROJET = ? AND ID_SPRINT != ?");
-            $sql->bind_param("sii",$sprintName,$projectID,$sprintID);
-            $sql->execute();
-            $result1 = $sql->get_result();
-            if (mysqli_num_rows($result1) > 0) {
-                return "Vous avez déjà créé un sprint du même nom";
-            } else {
-                $sql = $conn->prepare("UPDATE sprint
-                SET NOM_SPRINT=?, DATE_DEBUT=?, DATE_FIN=?
-                WHERE ID_SPRINT = ?");
-                $sql->bind_param("sssi",$sprintName,$startDate,$endDate,$sprintID);
-                $sql->execute();
-                return "Votre sprint a bien été modifié";
-            }
+            modifySprint($conn,$projectId,$sprintID,$sprintName,$startDate,$endDate);
         }
     }
+}
+
+function modifySprint($conn,$projectID,$sprintID,$sprintName,$startDate,$endDate){
+        //test que l'utilisateur n'a pas déjà créé un sprint du même nom
+        $sql = $conn->prepare("SELECT ID_SPRINT FROM sprint WHERE NOM_SPRINT = ? AND ID_PROJET = ? AND ID_SPRINT != ?");
+        $sql->bind_param("sii",$sprintName,$projectID,$sprintID);
+        $sql->execute();
+        $result1 = $sql->get_result();
+        if (mysqli_num_rows($result1) > 0) {
+            return "Vous avez déjà créé un sprint du même nom";
+        } else {
+            $sql = $conn->prepare("UPDATE sprint
+            SET NOM_SPRINT=?, DATE_DEBUT=?, DATE_FIN=?
+            WHERE ID_SPRINT = ?");
+            $sql->bind_param("sssi",$sprintName,$startDate,$endDate,$sprintID);
+            $sql->execute();
+            return "Votre sprint a bien été modifié";
+        }
 }
 
 function getSprintData($conn, $projectId, $sprintId){
