@@ -29,6 +29,27 @@ class TaskTest extends TestCase{
         $this->clear();
     }
 
+    public function testDeleteTask(){
+        $conn = connect();
+        $this->clear();
+        $userID=createAccount($conn);
+        $projectId = createProject($conn,$userID);
+        $sprintId = createSprint($conn,$projectId);
+        //CREATE THE TASK
+        createTask($conn,$userID,$projectId,$sprintId);
+        //Get taskId
+        $queryId ="SELECT ID_TACHE from tache WHERE DESCRIPTION= 'Test Description'";
+        $result = mysqli_query($conn,$queryId);
+        $taskId= mysqli_fetch_row($result)[0];
+        //DELETE
+        deleteTask($conn,$projectId,$sprintId,$taskId);
+        $queryId ="SELECT ID_TACHE from tache WHERE DESCRIPTION= 'Test Description'";
+        $result = mysqli_query($conn,$queryId);
+        $taskNumber=mysqli_num_rows($result);
+        $this->assertEquals($taskNumber, 0);
+        $this->clear();
+    }
+
     private function clear(){
         $conn = connect();
         $sql = "DELETE FROM utilisateur WHERE NOM_USER = 'TestAccount' OR MAIL_USER = 'TestAccount@test.fr'";

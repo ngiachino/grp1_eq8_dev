@@ -22,7 +22,6 @@ function addTask($conn,$projectId,$sprintId,$description,$duration)
     addHistorique($projectId,"Une tâche a été créée");
     return "Tâche ajoutée ";
 }
-
 function assignTask($conn,$projectId, $sprintId)
 {
     if (isset($_POST['assigner'])) {
@@ -138,21 +137,24 @@ function detachTaskFromMembers($conn, $projectId, $sprintId, $taskId)
     return "Suppression du lien entre les membres et la tâche".$taskId;
 }
 
-function deleteTask($conn, $projectId, $sprintId)
-{
+function startDeleteTask($conn,$projectId,$sprintId){
     if (isset($_POST['delete'])) {
         if (empty($_POST['taskId'])) {
             return "Impossible";
         }
         $taskId = $_POST['taskId'];
-        detachTaskFromIssues($conn,$projectId,$sprintId,$taskId);
-        detachTaskFromMembers($conn,$projectId,$sprintId,$taskId);
-
-        $query = "DELETE FROM Tache WHERE ID_TACHE = '$taskId'";
-        mysqli_query($conn, $query);
-        return "La suppresion la tâche a été faite! ";
+        deleteTask($conn,$projectId,$sprintId,$taskId);
     }
-    return null;
+}
+
+function deleteTask($conn, $projectId, $sprintId,$taskId)
+{
+    detachTaskFromIssues($conn,$projectId,$sprintId,$taskId);
+    detachTaskFromMembers($conn,$projectId,$sprintId,$taskId);
+
+    $query = "DELETE FROM Tache WHERE ID_TACHE = '$taskId'";
+    mysqli_query($conn, $query);
+    return "La suppresion la tâche a été faite! ";
 }
 
 function getIssuesTask($conn, $taskId, $projectId){

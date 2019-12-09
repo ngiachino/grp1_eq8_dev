@@ -21,7 +21,7 @@ $assignMessage = assignTask($conn,$projectId, $sprintId );
 $modifyTaskMessage = modifyTask($conn, $projectId, $sprintId);
 $issueAddMessage = addIssueTask($conn, $projectId);
 $editStateTaskMessage = editTaskEtat($conn, $projectId, $sprintId );
-$deleteMessage = deleteTask($conn,$projectId,$sprintId);
+$deleteMessage = startDeleteTask($conn,$projectId,$sprintId);
 $result= getTaskWithSpecificState($conn,$projectId, $sprintId);
 $resultSprintDays = getDaysSprint($conn,$projectId,$sprintId);
 
