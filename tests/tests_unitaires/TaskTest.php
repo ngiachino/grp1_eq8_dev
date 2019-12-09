@@ -4,6 +4,7 @@ include_once 'src/app/management/projectManagement.php';
 include_once 'src/app/management/registerManagement.php';
 include_once 'src/app/management/issuesManagement.php';
 include_once 'src/app/management/taskManagement.php';
+include_once 'src/app/management/sprintManagement.php';
 include_once 'utils.php';
 use PHPUnit\Framework\TestCase;
 /**
