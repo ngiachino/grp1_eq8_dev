@@ -175,7 +175,7 @@ function deleteTask($conn, $projectId, $sprintId,$taskId)
 
     $query = "DELETE FROM Tache WHERE ID_TACHE = '$taskId'";
     mysqli_query($conn, $query);
-    aggregateMessage("La suppresion la tâche a été faite!");
+    aggregateMessage("La suppression de la tâche a été faite!");
 }
 
 function getIssuesTask($conn, $taskId, $projectId){

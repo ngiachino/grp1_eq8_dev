@@ -198,7 +198,7 @@ $tasks = getAllTasks($conn, $projectId, $sprintId);
                     <form method="POST">
                         <input type="hidden" name="taskId" value="<?php echo $row[3];?>">
                         <div class="form-group">
-                            <select class="form-control w-25 d-inline" id="userName" name="userName">
+                            <select class="form-control d-inline" id="userName" name="userName">
                                 <?php
                                 $members = getMembersProject($projectId,$conn);
                                 while($member = mysqli_fetch_row($members)){
@@ -250,7 +250,7 @@ $tasks = getAllTasks($conn, $projectId, $sprintId);
                     <form method="POST">
                         <div class="form-group">
                             <input type="hidden" name="taskIdentificateur" value="<?php echo $row[3];?>">
-                            <select class="form-control w-25 d-inline" id="issueId" name="issueId">
+                            <select class="form-control d-inline" id="issueId" name="issueId">
                                 <?php
                                 $k=1;
                                 $issues = getIssuesProject($projectId,$conn);

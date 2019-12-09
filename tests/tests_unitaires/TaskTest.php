@@ -37,7 +37,7 @@ class TaskTest extends TestCase{
         $taskId = createTask($conn, $projectId, $sprintId);
         //DELETE
         deleteTask($conn, $projectId, $sprintId, $taskId);
-        $this->assertContains("La suppresion la tâche a été faite! ", getMessage());
+        $this->assertContains("La suppression de la tâche a été faite!", getMessage());
         $this->clear();
     }
 
