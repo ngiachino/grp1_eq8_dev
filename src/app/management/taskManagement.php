@@ -47,7 +47,6 @@ function assignTask($conn,$projectId, $sprintId)
     }
 }
 
-
 function addIssueTask($connexion, $projectId){
     if(isset($_POST['lier'])){
         if(empty($_POST['issueId'])){
@@ -176,14 +175,14 @@ function deleteIssueFromTask($conn, $projectId){
     }
 }
 
-function startDeleteMember($conn, $projectId, $sprintId, $taskId){
+function startDeleteMemberTask($conn, $projectId, $sprintId, $taskId){
     if(isset($_POST['deleteMember'])){
         $memberId = $_POST['idMember'];
-        deleteMember($conn, $projectId, $sprintId, $taskId, $memberId);
+        deleteMemberTask($conn, $projectId, $sprintId, $taskId, $memberId);
     }
 }
 
-function deleteMember($conn, $projectId, $sprintId, $taskId, $memberId){
+function deleteMemberTask($conn, $projectId, $sprintId, $taskId, $memberId){
     $queryDeleteMember ="DELETE FROM membre 
                              WHERE ID_TACHE = '$taskId'AND 
                                    ID_PROJET = '$projectId' AND 

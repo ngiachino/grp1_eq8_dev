@@ -19,4 +19,10 @@
         return addSprint($conn,$projectId,'sprint test', $today,$nextWeek);
     }
 
+    function createTask($conn, $projectId, $sprintId){
+        $description ="Test Description";
+        $duration= 1;
+        return addTask($conn, $projectId,$sprintId,$description,$duration);
+   }
+
 ?>

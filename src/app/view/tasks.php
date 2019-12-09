@@ -194,7 +194,7 @@ $resultSprintDays = getDaysSprint($conn,$projectId,$sprintId);
                                 <?php
                                 //LES MEMBRES
                                 $taskId = $row[3];
-                                startDeleteMember($conn, $projectId, $sprintId, $taskId);
+                                startDeleteMemberTask($conn, $projectId, $sprintId, $taskId);
                                 $taskMembers = getMemberTask($conn, $taskId, $sprintId, $projectId);
 
                                 // Afficher les membres  de la tâche
