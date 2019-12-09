@@ -1,6 +1,7 @@
 <?php
 include '../../database/DBconnect.php';
 include '../management/releaseManagement.php';
+include_once '../management/utils.php';
 $idProjet = startRelease();
 startAddRelease($idProjet);
 startDeleteRelease($idProjet);
@@ -114,6 +115,19 @@ while($row = mysqli_fetch_row($result)){
                 </div>
             </div>
         </div>
+    </div>
+    <?php
+}
+if (count(getMessage()) > 0){?>
+    <div class="alert alert-warning alert-dismissible fade show w-50 mx-auto mt-4" role="alert">
+        <strong>
+            <?php
+            writeMessage();
+            ?>
+        </strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
     <?php
 }
