@@ -25,13 +25,13 @@ startModifyTest($idProjet);
 
 <form method="POST" id="newTestForm"></form>
 <h1>Les Tests</h1>
-</br>
+<br>
 <?php $percentage = getSuccessPercent($idProjet);?>
 <div class="progress" id="testBar">
-  <div class="progress-bar" role="progressbar" style="width:<?php echo $percentage;?>%"><?php echo $percentage;?>%</div>
+    <div class="progress-bar" role="progressbar" style="width:<?php echo $percentage;?>%"><?php echo $percentage;?>%</div>
 </div>
 
-</br>
+<br>
 <table class="table" id="testsList">
     <thead class="thead-dark">
     <tr>
@@ -109,7 +109,7 @@ while($row = mysqli_fetch_row($result)){
                         </div>
                         <div class="form-group">
                             <label for="testEtat">Etat du test</label>
-                            <select class="form-control" name="etat">
+                            <select class="form-control" name="etat" id="testEtat">
                                 <option value="Non testé">Non testé</option>
                                 <option value="Réussite">Réussite</option>
                                 <option value="Echec">Echec</option>

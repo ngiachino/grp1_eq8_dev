@@ -53,7 +53,7 @@
             $testID = $this->createTest($conn,$idProjet);
             
             $res = modifyTest($idProjet,"Description de Test","Réussite","2019-12-29",$testID,false);
-            $this->assertEquals($res,"Votre test a bien été modifiée");
+            $this->assertEquals($res,"Votre test a bien été modifié");
 
             $sql = "SELECT ID_TEST FROM test WHERE ID_PROJET = '$idProjet' AND DESCRIPTION = 'Description de Test'";
             $result = $conn->query($sql);

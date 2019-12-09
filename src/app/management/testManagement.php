@@ -16,7 +16,6 @@ function showTests($idProjet){
     return mysqli_query($conn, $query);
 }
 
-
 function startAddTest($idProjet){
     if (isset($_POST['submit'])) {
         $description = $_POST['description'];
@@ -25,7 +24,8 @@ function startAddTest($idProjet){
         addTest($idProjet,$description,$etat,$date,true);
     }
 }
-function addTest($idProjet,$description,$etat,$date,$processIsolation){
+
+function addTest($idProjet, $description, $etat, $date, $processIsolation){
     $conn = connect();
     $sql = $conn->prepare("INSERT INTO `test` (ID_PROJET, DATE_DEBUT, ETAT, DESCRIPTION)
     VALUES (?,?,?,?)");
@@ -44,7 +44,8 @@ function startDeleteTest($idProjet){
         deleteTest($idProjet,$testID,true);
     }
 }
-function deleteTest($idProjet,$testID,$processIsolation){
+
+function deleteTest($idProjet, $testID, $processIsolation){
     $conn = connect();
     $query = "DELETE FROM `test` WHERE ID_TEST = '$testID' AND ID_PROJET = '$idProjet'";
     mysqli_query($conn, $query);
@@ -54,6 +55,7 @@ function deleteTest($idProjet,$testID,$processIsolation){
     }
     return "Un test a été supprimé";
 }
+
 function startModifyTest($idProjet){
     if(isset($_POST['modify'])){
         $testDescription = $_POST['description'];
@@ -63,7 +65,8 @@ function startModifyTest($idProjet){
         modifyTest($idProjet,$testDescription,$testEtat,$testDate,$testID,true);
     }
 }
-function modifyTest($idProjet,$testDescription,$testEtat,$testDate,$testID,$processIsolation){
+
+function modifyTest($idProjet, $testDescription, $testEtat, $testDate, $testID, $processIsolation){
     $conn = connect();
     $sql = $conn->prepare("UPDATE test
     SET DESCRIPTION=?, DATE_DEBUT=?, ETAT=?
@@ -74,7 +77,7 @@ function modifyTest($idProjet,$testDescription,$testEtat,$testDate,$testID,$proc
     if($processIsolation){
         header("Location: tests.php");
     }
-    return "Votre test a bien été modifiée";
+    return "Votre test a bien été modifié";
 }
 
 function getSuccessPercent($idProjet){
