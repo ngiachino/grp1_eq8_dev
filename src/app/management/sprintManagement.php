@@ -1,4 +1,6 @@
 <?php
+include_once 'historiqueManagement.php';
+
 function startAddSprint($conn, $projectId)
 {
     if (isset($_POST['submit'])) {
@@ -32,6 +34,7 @@ function addSprint($conn,$projectID,$sprintName, $startDate, $endDate )
                                     VALUES (?,?,?,?)");
         $sql->bind_param("siss",$sprintName,$projectID,$startDate,$endDate);
         $sql->execute();
+        addHistorique($projectID,"Le ".$sprintName." a été ajouté au projet");
         return "Votre sprint a bien été crée";
     }
 }
@@ -43,9 +46,15 @@ function startDeleteSprint($conn){
 }
 
 function deleteSprint($conn, $sprintId)
-{   echo $sprintId;
+{
+    $query="SELECT NOM_SPRINT, ID_PROJET FROM sprint WHERE ID_SPRINT ='$sprintId'";
+    $result=mysqli_query($conn,$query);
+    $row = mysqli_fetch_row($result);
+    $sprintName=$row[0];
+    $projectID =$row[1];
     $query = "DELETE FROM sprint WHERE ID_SPRINT = '$sprintId'";
     mysqli_query($conn,$query);
+    addHistorique($projectID,"Le".$sprintName." a été supprimé du projet");
     return "votre sprint a été supprimé";
 }
 function startModifySprint($conn,$projectId){
@@ -77,6 +86,7 @@ function modifySprint($conn,$projectID,$sprintID,$sprintName,$startDate,$endDate
             WHERE ID_SPRINT = ?");
             $sql->bind_param("sssi",$sprintName,$startDate,$endDate,$sprintID);
             $sql->execute();
+            addHistorique($projectID,"Le".$sprintName." a été modifié");
             return "Votre sprint a bien été modifié";
         }
 }
