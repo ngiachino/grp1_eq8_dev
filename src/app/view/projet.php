@@ -11,7 +11,7 @@ $messageDelProject = startDeleteProject($projectId);
 $messageModif = startModifyProject($projectId);
 $result1 = showMembers($projectId);
 $result12 = getCurrentProject($projectId);
-$row = mysqli_fetch_row($result12);
+$rowProject = mysqli_fetch_row($result12);
 $historiques = showHistorique($projectId);
 ?>
 
@@ -71,7 +71,7 @@ $historiques = showHistorique($projectId);
                 Informations
                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modifyProjectModal">Modifier</button>
                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delProjectModal">Supprimer</button>
-                <div>Description : <?php echo $row[3];?></div>
+                <div>Description : <?php echo $rowProject[3];?></div>
                 <div class="py-2">Historique :</div>
                 <div class="scrollable">
                     <ul class="list-group list-group-flush" id="historique">
@@ -154,14 +154,14 @@ $historiques = showHistorique($projectId);
             </div>
             <div class="modal-body">
                 <form method="POST">
-                    <input type="hidden" name="id" value="<?php echo $row[0];?>">
+                    <input type="hidden" name="id" value="<?php echo $rowProject[0];?>">
                     <div class="form-group">
                         <label for="projectName">Nom du projet</label>
                         <input type="text" class="form-control" id="projectName" name="name" value="<?php echo $_GET['title']?>">
                     </div>
                     <div class="form-group">
                         <label for="projectDesc">Description du projet</label>
-                        <textarea class="form-control" name="description" id="projectDesc"><?php echo $row[3];?></textarea>
+                        <textarea class="form-control" name="description" id="projectDesc"><?php echo $rowProject[3];?></textarea>
                     </div>
                     <div class="modal-footer">
                         <input type="submit" name="modify" class="btn btn-primary" value="Modifier">
