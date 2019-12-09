@@ -1,3 +1,8 @@
+
+__Documentation de la release V0.3.0__
+
+__Dernière mise à jour le 09/12/2019__
+
 # Mise en place du site
 ## Docker
 Il est nécessaire d'avoir installé **Docker** au préalable.
