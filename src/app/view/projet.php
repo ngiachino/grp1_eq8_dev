@@ -95,7 +95,7 @@ $historiques = showHistorique($projectId);
         <div class="col-7">
             <div class="membersList">
                 <form class="form-container d-inline" method="POST">
-                    <input type="text" name="userName" placeholder="Pseudo ou Email" id="userName">
+                    <input type="text" name="userName" class="form-control w-50 d-inline mb-2" placeholder="Pseudo ou Email" id="userName">
                     <input type="submit" name="submit" class="submit btn btn-outline-danger" value="Inviter membre">
                 </form>
                 <span class="p-3 small font-weight-bold">
@@ -113,7 +113,7 @@ $historiques = showHistorique($projectId);
                         <li class="d-flex"><?php echo '- '.$member[0] ?>
                             <form method="post">
                                 <input class="" type="hidden" name="name" value="<?php echo $member[0];?>">
-                                <input class="btn pt-1" type="<?php if($member[0] == $_GET['owner']){echo "hidden";} else{echo "submit";} ?>" name="deleteUser" id="<?php echo $member[0];?>" value="&#x274C;">
+                                <button class="deleteElement fas fa-times btn bg-transparent btn-sm float-left" style="display:<?php if($member[0] == $_GET['owner']){echo "none";} else{echo "";} ?>" name="deleteUser" id="<?php echo $member[0];?>"></button>
                             </form>
                         </li>
                     <?php $i++;
