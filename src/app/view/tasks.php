@@ -44,9 +44,11 @@ $tasks = getAllTasks($conn, $projectId, $sprintId);
             <div class="col-md-3">
                 <h2>
                     <?php
-                    $getSprintName = "SELECT NOM_SPRINT from sprint WHERE ID_SPRINT ='$sprintId'";
-                    $result = mysqli_query($conn,$getSprintName);
-                    $sprintName = mysqli_fetch_row($result)[0];
+                    $getSprintData = "SELECT NOM_SPRINT, DATE_FIN from sprint WHERE ID_SPRINT ='$sprintId'";
+                    $result = mysqli_query($conn,$getSprintData);
+                    $sprintData = mysqli_fetch_row($result)[0];
+                    $sprintName = $sprintData[0];
+                    $sprintEndDate = $sprintData[1];
                     echo $sprintName;
                     ?>
                 </h2>
@@ -55,10 +57,15 @@ $tasks = getAllTasks($conn, $projectId, $sprintId);
             <div class="col-md-9">
                 <!--BARRE DE PROGRESSION D UN SPRINT-->
                 <?php
-                $sprintDays = mysqli_fetch_row($resultSprintDays);
-                $sprintLeftDays = $sprintDays[1];
-                $sprintNumberDays = $sprintDays[0];
-                $daysPercent = ((($sprintNumberDays - $sprintLeftDays) * 100) / $sprintNumberDays);
+                $today = date("Y-m-d");
+                $sprintLeftDays ="0";
+                $daysPercent = 100;
+                if($sprintEndDate < $today) {
+                    $sprintDays = mysqli_fetch_row($resultSprintDays);
+                    $sprintLeftDays = $sprintDays[1];
+                    $sprintNumberDays = $sprintDays[0];
+                    $daysPercent = ((($sprintNumberDays - $sprintLeftDays) * 100) / $sprintNumberDays);
+                }
                 ?>
                 <div class="progress">
                     <div class="progress-bar bg-dark" role="progressbar" style="width: <?php echo $daysPercent;?>%">
