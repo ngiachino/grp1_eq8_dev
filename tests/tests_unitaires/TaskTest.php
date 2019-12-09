@@ -5,6 +5,7 @@ include_once 'src/app/management/registerManagement.php';
 include_once 'src/app/management/taskManagement.php';
 include_once 'src/app/management/sprintManagement.php';
 include_once 'utils.php';
+include_once 'src/app/management/utils.php';
 use PHPUnit\Framework\TestCase;
 /**
  * @group testsUnitaires
@@ -19,8 +20,8 @@ class TaskTest extends TestCase{
         $projectId = createProject($conn,$userID);
         $sprintId = createSprint($conn,$projectId);
         //CREATE THE TASK
-        $res = addTask($conn,$projectId,$sprintId,"Test Description",1,"TO DO");
-        $this->assertEquals("Tâche ajoutée",$res);
+        addTask($conn,$projectId,$sprintId,"Test Description",1,"TO DO");
+        $this->assertContains("Tâche ajoutée", getMessage());
         $sql = "SELECT ID_TACHE from tache WHERE ID_PROJET= '$projectId'";
         $result = $conn->query($sql);
         $this->assertEquals($result->num_rows, 1);
@@ -35,8 +36,8 @@ class TaskTest extends TestCase{
         $sprintId = createSprint($conn,$projectId);
         $taskId = createTask($conn, $projectId, $sprintId);
         //DELETE
-        $res = deleteTask($conn, $projectId, $sprintId, $taskId);
-        $this->assertEquals("La suppresion la tâche a été faite! ", $res);
+        deleteTask($conn, $projectId, $sprintId, $taskId);
+        $this->assertContains("La suppresion la tâche a été faite! ", getMessage());
         $this->clear();
     }
 
@@ -56,7 +57,6 @@ class TaskTest extends TestCase{
         $conn->query($sql);
     }
 }
-
 
 function createTask($conn, $projectId, $sprintId){
     $description ="Test Description";

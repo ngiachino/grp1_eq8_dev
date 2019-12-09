@@ -16,12 +16,12 @@ else if( $_GET['projectId'] == null || $_GET['sprintId'] == null){
 
 $projectId = $_GET['projectId'];
 $sprintId = $_GET['sprintId'];
-$addMessage = startAddTask($conn,$projectId, $sprintId);
-$assignMessage = assignTask($conn,$projectId, $sprintId );
-$modifyTaskMessage = modifyTask($conn, $projectId, $sprintId);
-$issueAddMessage = addIssueTask($conn, $projectId);
-$editStateTaskMessage = editTaskEtat($conn, $projectId, $sprintId );
-$deleteMessage = startDeleteTask($conn,$projectId,$sprintId);
+startAddTask($conn,$projectId, $sprintId);
+assignTask($conn,$projectId, $sprintId );
+modifyTask($conn, $projectId, $sprintId);
+addIssueTask($conn, $projectId);
+editTaskEtat($conn, $projectId, $sprintId );
+startDeleteTask($conn,$projectId,$sprintId);
 $result= getTaskWithSpecificState($conn,$projectId, $sprintId);
 $resultSprintDays = getDaysSprint($conn,$projectId,$sprintId);
 $tasks = getAllTasks($conn, $projectId, $sprintId);
@@ -46,8 +46,8 @@ $tasks = getAllTasks($conn, $projectId, $sprintId);
                     <?php
                     $getSprintData = "SELECT NOM_SPRINT, DATE_FIN from sprint WHERE ID_SPRINT ='$sprintId'";
                     $result = mysqli_query($conn,$getSprintData);
-                    $sprintData = mysqli_fetch_row($result)[0];
-                    $sprintName = $sprintData;
+                    $sprintData = mysqli_fetch_row($result);
+                    $sprintName = $sprintData[0];
                     $sprintEndDate = $sprintData[1];
                     echo $sprintName;
                     ?>
@@ -321,7 +321,7 @@ $tasks = getAllTasks($conn, $projectId, $sprintId);
                             <textarea class="form-control" id="descriptionTask" maxlength="500" name="descriptionTask"><?php echo $row[0];?></textarea>
                             <br>
                             <label for="durationTask">Durée:</label> <br>
-                            <input type="number" step="0.5" class="form-control-sm" id="durationTask" name="durationTask" placeholder="<?php echo $row[1];?>">
+                            <input type="number" step="0.5" class="form-control form-control-sm" id="durationTask" name="durationTask" placeholder="<?php echo $row[1];?>">
                             <input type="hidden" name="taskId" value="<?php echo $row[3];?>">
                         </div>
                         <button type="submit" name="modifier" class="btn btn-secondary btn-sm">Modifier</button>
@@ -342,6 +342,20 @@ $i++;
 </div>
 <?php
 $connexion=null;
+
+if (count(getMessage()) > 0){?>
+<div class="alert alert-warning alert-dismissible fade show w-50 mx-auto mt-4" role="alert">
+    <strong>
+        <?php
+        writeMessage();
+        ?>
+    </strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<?php
+}
 ?>
 
 </body>

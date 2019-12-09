@@ -51,6 +51,6 @@ ul a{
     color:red;
 }
 
-.daskDeleteElement:hover {
+.deleteElement:hover {
     color: #b70000;
 }

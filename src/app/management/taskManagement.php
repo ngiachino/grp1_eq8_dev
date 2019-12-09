@@ -1,15 +1,19 @@
 <?php
 include_once 'historiqueManagement.php';
+include_once 'utils.php';
+
 function startAddTask($conn,$projectId,$sprintId)
 {
     if (isset($_POST['addTask'])) {
         $description = $_POST['taskDescription'];
         $duration = $_POST['taskDuration'];
         if(taskExist($conn,$projectId,$sprintId,$description)){
-            return "Il existe déjà une tâche avec cette description";
+            aggregateMessage("Il existe déjà une tâche avec cette description");
+            return;
         }
         if (empty($description) || empty($duration)) {
-            return "Veuillez remplir tous les champs!";
+            aggregateMessage("Veuillez remplir tous les champs!");
+            return;
         } else {
             if(empty($isDone)){
                 $isDone="TO DO";
@@ -21,15 +25,17 @@ function startAddTask($conn,$projectId,$sprintId)
         }
     }
 }
-function addTask($conn,$projectId,$sprintId,$description,$duration,$isDone)
+
+function addTask($conn, $projectId, $sprintId, $description, $duration, $isDone)
 {
     $sql = $conn->prepare("INSERT INTO `tache`(`ID_PROJET`, `ID_SPRINT`,`ID_USER_STORY`,`DESCRIPTION`,`DUREE_TACHE`, `IS_DONE`) 
                             VALUES (?,?,-1,?,?,?)");
     $sql->bind_param("iisss",$projectId,$sprintId,$description,$duration,$isDone);
     $sql->execute();
     addHistorique($projectId,"Une tâche a été créée");
-    return "Tâche ajoutée";
+    aggregateMessage("Tâche ajoutée");
 }
+
 function assignTask($conn,$projectId, $sprintId)
 {
     if (isset($_POST['assigner']) && (!(empty($_POST['userName'])) || !(empty($_POST['taskId'])))) {
@@ -47,7 +53,8 @@ function assignTask($conn,$projectId, $sprintId)
                                     VALUES ('$userId', '$projectId','$userName'
                                             ,'$sprintId', '$taskId')";
             mysqli_query($conn, $queryAssign);
-            return "La tache a été assignée!";
+            aggregateMessage("La tache a été assignée!");
+            return;
         }
     }
 }
@@ -55,7 +62,8 @@ function assignTask($conn,$projectId, $sprintId)
 function addIssueTask($connexion, $projectId){
     if(isset($_POST['lier'])){
         if(empty($_POST['issueId'])){
-            return "Veuillez indiquez la USS";
+            aggregateMessage("Veuillez indiquez l'User Story");
+            return;
         }
         $taskId = $_POST['taskIdentificateur'];
         $issueId = $_POST['issueId'];
@@ -66,7 +74,8 @@ function addIssueTask($connexion, $projectId){
                         DESC LIMIT 1 ";
         $exist = mysqli_query($connexion, $queryExistUss);
         if(mysqli_num_rows($exist)== 0 || !($exist)) {
-            return "L'identifiant de cette User story n'existe pas ou alors elle est déjà liée à la tâche";
+            aggregateMessage("L'identifiant de cette User Story n'existe pas ou alors elle est déjà liée à la tâche");
+            return;
         }
         $resultIssue = mysqli_fetch_row($exist);
         $issueId = $resultIssue[0];
@@ -79,7 +88,8 @@ function addIssueTask($connexion, $projectId){
                        VALUES ('$issueId','$priorite','$difficulte','$description',
                                     '$projectId','$taskId')";
         mysqli_query($connexion, $queryInsert);
-        return $issueId."La tache a été reliée à la US";
+        aggregateMessage($issueId."La tache a été reliée à l'User Story'");
+        return;
     }
 }
 
@@ -98,14 +108,15 @@ function modifyTask($conn, $projectId, $sprintId)
     if(isset($_POST['modifier'])&& !empty($_POST['taskId'])) {
             $taskId= $_POST['taskId'];
             if (!empty($_POST['descriptionTask']) && empty($_POST['durationTask'])) {
-                return modifyDescriptionTask($conn, $taskId, $projectId, $sprintId, $_POST['descriptionTask']);
+                modifyDescriptionTask($conn, $taskId, $projectId, $sprintId, $_POST['descriptionTask']);
             }
-            elseif  (empty($_POST['descriptionTask']) && !empty($_POST['durationTask'])) {
-                return modifyDurationTask($conn, $taskId, $projectId, $sprintId, $_POST['durationTask']);
+            elseif (empty($_POST['descriptionTask']) && !empty($_POST['durationTask'])) {
+                modifyDurationTask($conn, $taskId, $projectId, $sprintId, $_POST['durationTask']);
             }
             else{
-                return modifyDescriptionTask($conn, $taskId, $projectId, $sprintId, $_POST['descriptionTask'])
-                            .modifyDurationTask($conn, $taskId, $projectId, $sprintId, $_POST['durationTask']);
+                modifyDescriptionTask($conn, $taskId, $projectId, $sprintId, $_POST['descriptionTask']);
+                modifyDurationTask($conn, $taskId, $projectId, $sprintId, $_POST['durationTask']);
+                aggregateMessage("La modification de la description et de la durée de la tâche ont été faites!");
             }
         }
 }
@@ -115,8 +126,9 @@ function modifyDescriptionTask($conn, $taskId, $projectId, $sprintId, $descripti
     $sql = $conn->prepare("UPDATE tache SET DESCRIPTION = ? WHERE ID_TACHE = ? AND ID_PROJET = ? AND ID_SPRINT = ?");
     $sql->bind_param("siii",$description,$taskId,$projectId,$sprintId);
     $sql->execute();
-    return "LA Modification de la description de la tâche a été faite! ";
+    aggregateMessage("La modification de la description de la tâche a été faite!");
 }
+
 function modifyDurationTask($conn, $taskId, $projectId, $sprintId, $duration)
 {
     $queryUpdate = "UPDATE tache 
@@ -128,39 +140,42 @@ function modifyDurationTask($conn, $taskId, $projectId, $sprintId, $duration)
     $sql = $conn->prepare("UPDATE tache SET DUREE_TACHE = ? WHERE ID_TACHE = ? AND ID_PROJET = ? AND ID_SPRINT = ?");
     $sql->bind_param("siii",$duration,$taskId,$projectId,$sprintId);
     $sql->execute();
-    return "La modification de la durée de la tâche a été faite! ";
+    aggregateMessage("La modification de la durée de la tâche a été faite!");
 }
+
 function detachTaskFromIssues($conn, $projectId, $taskId)
 {
     $queryDelete = "DELETE FROM issue WHERE ID_TACHE = '$taskId' and ID_PROJET = '$projectId'";
     mysqli_query($conn,$queryDelete);
-    return "Suppression du lien entre les issues et la tâche".$taskId;
+    aggregateMessage("Suppression du lien entre les issues et la tâche".$taskId);
 }
+
 function detachTaskFromMembers($conn, $projectId, $sprintId, $taskId)
 {
     $queryDelete = "DELETE FROM membre WHERE ID_TACHE = '$taskId' and ID_PROJET = '$projectId' and ID_SPRINT='$sprintId'";
     mysqli_query($conn,$queryDelete);
-    return "Suppression du lien entre les membres et la tâche".$taskId;
+    aggregateMessage("Suppression du lien entre les membres et la tâche".$taskId);
 }
 
 function startDeleteTask($conn,$projectId,$sprintId){
     if (isset($_POST['delete'])) {
         if (empty($_POST['taskId'])) {
-            return "Impossible";
+            aggregateMessage("Impossible");
+            return;
         }
         $taskId = $_POST['taskId'];
-        deleteTask($conn,$projectId,$sprintId,$taskId);
+        deleteTask($conn, $projectId, $sprintId, $taskId);
     }
 }
 
 function deleteTask($conn, $projectId, $sprintId,$taskId)
 {
-    detachTaskFromIssues($conn,$projectId,$sprintId,$taskId);
-    detachTaskFromMembers($conn,$projectId,$sprintId,$taskId);
+    detachTaskFromIssues($conn, $projectId, $taskId);
+    detachTaskFromMembers($conn, $projectId, $sprintId, $taskId);
 
     $query = "DELETE FROM Tache WHERE ID_TACHE = '$taskId'";
     mysqli_query($conn, $query);
-    return "La suppresion la tâche a été faite! ";
+    aggregateMessage("La suppresion la tâche a été faite!");
 }
 
 function getIssuesTask($conn, $taskId, $projectId){
@@ -202,7 +217,10 @@ function deleteMemberTask($conn, $projectId, $sprintId, $taskId, $memberId){
 function editTaskEtat($conn, $projectId, $sprintId ){
     if(isset($_POST['editTaskState']))
     {
-        if(empty($_POST['taskState'])){return "Veuillez choisir un état";}
+        if(empty($_POST['taskState'])){
+            aggregateMessage("Veuillez choisir un état");
+            return;
+        }
         $taskId = $_POST['taskId'];
         $taskState = $_POST['taskState'];
         $queryEditTaskState = "UPDATE tache
@@ -213,6 +231,7 @@ function editTaskEtat($conn, $projectId, $sprintId ){
         mysqli_query($conn, $queryEditTaskState);
     }
 }
+
 function getAllTasks($conn, $projectId, $sprintId){
     $queryGet = "SELECT DISTINCT tache.DESCRIPTION, tache.DUREE_TACHE, tache.IS_DONE, tache.ID_TACHE
                  FROM tache WHERE tache.ID_PROJET = '$projectId' AND tache.ID_SPRINT = '$sprintId'
