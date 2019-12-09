@@ -36,13 +36,13 @@ class TaskTest extends TestCase{
         $projectId = createProject($conn,$userID);
         $sprintId = createSprint($conn,$projectId);
         //CREATE THE TASK
-        createTask($conn,$userID,$projectId,$sprintId);
+        createTask($conn, $projectId, $sprintId);
         //Get taskId
         $queryId ="SELECT ID_TACHE from tache WHERE DESCRIPTION= 'Test Description'";
         $result = mysqli_query($conn,$queryId);
         $taskId= mysqli_fetch_row($result)[0];
         //DELETE
-        deleteTask($conn,$projectId,$sprintId,$taskId);
+        deleteTask($conn, $projectId, $sprintId, $taskId);
         $queryId ="SELECT ID_TACHE from tache WHERE DESCRIPTION= 'Test Description'";
         $result = mysqli_query($conn,$queryId);
         $taskNumber=mysqli_num_rows($result);
