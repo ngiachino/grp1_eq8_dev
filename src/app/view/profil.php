@@ -5,7 +5,7 @@ include_once '../management/utils.php';
 
 session_start();
 $result1 = startProfil();
-$addMessage = startAddProject();
+startAddProject();
 $userTasks = getUserTasks();
 ?>
 

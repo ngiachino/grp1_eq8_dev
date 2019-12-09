@@ -1,5 +1,6 @@
 <?php
 include_once 'historiqueManagement.php';
+include_once 'utils.php';
 
 function startIssues(){
     if($_SESSION['projectId'] == null){
@@ -32,7 +33,7 @@ function addIssue($idProjet,$description,$priority,$difficulty){
     $sql->bind_param("sisi",$priority,$difficulty,$description,$idProjet);
     $sql->execute();
     addHistorique($idProjet,"Une issue a été créée");
-    return "Votre issue a été créée";
+    aggregateMessage("Votre issue a été créée");
 }
 
 function startModifyIssue($projectID){
@@ -41,9 +42,10 @@ function startModifyIssue($projectID){
         $priority = $_POST['priority'];
         $difficulty = $_POST['difficulty'];
         $description = $_POST['description'];
-        return modifyIssue($projectID,$idUS,$priority,$difficulty,$description);
+        modifyIssue($projectID,$idUS,$priority,$difficulty,$description);
     }
 }
+
 function modifyIssue($projectID,$idUS,$priority,$difficulty,$description){
     $conn = connect();
     //test qu'une US de même description n'a pas déjà été créée
@@ -52,7 +54,7 @@ function modifyIssue($projectID,$idUS,$priority,$difficulty,$description){
     $sqlTest1->execute();
     $result1 = $sqlTest1->get_result();
     if (mysqli_num_rows($result1) > 0) {
-        return "Cette US existe déjà";
+        aggregateMessage("Cette US existe déjà");
     } else {
         $sql = $conn->prepare("UPDATE `issue`
         SET PRIORITE = ?, DIFFICULTE = ?, DESCRIPTION = ?
@@ -60,7 +62,7 @@ function modifyIssue($projectID,$idUS,$priority,$difficulty,$description){
         $sql->bind_param("sisi",$priority,$difficulty,$description,$idUS);
         $sql->execute();
         addHistorique($projectID,"Une issue a été modifiée");
-        return "Votre issue a bien été modifiée";
+        aggregateMessage("Votre issue a bien été modifiée");
     }
 }
 
@@ -77,5 +79,5 @@ function deleteIssue($issueID, $idProjet){
     $sql->bind_param("ii",$issueID,$idProjet);
     $sql->execute();
     addHistorique($idProjet,"Une issue a été supprimée");
-    return "Votre issue a été supprimée";
+    aggregateMessage("Votre issue a été supprimée");
 }

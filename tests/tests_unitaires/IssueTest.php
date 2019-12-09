@@ -18,8 +18,8 @@
             $userID=createAccount($conn);
             $idProjet = createProject($conn,$userID);
 
-            $res = addIssue($idProjet,"Description de test","HIGH",2);
-            $this->assertEquals($res,"Votre issue a été créée");
+            addIssue($idProjet,"Description de test","HIGH",2);
+            $this->assertContains("Votre issue a été créée", getMessage());
             $sql = "SELECT ID_USER_STORY FROM issue WHERE ID_PROJET = '$idProjet'";
             $result = $conn->query($sql);
             $this->assertEquals($result->num_rows, 1);
@@ -35,8 +35,8 @@
             $idProjet = createProject($conn,$userID);
             $issueID = $this->createIssue($conn,$idProjet);
 
-            $res = deleteIssue($issueID, $idProjet);
-            $this->assertEquals($res,"Votre issue a été supprimée");
+            deleteIssue($issueID, $idProjet);
+            $this->assertContains("Votre issue a été supprimée", getMessage());
 
             $sql = "SELECT ID_USER_STORY FROM issue WHERE ID_PROJET = '$idProjet'";
             $result = $conn->query($sql);
@@ -50,8 +50,8 @@
             $idProjet = createProject($conn,$userID);
             $issueID = $this->createIssue($conn,$idProjet);
             
-            $res = modifyIssue($idProjet,$issueID,"LOW",2,"Description de test");
-            $this->assertEquals($res,"Votre issue a bien été modifiée");
+            modifyIssue($idProjet,$issueID,"LOW",2,"Description de test");
+            $this->assertContains("Votre issue a bien été modifiée", getMessage());
 
             $sql = "SELECT ID_USER_STORY FROM issue WHERE ID_PROJET = '$idProjet' AND DESCRIPTION = 'Description de test'";
             $result = $conn->query($sql);

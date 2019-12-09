@@ -72,8 +72,7 @@ $historiques = showHistorique($projectId);
                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modifyProjectModal">Modifier</button>
                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delProjectModal">Supprimer</button>
                 <div>Description : <?php echo $row[3];?></div>
-                <div>Historique :</div>
-                </br>
+                <div class="py-2">Historique :</div>
                 <div class="scrollable">
                     <ul class="list-group list-group-flush" id="historique">
                     <?php $i=0;
@@ -114,7 +113,7 @@ $historiques = showHistorique($projectId);
                         <li class="d-flex"><?php echo '- '.$member[0] ?>
                             <form method="post">
                                 <input class="" type="hidden" name="name" value="<?php echo $member[0];?>">
-                                <input class="btn pt-1" type="<?php if($member[0] == $_GET['owner']){echo "hidden";} else{echo "submit";} ?>" name="deleteUser" id="<?php echo $member[0];?>"" value="&#x274C;">
+                                <input class="btn pt-1" type="<?php if($member[0] == $_GET['owner']){echo "hidden";} else{echo "submit";} ?>" name="deleteUser" id="<?php echo $member[0];?>" value="&#x274C;">
                             </form>
                         </li>
                     <?php $i++;

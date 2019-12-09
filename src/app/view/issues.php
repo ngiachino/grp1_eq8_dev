@@ -26,34 +26,34 @@ $result = showIssues($idProjet);
 <h1>Issues</h1>
 <form method="POST" id="newIssueForm"></form>
 <table class="table" id="issuesList">
-  <thead class="thead-dark">
+    <thead class="thead-dark">
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">Description</th>
-      <th scope="col">Priorité</th>
-      <th scope="col">Difficulté</th>
-      <th scope="col">Action</th>
+        <th scope="col">#</th>
+        <th scope="col">Description</th>
+        <th scope="col">Priorité</th>
+        <th scope="col">Difficulté</th>
+        <th scope="col">Action</th>
     </tr>
-  </thead>
-  <tbody>
-  <?php $i = 1;
+    </thead>
+    <tbody>
+    <?php $i = 1;
     while($row = mysqli_fetch_row($result)){?>
-    <tr>
-      <th scope="row"><?php echo $i;?>
-          <form method="POST" id="deleteModifyForm<?php echo $i; ?>"></form>
-          <input form="deleteModifyForm<?php echo $i; ?>" type="hidden" name="id" value="<?php echo $row[0];?>">
-      </th>
-      <td><?php echo $row[3];?></td>
-      <td><?php echo $row[1];?></td>
-      <td><?php echo $row[2];?></td>
-      <td>
-          <button class="btn btn-primary" data-toggle="modal" data-target="#modifyIssueModal<?php echo $row[0];?>">Modifier</button>
-          <input class="btn btn-danger" id="delete<?php echo $i;?>" form="deleteModifyForm<?php echo $i; ?>" type="submit" name="delete" value="Supprimer">
-      </td>
-    </tr>
-    <?php
-      $i++;
-      }
+        <tr>
+            <th scope="row"><?php echo $i;?>
+                <form method="POST" id="deleteModifyForm<?php echo $i; ?>"></form>
+                <input form="deleteModifyForm<?php echo $i; ?>" type="hidden" name="id" value="<?php echo $row[0];?>">
+            </th>
+            <td><?php echo $row[3];?></td>
+            <td><?php echo $row[1];?></td>
+            <td><?php echo $row[2];?></td>
+            <td>
+                <button class="btn btn-primary" data-toggle="modal" data-target="#modifyIssueModal<?php echo $row[0];?>">Modifier</button>
+                <input class="btn btn-danger" id="delete<?php echo $i;?>" form="deleteModifyForm<?php echo $i; ?>" type="submit" name="delete" value="Supprimer">
+            </td>
+        </tr>
+        <?php
+        $i++;
+    }
     ?>
     <tr>
         <th scope="row"></th>
@@ -74,7 +74,7 @@ $result = showIssues($idProjet);
             <input class="btn btn-dark" type="submit" name="submit" value="Créer" form="newIssueForm">
         </td>
     </tr>
-  </tbody>
+    </tbody>
 </table>
 
 <?php
@@ -119,8 +119,23 @@ while($row = mysqli_fetch_row($result)){
             </div>
         </div>
     </div>
+
+    <?php
+}
+if (count(getMessage()) > 0){?>
+    <div class="alert alert-warning alert-dismissible fade show w-50 mx-auto mt-4" role="alert">
+        <strong>
+            <?php
+            writeMessage();
+            ?>
+        </strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
     <?php
 }
 ?>
+
 </body>
 </html>
