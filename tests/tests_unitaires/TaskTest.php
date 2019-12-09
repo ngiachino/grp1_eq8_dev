@@ -2,7 +2,6 @@
 include_once 'src/database/DBconnect.php';
 include_once 'src/app/management/projectManagement.php';
 include_once 'src/app/management/registerManagement.php';
-include_once 'src/app/management/issuesManagement.php';
 include_once 'src/app/management/taskManagement.php';
 include_once 'src/app/management/sprintManagement.php';
 include_once 'utils.php';
@@ -38,9 +37,9 @@ class TaskTest extends TestCase{
         //DELETE
         $res = deleteTask($conn, $projectId, $sprintId, $taskId);
         $this->assertEquals("La suppresion la tâche a été faite! ", $res);
-        $sql ="SELECT * from tache WHERE ID_TACHE = '$taskId'";
-        $result = $conn->query($sql);
-        $this->assertEquals($result->num_rows, 0);
+        $sqlTest ="SELECT * from tache WHERE ID_TACHE = '$taskId'";
+        $resultTest = $conn->query($sqlTest);
+        $this->assertEquals(0,$resultTest->num_rows);
         $this->clear();
     }
 
