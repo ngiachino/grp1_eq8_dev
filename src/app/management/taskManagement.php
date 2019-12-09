@@ -5,20 +5,20 @@ function startAddTask($conn,$projectId,$sprintId)
     if (isset($_POST['submit'])) {
         $description = $_POST['taskDescription'];
         $duration = $_POST['taskDuration'];
-        if (empty($description) || empty($duration)) {
+        $isDone =  $_POST['taskState'];
+        if (empty($description) || empty($duration) || empty($isDone)) {
             return "Veuillez remplir tous les champs!";
         } else {
-            addTask($conn, $projectId, $sprintId, $description, $duration);
+            addTask($conn, $projectId, $sprintId, $description, $duration,$isDone);
         }
     }
 }
-function addTask($conn,$projectId,$sprintId,$description,$duration)
+function addTask($conn,$projectId,$sprintId,$description,$duration,$isDone)
 {
-    $DefaultTaskState = "TO DO";
-    $query = "INSERT INTO `tache`(`ID_PROJET`, `ID_SPRINT`,`ID_USER_STORY`, 
-                                      `DESCRIPTION`,`DUREE_TACHE`, `IS_DONE`) 
-                     VALUES ('$projectId','$sprintId','-1','$description','$duration','$DefaultTaskState')";
-    mysqli_query($conn, $query);
+    $sql = $conn->prepare("INSERT INTO `tache`(`ID_PROJET`, `ID_SPRINT`,`ID_USER_STORY`,`DESCRIPTION`,`DUREE_TACHE`, `IS_DONE`) 
+                            VALUES (?,?,-1,?,?,?)");
+    $sql->bind_param("iisss",$projectId,$sprintId,$description,$duration,$isDone);
+    $sql->execute();
     addHistorique($projectId,"Une tâche a été créée");
     return "Tâche ajoutée";
 }
@@ -106,12 +106,9 @@ function modifyTask($conn, $projectId, $sprintId)
 
 function modifyDescriptionTask($conn, $taskId, $projectId, $sprintId, $description)
 {
-    $queryUpdate = "UPDATE tache 
-                    SET DESCRIPTION = '$description'
-                    WHERE ID_TACHE = '$taskId'AND 
-                          ID_PROJET = '$projectId' AND 
-                          ID_SPRINT = '$sprintId' ";
-    mysqli_query($conn, $queryUpdate);
+    $sql = $conn->prepare("UPDATE tache SET DESCRIPTION = ? WHERE ID_TACHE = ? AND ID_PROJET = ? AND ID_SPRINT = ?");
+    $sql->bind_param("siii",$description,$taskId,$projectId,$sprintId);
+    $sql->execute();
     return "LA Modification de la description de la tâche a été faite! ";
 }
 function modifyDurationTask($conn, $taskId, $projectId, $sprintId, $duration)
@@ -122,6 +119,9 @@ function modifyDurationTask($conn, $taskId, $projectId, $sprintId, $duration)
                           ID_PROJET = '$projectId' AND 
                           ID_SPRINT = '$sprintId' ";
     mysqli_query($conn, $queryUpdate);
+    $sql = $conn->prepare("UPDATE tache SET DUREE_TACHE = ? WHERE ID_TACHE = ? AND ID_PROJET = ? AND ID_SPRINT = ?");
+    $sql->bind_param("siii",$duration,$taskId,$projectId,$sprintId);
+    $sql->execute();
     return "La modification de la durée de la tâche a été faite! ";
 }
 function detachTaskFromIssues($conn, $projectId, $taskId)
@@ -209,9 +209,8 @@ function editTaskEtat($conn, $projectId, $sprintId ){
 }
 function getAllTasks($conn, $projectId, $sprintId){
     $queryGet = "SELECT DISTINCT tache.DESCRIPTION, tache.DUREE_TACHE, tache.IS_DONE, tache.ID_TACHE
-                 FROM tache  
-                 WHERE tache.ID_PROJET = '$projectId'
-                    AND tache.ID_SPRINT = '$sprintId'
+                 FROM tache WHERE tache.ID_PROJET = '$projectId' AND tache.ID_SPRINT = '$sprintId'
+                 ORDER BY tache.ID_TACHE
                     ";
     return mysqli_query($conn, $queryGet);
 }

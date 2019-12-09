@@ -24,7 +24,7 @@ $editStateTaskMessage = editTaskEtat($conn, $projectId, $sprintId );
 $deleteMessage = startDeleteTask($conn,$projectId,$sprintId);
 $result= getTaskWithSpecificState($conn,$projectId, $sprintId);
 $resultSprintDays = getDaysSprint($conn,$projectId,$sprintId);
-
+$tasks = getAllTasks($conn, $projectId, $sprintId);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -136,7 +136,7 @@ $resultSprintDays = getDaysSprint($conn,$projectId,$sprintId);
         <tbody>
         <?php
         $i = 1;
-        while ($row = mysqli_fetch_row($result)) {
+        while ($row = mysqli_fetch_row($tasks)) {
         ?>
         <tr>
             <th scope="row"><?php echo $i;?></th>
