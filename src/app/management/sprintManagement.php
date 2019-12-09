@@ -12,7 +12,8 @@ function startAddSprint($conn, $projectId)
             return "Vous devez remplir tous les champs";
         }
         if($startDate>$endDate){
-            return "La date de début ne peut pas être plus récente que celle de la fin du sprint";}
+            return "La date de début ne peut pas être plus récente que celle de la fin du sprint";
+        }
         else{
             addSprint($conn, $projectId,$sprintName,$startDate,$endDate);
         }
@@ -86,7 +87,7 @@ function modifySprint($conn,$projectID,$sprintID,$sprintName,$startDate,$endDate
             WHERE ID_SPRINT = ?");
             $sql->bind_param("sssi",$sprintName,$startDate,$endDate,$sprintID);
             $sql->execute();
-            addHistorique($projectID,"Le".$sprintName." a été modifié");
+            addHistorique($projectID,$sprintName." a été modifié");
             return "Votre sprint a bien été modifié";
         }
 }

@@ -19,7 +19,7 @@ function startProfil(){
 
 function getCurrentProject($projectId){
     $conn = connect();
-    $queryProjet = " SELECT ID_PROJET,NOM_PROJET,ID_MANAGER,DESCRIPTION FROM projet WHERE ID_PROJET = '$projectId'";
+    $queryProjet = "SELECT ID_PROJET,NOM_PROJET,ID_MANAGER,DESCRIPTION FROM projet WHERE ID_PROJET = '$projectId'";
     $result = mysqli_query($conn, $queryProjet);
     if(!($result)) {
         echo "Error: " . $queryProjet . "<br>" . $conn->error . "<br>";
