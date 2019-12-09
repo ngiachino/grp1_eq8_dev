@@ -89,16 +89,19 @@ $tasks = getAllTasks($conn, $projectId, $sprintId);
                     <label for="taskDuration">Durée de la tâche (en jour/homme) :</label>
                     <input type="number" step="0.5" class="form-control" id="taskDuration" name="taskDuration">
                 </div>
-                <div class="col-md-4 mb-3">
-                    <label for="taskState">Etat de la tâche: </label>
-                    <select class="form-control form-control-sm" name="taskState" id="taskState">
-                        <option value="TO DO">TO DO</option>
-                        <option value="ON GOING">ON GOING</option>
-                        <option value="DONE">DONE</option>
-                    </select>
+                <div class="col-md-9">
+                <label for="nameState">Etat de la tâche</label>
+                    <br>
+                <select class="form-control w-25 d-inline" id="nameState" name="nameState">
+                    <option value="" disabled selected>Default : TO DO</option>
+                    <option value="TO DO">TO DO</option>
+                    <option value="ON GOING">ON GOING </option>
+                    <option value="DONE">DONE</option>
+                </select>
                 </div>
             </div>
-            <button type="submit" name="submit" class="btn btn-dark btn-sm">Ajouter</button>
+            <br>
+            <button type="submit" name="addTask" class="btn btn-dark btn-sm">Ajouter</button>
         </form>
         <!--FIN DU FORMULAIRE-->
     </div>

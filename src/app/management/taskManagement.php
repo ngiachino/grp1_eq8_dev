@@ -2,13 +2,21 @@
 include_once 'historiqueManagement.php';
 function startAddTask($conn,$projectId,$sprintId)
 {
-    if (isset($_POST['submit'])) {
+    if (isset($_POST['addTask'])) {
         $description = $_POST['taskDescription'];
         $duration = $_POST['taskDuration'];
-        $isDone =  $_POST['taskState'];
-        if (empty($description) || empty($duration) || empty($isDone)) {
+        if(taskExist($conn,$projectId,$sprintId,$description)){
+            return "Il existe déjà une tâche avec cette description";
+        }
+        if (empty($description) || empty($duration)) {
             return "Veuillez remplir tous les champs!";
         } else {
+            if(empty($isDone)){
+                $isDone="TO DO";
+            }
+            else{
+                $isDone =  $_POST['taskState'];
+            }
             addTask($conn, $projectId, $sprintId, $description, $duration,$isDone);
         }
     }
@@ -248,4 +256,10 @@ function getMembersProject($projectId,$conn){
 function getIssuesProject($projectId,$conn){
     $sql = "SELECT DISTINCT ID_USER_STORY FROM issue WHERE ID_PROJET = '$projectId'";
     return mysqli_query($conn,$sql);
+}
+
+function taskExist($conn,$projectId,$sprintId,$description){
+    $queryExist ="SELECT ID_TACHE FROM tache WHERE DESCRIPTION='$description'";
+    $result = mysqli_query($conn,$queryExist);
+    return (mysqli_num_rows($result) != 0);
 }
