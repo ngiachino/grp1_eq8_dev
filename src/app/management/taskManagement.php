@@ -259,7 +259,10 @@ function getIssuesProject($projectId,$conn){
 }
 
 function taskExist($conn,$projectId,$sprintId,$description){
-    $queryExist ="SELECT ID_TACHE FROM tache WHERE DESCRIPTION='$description'";
-    $result = mysqli_query($conn,$queryExist);
-    return (mysqli_num_rows($result) != 0);
+    $sql = $conn->prepare("SELECT ID_TACHE FROM tache WHERE ( DESCRIPTION=? 
+                    AND ID_PROJET='$projectId' AND ID_SPRINT= '$sprintId')");
+    $sql->bind_param("s",$description);
+    $sql->execute();
+    $result = $sql->get_result();
+    return mysqli_num_rows($result) != 0;
 }
