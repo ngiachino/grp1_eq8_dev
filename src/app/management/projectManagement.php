@@ -139,7 +139,7 @@ function getUserTasks(){
     $conn = connect();
     $userID = $_SESSION['userID'];
     $idCurrentSprint = getCurrentSprint($conn);
-    $queryTask ="SELECT tache.DESCRIPTION, membre.ID_SPRINT, NOM_PROJET, DATE_DEBUT, DATE_FIN
+    $queryTask ="SELECT tache.DESCRIPTION, sprint.NOM_SPRINT, NOM_PROJET, DATE_DEBUT, DATE_FIN, tache.ID_PROJET, tache.ID_SPRINT
                  FROM membre JOIN tache ON membre.ID_TACHE = tache.ID_TACHE
                              JOIN projet ON membre.ID_PROJET = projet.ID_PROJET
                              JOIN sprint ON membre.ID_SPRINT = sprint.ID_SPRINT 

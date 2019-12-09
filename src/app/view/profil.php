@@ -78,11 +78,13 @@ $userTasks = getUserTasks();
                     ?>
                     <tr>
                         <td>
-                            <span> <?php echo $tasks[0]; ?> - Sprint : <?php echo $tasks[1]; ?></span>
+                        <a class="d-inline-block w-100 h-100" href="./tasks.php?projectId=<?php echo $tasks[5];?>&sprintId=<?php echo $tasks[6];?>">
+                            <span> <?php echo substr($tasks[0], 0, 50)."[...]"; ?> - <?php echo $tasks[1]; ?></span>
                             <br/>
                             <span class="subtitle">Projet : <?php echo $tasks[2] ;  ?></span>
                             <br/>
                             <span class="subtitle">Du  <?php echo $tasks[3] ;?> au <?php echo $tasks[4] ;?></span>
+                        </a>
                         </td>
                     </tr>
                 <?php }  ?>
