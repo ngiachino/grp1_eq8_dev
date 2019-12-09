@@ -19,7 +19,7 @@ class TaskTest extends TestCase{
         $projectId = createProject($conn,$userID);
         $sprintId = createSprint($conn,$projectId);
         //CREATE THE TASK
-        $res = addTask($conn,$projectId,$sprintId,"Test Description",1);
+        $res = addTask($conn,$projectId,$sprintId,"Test Description",1,"TO DO");
         $this->assertEquals("Tâche ajoutée",$res);
         $sql = "SELECT ID_TACHE from tache WHERE ID_PROJET= '$projectId'";
         $result = $conn->query($sql);
@@ -61,7 +61,7 @@ class TaskTest extends TestCase{
 function createTask($conn, $projectId, $sprintId){
     $description ="Test Description";
     $duration= 1;
-    addTask($conn, $projectId,$sprintId,$description,$duration);
+    addTask($conn, $projectId,$sprintId,$description,$duration,"TO DO");
     $sql ="SELECT ID_TACHE from tache WHERE DESCRIPTION= 'Test Description'";
     $result = $conn->query($sql);
     $row = mysqli_fetch_assoc($result);
