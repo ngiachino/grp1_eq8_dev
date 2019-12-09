@@ -32,24 +32,22 @@ function addTask($conn,$projectId,$sprintId,$description,$duration,$isDone)
 }
 function assignTask($conn,$projectId, $sprintId)
 {
-    if (isset($_POST['assigner'])) {
-        if (!(empty($_POST['userName'])) || !(empty($_POST['taskId']))) {
-            $userName = $_POST['userName'];
-            $taskId = $_POST['taskId'];
-            $queryExistMember = "SELECT ID_MEMBRE
+    if (isset($_POST['assigner']) && (!(empty($_POST['userName'])) || !(empty($_POST['taskId'])))) {
+        $userName = $_POST['userName'];
+        $taskId = $_POST['taskId'];
+        $queryExistMember = "SELECT ID_MEMBRE
                                  from membre join utilisateur 
                                              on membre.ID_MEMBRE = utilisateur.ID_USER 
                                 WHERE NOM_USER = '$userName' AND ID_TACHE != '$taskId' AND ID_PROJET = '$projectId' ";
-            $resultMember = mysqli_query($conn, $queryExistMember);
-            if (mysqli_num_rows($resultMember) != 0) {
-                $row = mysqli_fetch_row($resultMember);
-                $userId = $row[0];
-                $queryAssign = " INSERT INTO membre 
+        $resultMember = mysqli_query($conn, $queryExistMember);
+        if (mysqli_num_rows($resultMember) != 0) {
+            $row = mysqli_fetch_row($resultMember);
+            $userId = $row[0];
+            $queryAssign = " INSERT INTO membre 
                                     VALUES ('$userId', '$projectId','$userName'
                                             ,'$sprintId', '$taskId')";
-                mysqli_query($conn, $queryAssign);
-                return "La tache a été assignée!";
-            }
+            mysqli_query($conn, $queryAssign);
+            return "La tache a été assignée!";
         }
     }
 }
