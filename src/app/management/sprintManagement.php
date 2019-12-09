@@ -12,7 +12,7 @@ function startAddSprint($conn, $projectId)
             return "Vous devez remplir tous les champs";
         }
         if($startDate>$endDate){
-            return "La date de début ne peut pas être plus récente que celle de la fin du sprint";
+            return "La date de début ne peut pas être supérieure à celle de la fin";
         }
         else{
             addSprint($conn, $projectId,$sprintName,$startDate,$endDate);
@@ -67,7 +67,11 @@ function startModifySprint($conn,$projectId){
         //test que tous les champs sont remplis
         if (empty($sprintName) || empty($startDate) || empty($endDate)) {
             return "Vous devez remplir tous les champs";
-        } else {
+        }
+        if($startDate>$endDate){
+            return "La date de début ne peut pas être supérieure à celle de la fin";
+        }
+        else {
             modifySprint($conn,$projectId,$sprintID,$sprintName,$startDate,$endDate);
         }
     }
