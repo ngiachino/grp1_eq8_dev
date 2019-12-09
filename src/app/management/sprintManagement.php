@@ -8,7 +8,10 @@ function startAddSprint($conn, $projectId)
         //test que tous les champs sont remplis
         if (empty($sprintName) || empty($startDate) || empty($endDate)) {
             return "Vous devez remplir tous les champs";
-        } else {
+        }
+        if($startDate>$endDate){
+            return "La date de début ne peut pas être plus récente que celle de la fin du sprint";}
+        else{
             addSprint($conn, $projectId,$sprintName,$startDate,$endDate);
         }
     }
