@@ -8,6 +8,9 @@ Depuis la racine du projet, vous devez lancer la commande suivante :
 ```
 phpunit tests/tests_unitaires/.
 ```
+## Suivi des tests
+Le suivi des tests est effectué à l'aide de Travis. Vous pouvez suivre le résultat de ces tests à l'adresse suivant :
+https://travis-ci.com/ngiachino/grp1_eq8_dev 
 
 # Tests de validation
 
@@ -26,3 +29,25 @@ ChromeDriver étant inclu dans le dossier tests_E2E, il n'est pas nécessaire de
 ```
 python tests.py
 ```
+## Suivi des tests
+Le script Python créé un fichier "latest_log.txt" contenant les informations de la dernière exécution du script.
+Le résultat des tests E2E est répertorié dans le tableau ci-dessous.
+
+## Résultats des Tests
+Les tests ont été réalisés en local avec Selenium et avec le script Python pour ceux ne provoquant pas d'erreur de délais.
+
+|Description du test|Date de la dernière exécution|Résultat|
+|:-----------------:|:---------------------------:|:------:|
+|Connexion|09/12/2019|Réussi|
+|Deconnexion|09/12/2019|Réussi|
+|Ajout d'issue|09/12/2019|Réussi|
+|Suppression d'issue|09/12/2019|Réussi|
+|Ajout de membre|09/12/2019|Réussi|
+|Suppression de membre|09/12/2019|Réussi|
+|Ajout de release|09/12/2019|Réussi|
+|Modification de release|09/12/2019|Réussi|
+|Suppression de release|09/12/2019|Réussi|
+|Redirection vers la release en cas de clique sur le lien|09/12/2019|Réussi|
+|Ajout de sprint|09/12/2019|Réussi|
+|Modification de sprint|09/12/2019|Réussi|
+|Suppression de sprint|09/12/2019|Réussi|
