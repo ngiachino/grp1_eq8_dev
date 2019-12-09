@@ -17,8 +17,10 @@ class SprintTest extends TestCase{
         $this->clear();
         $userID=createAccount($conn);
         $projectId = createProject($conn,$userID);
-        $messageResult = createSprint($conn,$projectId);
-        $this->assertEquals($messageResult,"Votre sprint a bien été crée");
+        $startDate = date("Y-m-d");
+        $endDate = date("Y-m-d", strtotime("+1 week"));
+        $res = addSprint($conn,$projectId,"sprint test", $startDate, $endDate);
+        $this->assertEquals($res,"Votre sprint a bien été crée");
         $sql = "SELECT ID_SPRINT FROM sprint WHERE ID_PROJET=$projectId and NOM_SPRINT='sprint test'";
         $result = $conn->query($sql);
         $this->assertEquals($result->num_rows, 1);
@@ -30,12 +32,8 @@ class SprintTest extends TestCase{
         $this->clear();
         $userID=createAccount($conn);
         $projectId = createProject($conn,$userID);
-        createSprint($conn,$projectId);
-        //GET ID
-        $queryAddedSprint = "SELECT ID_SPRINT FROM sprint WHERE  ID_PROJET ='$projectId' AND NOM_SPRINT ='sprint test' ";
-        $getSprintId = mysqli_query($conn,$queryAddedSprint);
-        $sprintId = mysqli_fetch_row($getSprintId)[0];
-        //DELETE
+        $sprintId = createSprint($conn,$projectId);
+
         $deleteResult = deleteSprint($conn,$sprintId);
         $this->assertEquals($deleteResult,"votre sprint a été supprimé");
         $sql = "SELECT ID_SPRINT FROM sprint WHERE  NOM_SPRINT='sprint test'";

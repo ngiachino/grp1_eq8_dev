@@ -16,13 +16,10 @@
     function createSprint($conn, $projectId){
         $today = date("Y-m-d");
         $nextWeek = date("Y-m-d", strtotime("+1 week"));
-        return addSprint($conn,$projectId,'sprint test', $today,$nextWeek);
+        addSprint($conn,$projectId,'sprint test', $today,$nextWeek);
+        $sql ="SELECT ID_SPRINT from sprint WHERE NOM_SPRINT= 'sprint test'";
+        $result = $conn->query($sql);
+        $row = mysqli_fetch_assoc($result);
+        return $row["ID_SPRINT"];
     }
-
-    function createTask($conn, $projectId, $sprintId){
-        $description ="Test Description";
-        $duration= 1;
-        return addTask($conn, $projectId,$sprintId,$description,$duration);
-   }
-
 ?>

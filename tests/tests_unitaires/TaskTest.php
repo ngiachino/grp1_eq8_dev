@@ -19,13 +19,11 @@ class TaskTest extends TestCase{
         $projectId = createProject($conn,$userID);
         $sprintId = createSprint($conn,$projectId);
         //CREATE THE TASK
-        $messageAdd = createTask($conn,$userID,$projectId,$sprintId);
-        $this->assertEquals($messageAdd,"Tâche ajoutée ");
-        //RECHECK TASK'S NUMBER
-        $sql = "SELECT ID_TACHE from tache WHERE DESCRIPTION='Test Description'";
-        $resultTask = mysqli_query($conn,$sql);
-        $taskNumber=mysqli_num_rows($resultTask);
-        $this->assertEquals($taskNumber, 1);
+        $res = addTask($conn,$projectId,$sprintId,"Test Description",1);
+        $this->assertEquals("Tâche ajoutée",$res);
+        $sql = "SELECT ID_TACHE from tache WHERE ID_PROJET= '$projectId'";
+        $result = $conn->query($sql);
+        $this->assertEquals($result->num_rows, 1);
         $this->clear();
     }
 
@@ -35,18 +33,13 @@ class TaskTest extends TestCase{
         $userID=createAccount($conn);
         $projectId = createProject($conn,$userID);
         $sprintId = createSprint($conn,$projectId);
-        //CREATE THE TASK
-        createTask($conn, $projectId, $sprintId);
-        //Get taskId
-        $queryId ="SELECT ID_TACHE from tache WHERE DESCRIPTION= 'Test Description'";
-        $result = mysqli_query($conn,$queryId);
-        $taskId= mysqli_fetch_row($result)[0];
+        $taskId = createTask($conn, $projectId, $sprintId);
         //DELETE
-        deleteTask($conn, $projectId, $sprintId, $taskId);
-        $queryId ="SELECT ID_TACHE from tache WHERE DESCRIPTION= 'Test Description'";
-        $result = mysqli_query($conn,$queryId);
-        $taskNumber=mysqli_num_rows($result);
-        $this->assertEquals($taskNumber, 0);
+        $res = deleteTask($conn, $projectId, $sprintId, $taskId);
+        $this->assertEquals("La suppresion la tâche a été faite! ", $res);
+        $sql ="SELECT ID_TACHE from tache WHERE ID_PROJET= '$projectId'";
+        $result = $conn->query($sql);
+        $this->assertEquals($result->num_rows, 0);
         $this->clear();
     }
 
@@ -65,4 +58,15 @@ class TaskTest extends TestCase{
         $sql = "DELETE FROM tache WHERE DESCRIPTION ='Test Description'";
         $conn->query($sql);
     }
+}
+
+
+function createTask($conn, $projectId, $sprintId){
+    $description ="Test Description";
+    $duration= 1;
+    addTask($conn, $projectId,$sprintId,$description,$duration);
+    $sql ="SELECT ID_TACHE from tache WHERE DESCRIPTION= 'Test Description'";
+    $result = $conn->query($sql);
+    $row = mysqli_fetch_assoc($result);
+    return $row["ID_TACHE"];
 }

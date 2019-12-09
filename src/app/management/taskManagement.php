@@ -20,7 +20,7 @@ function addTask($conn,$projectId,$sprintId,$description,$duration)
                      VALUES ('$projectId','$sprintId','-1','$description','$duration','$DefaultTaskState')";
     mysqli_query($conn, $query);
     addHistorique($projectId,"Une tâche a été créée");
-    return "Tâche ajoutée ";
+    return "Tâche ajoutée";
 }
 function assignTask($conn,$projectId, $sprintId)
 {

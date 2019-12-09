@@ -20,7 +20,7 @@ function startAddSprint($conn, $projectId)
     }
 }
 
-function addSprint($conn,$projectID,$sprintName, $startDate, $endDate )
+function addSprint($conn,$projectID,$sprintName, $startDate, $endDate)
 {
     //test que l'utilisateur n'a pas déjà créé un sprint  du même nom
     $sql = $conn->prepare("SELECT ID_SPRINT FROM sprint WHERE NOM_SPRINT = ? AND ID_PROJET = ?");
