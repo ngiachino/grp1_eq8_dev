@@ -37,9 +37,6 @@ class TaskTest extends TestCase{
         //DELETE
         $res = deleteTask($conn, $projectId, $sprintId, $taskId);
         $this->assertEquals("La suppresion la tâche a été faite! ", $res);
-        $sqlTest ="SELECT * from tache WHERE ID_TACHE = '$taskId'";
-        $resultTest = $conn->query($sqlTest);
-        $this->assertEquals(0,$resultTest->num_rows);
         $this->clear();
     }
 
