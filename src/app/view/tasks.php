@@ -42,7 +42,14 @@ $resultSprintDays = getDaysSprint($conn,$projectId,$sprintId);
         <!--AFFICHER LE NUMERO DE SPRINT -->
         <div class="row">
             <div class="col-md-3">
-                <h2>Sprint <?php echo $sprintId ?></h2>
+                <h2>
+                    <?php
+                    $getSprintName ="SELECT NOM_SPRINT from sprint WHERE ID_SPRINT ='$sprintId'";
+                    $result = mysqli_query($conn,$getSprintName);
+                    $sprintName = mysqli_fetch_row($result)[0];
+                    echo $sprintName;
+                    ?>
+                </h2>
             </div>
             <!--Statistiques -->
             <div class="col-md-9">
