@@ -47,7 +47,7 @@ $tasks = getAllTasks($conn, $projectId, $sprintId);
                     $getSprintData = "SELECT NOM_SPRINT, DATE_FIN from sprint WHERE ID_SPRINT ='$sprintId'";
                     $result = mysqli_query($conn,$getSprintData);
                     $sprintData = mysqli_fetch_row($result)[0];
-                    $sprintName = $sprintData[0];
+                    $sprintName = $sprintData;
                     $sprintEndDate = $sprintData[1];
                     echo $sprintName;
                     ?>
@@ -57,19 +57,29 @@ $tasks = getAllTasks($conn, $projectId, $sprintId);
             <div class="col-md-9">
                 <!--BARRE DE PROGRESSION D UN SPRINT-->
                 <?php
-                $today = date("Y-m-d");
-                $sprintLeftDays ="0";
-                $daysPercent = 100;
-                if($sprintEndDate < $today) {
-                    $sprintDays = mysqli_fetch_row($resultSprintDays);
-                    $sprintLeftDays = $sprintDays[1];
-                    $sprintNumberDays = $sprintDays[0];
-                    $daysPercent = ((($sprintNumberDays - $sprintLeftDays) * 100) / $sprintNumberDays);
+                $sprintDays = mysqli_fetch_row($resultSprintDays);
+                $sprintStartDate = strtotime($sprintDays[0]);
+                $sprintEndDate = strtotime($sprintDays[1]);
+                $currentDate = strtotime($sprintDays[2]);
+                if($currentDate>$sprintEndDate){
+                    $datePercent = "100";
+                    $nbDaysMessage = "Sprint terminé";
+                }
+                else if($currentDate<$sprintStartDate){
+                    $datePercent = "0";
+                    $nbDays = ($sprintStartDate - $currentDate)/86400;
+                    $nbDaysMessage = "Le Sprint commence dans ". $nbDays." jours";
+                }
+                else{
+                    $globalDuration = $sprintEndDate - $sprintStartDate;
+                    $currentDuration = ($sprintEndDate - $currentDate);
+                    $datePercent = ($currentDuration * 100)/$globalDuration;
+                    $nbDaysMessage = $currentDuration/86400 . " jours restants";
                 }
                 ?>
                 <div class="progress">
-                    <div class="progress-bar bg-dark" role="progressbar" style="width: <?php echo $daysPercent;?>%">
-                        <?php echo $sprintLeftDays.' jours restant'; ?>
+                    <div class="progress-bar bg-dark" role="progressbar" style="width: <?php echo $datePercent;?>%">
+                        <?php echo $nbDaysMessage; ?>
                     </div>
                 </div>
                 <!--CHIFFRES-->

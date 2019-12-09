@@ -101,7 +101,7 @@ function getSprintData($conn, $projectId, $sprintId){
 
 function getDaysSprint($conn, $projectId, $sprintId){
 
-    $queryMinusDate = "SELECT DATEDIFF(DATE_FIN,DATE_DEBUT), DATEDIFF(DATE_FIN,CURDATE())
+    $queryMinusDate = "SELECT DATE_DEBUT, DATE_FIN, CURDATE()
                        FROM sprint
                        WHERE ID_SPRINT='$sprintId'
                          AND ID_PROJET='$projectId'";
