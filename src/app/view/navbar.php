@@ -7,6 +7,11 @@ $row = mysqli_fetch_row(startProfil());
 
 <div class="menuBar">
     <div class="float-left">
+        <form>
+            <button class="fa fa-chevron-circle-left btn btn-transparent btn-xsm" style="color: white;" type="button" value="back" onclick="history.go(-1)"></button>
+        </form>
+    </div>
+    <div class="float-left">
         <a href="profil.php">GoProject</a>
     </div>
     <div class="float-left px-4">
