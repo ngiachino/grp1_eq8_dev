@@ -321,7 +321,7 @@ $tasks = getAllTasks($conn, $projectId, $sprintId);
                             <textarea class="form-control" id="descriptionTask" maxlength="500" name="descriptionTask"><?php echo $row[0];?></textarea>
                             <br>
                             <label for="durationTask">Durée:</label> <br>
-                            <input type="number" step="0.5" class="form-control form-control-sm" id="durationTask" name="durationTask" placeholder="<?php echo $row[1];?>">
+                            <input type="number" step="0.5" min="0.5" class="form-control form-control-sm" id="durationTask" name="durationTask" placeholder="<?php echo $row[1];?>">
                             <input type="hidden" name="taskId" value="<?php echo $row[3];?>">
                         </div>
                         <button type="submit" name="modifier" class="btn btn-secondary btn-sm">Modifier</button>
