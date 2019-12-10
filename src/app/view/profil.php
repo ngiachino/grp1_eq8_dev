@@ -73,7 +73,7 @@ $userTasks = getUserTasks();
 
                 <!--DESCRIPTION, ID_SPRINT, NOM_PROJET, DATE_DEBUT, DATE_FIN-->
                 <?php
-                while($userTasks && $tasks = mysqli_fetch_row($userTasks))
+                while($tasks = mysqli_fetch_row($userTasks))
                 {
                     ?>
                     <tr>
