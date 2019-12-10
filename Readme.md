@@ -40,6 +40,15 @@
 |US30|En tant qu'Administrateur de projet/Collaborateur je veux avoir accès à ma liste de tâches en cours à partir de ma page d'accueil, récapitulant toutes mes tâches, renseignant le nom de la tâche, le projet associé, la date de début et celle de fin|MEDIUM|3|3|
 |US31|En tant qu'Administrateur de projet/Collaborateur je veux avoir accès à ma liste de tâches à venir à partir de ma page d'accueil, récapitulant toutes mes tâches, renseignant le nom de la tâche, le projet associé, la date de début et celle de fin|MEDIUM|3|3|
 |US32|En tant qu'Administrateur de projet/Collaborateur, sur la page d'accueil d'un projet, je veux avoir accès à l'historique des modifications qui ont été faites sur ce projet. Les 5 derniers Ajouts/modifications/suppressions d'issue, sprint, tâche, release, test et documentation y seront répertoriés. Avec le type de modification, la date et la personne qui a fait la modification.|LOW|5|3|
+|US33|En tant qu'Administrateur de projet/Collaborateur, sur la page d'accueil d'un projet, je veux pouvoir modifier le nom et/ou la description du projet en cliquant sur le bouton modifier.|MEDIUM|2|3|
+|US34|En tant qu'Administrateur de projet/Collaborateur, je veux pouvoir visualiser la progression d'un sprint en fonction de la date de début et de la date de fin.|LOW|2|3|
+|US35|En tant qu'Administrateur de projet/Collaborateur, je veux pouvoir naviguer sur la liste de tous les sprints du projets en cliquant sur le bouton Suivant/Précedent.|LOW|2|3|
+|US36|En tant qu'Administrateur de projet/Collaborateur, je veux pouvoir lier une tâche à des issues de mon projet en renseignant son numéro et en cliquant sur le bouton Ajouter .|MEDIUM|2|3|
+|US37|En tant qu'Administrateur de projet/Collaborateur, je veux pouvoir visualiser pour chaque tâche l'ensemble ses issues.|MEDIUM|2|3|
+|US38|En tant qu'Administrateur de projet/Collaborateur, je veux pouvoir supprimer une issue à partir de la liste des issues d'une tâche en cliquant sur l'icône supprimer à côté de cette issue .|MEDIUM|1|3|
+|US39|En tant qu'Administrateur de projet/Collaborateur, je veux pouvoir supprimer un membre de la liste des membres d'une tâche en cliquant sur l'icône supprimer à côté de ce membre .|MEDIUM|1|3|
+|US40|En tant qu'Administrateur de projet/Collaborateur, je veux pouvoir supprimer un membre de la liste des membres d'une tâche en cliquant sur l'icône supprimer à côté de ce membre afin de supprimer ce membre de la liste.|MEDIUM|1|3|
+
 
 ​
 ## Annexes
@@ -76,11 +85,12 @@
 ​
 ### DOCUMENTATION :
 - Titre
-- Description
+- Description (optionnel)
+- Document correspondant
 ​
 ### RELEASE :
 - Numéro de version (doit être unique)
-- Description
+- Description (optionnel)
 - Lien vers docker
 - Date de la release
 ​
