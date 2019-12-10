@@ -104,7 +104,7 @@ $tasks = getAllTasks($conn, $projectId, $sprintId);
             <div class="form-row">
                 <div class="col-md-4 mb-3">
                     <label for="taskDuration">Durée de la tâche (en jour/homme) :</label>
-                    <input type="number" step="0.5" class="form-control" id="taskDuration" name="taskDuration">
+                    <input type="number" step="0.5" min="0.5" class="form-control" id="taskDuration" name="taskDuration">
                 </div>
                 <div class="col-md-9">
                 <label for="nameState">Etat de la tâche</label>
