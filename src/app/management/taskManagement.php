@@ -83,12 +83,11 @@ function addIssueTask($connexion, $projectId){
         $difficulte = $resultIssue[2];
         $description = $resultIssue[3];
         //AJOUTER
-        $queryInsert = "INSERT INTO `issue`(`ID_USER_STORY`, `PRIORITE`,`DIFFICULTE`, `DESCRIPTION`, 
-                                     `ID_PROJET`, `ID_TACHE`) 
-                       VALUES ('$issueId','$priorite','$difficulte','$description',
-                                    '$projectId','$taskId')";
-        mysqli_query($connexion, $queryInsert);
-        aggregateMessage($issueId."La tache a été reliée à l'User Story'");
+        $sql = $connexion->prepare("INSERT INTO `issue`(`ID_USER_STORY`, `PRIORITE`,`DIFFICULTE`, `DESCRIPTION`, `ID_PROJET`, `ID_TACHE`) 
+                                VALUES ('$issueId','$priorite','$difficulte',?,'$projectId','$taskId')");
+        $sql->bind_param("s",$description);
+        $sql->execute();
+        aggregateMessage("La tache a été reliée à l'User Story'");
         return;
     }
 }
@@ -107,6 +106,7 @@ function modifyTask($conn, $projectId, $sprintId)
 {
     if(isset($_POST['modifier'])&& !empty($_POST['taskId'])) {
             $taskId= $_POST['taskId'];
+            aggregateMessage("La modification de la tâche a été faite!");
             if (!empty($_POST['descriptionTask']) && empty($_POST['durationTask'])) {
                 modifyDescriptionTask($conn, $taskId, $projectId, $sprintId, $_POST['descriptionTask']);
             }
@@ -116,7 +116,6 @@ function modifyTask($conn, $projectId, $sprintId)
             else{
                 modifyDescriptionTask($conn, $taskId, $projectId, $sprintId, $_POST['descriptionTask']);
                 modifyDurationTask($conn, $taskId, $projectId, $sprintId, $_POST['durationTask']);
-                aggregateMessage("La modification de la description et de la durée de la tâche ont été faites!");
             }
         }
 }
@@ -126,7 +125,6 @@ function modifyDescriptionTask($conn, $taskId, $projectId, $sprintId, $descripti
     $sql = $conn->prepare("UPDATE tache SET DESCRIPTION = ? WHERE ID_TACHE = ? AND ID_PROJET = ? AND ID_SPRINT = ?");
     $sql->bind_param("siii",$description,$taskId,$projectId,$sprintId);
     $sql->execute();
-    aggregateMessage("La modification de la description de la tâche a été faite!");
 }
 
 function modifyDurationTask($conn, $taskId, $projectId, $sprintId, $duration)
@@ -140,7 +138,6 @@ function modifyDurationTask($conn, $taskId, $projectId, $sprintId, $duration)
     $sql = $conn->prepare("UPDATE tache SET DUREE_TACHE = ? WHERE ID_TACHE = ? AND ID_PROJET = ? AND ID_SPRINT = ?");
     $sql->bind_param("siii",$duration,$taskId,$projectId,$sprintId);
     $sql->execute();
-    aggregateMessage("La modification de la durée de la tâche a été faite!");
 }
 
 function detachTaskFromIssues($conn, $projectId, $taskId)

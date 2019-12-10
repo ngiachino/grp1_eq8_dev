@@ -73,7 +73,7 @@ $tasks = getAllTasks($conn, $projectId, $sprintId);
                 else{
                     $globalDuration = $sprintEndDate - $sprintStartDate;
                     $currentDuration = ($sprintEndDate - $currentDate);
-                    $datePercent = ($currentDuration * 100)/$globalDuration;
+                    $datePercent = 100 - ($currentDuration * 100)/$globalDuration;
                     $nbDaysMessage = $currentDuration/86400 . " jours restants";
                 }
                 ?>
@@ -255,7 +255,7 @@ $tasks = getAllTasks($conn, $projectId, $sprintId);
                                 $k=1;
                                 $issues = getIssuesProject($projectId,$conn);
                                 while($issue = mysqli_fetch_row($issues)){
-                                    echo "<option value=$issue[0]>US$i</option>";
+                                    echo "<option value=$issue[0]>US$k</option>";
                                     $k++;
                                 }
                                 ?>
@@ -270,24 +270,31 @@ $tasks = getAllTasks($conn, $projectId, $sprintId);
                     <?php
                     deleteIssueFromTask($conn,$projectId);
                     $resultIssues = getIssuesTask($conn, $taskId, $projectId);
-                    $l = 1;
                     while ($rowIssue = mysqli_fetch_row($resultIssues)) {
+                        $issueNumber = 0;
                         $issueId = $rowIssue[0];
-                        $issueNumber = $l;
-                        $l++;
+                        $issues = getIssuesProject($projectId,$conn);
+                        while($issue = mysqli_fetch_row($issues)){
+                            $issueIdProject = $issue[0];
+                            $issueNumber++;
+                            if($issueId == $issueIdProject){
                         ?>
-                        <tr>
-                            <!--Bouton delete-->
-                            <td>
-                                <form method="POST">
-                                    <button type="submit" class="taskDeleteElement fas fa-times btn bg-transparent btn-sm float-left" name="deleteIssue"></button>
-                                    <?php echo "US$issueNumber"; ?>
-                                    <input type="hidden" name="issueId" value="<?php echo $issueId;?>">
-                                    <input type="hidden" name="taskId" value="<?php echo $taskId;?>">
-                                </form>
-                            </td>
-                        </tr>
-                    <?php } ?>
+                            <tr>
+                                <!--Bouton delete-->
+                                <td>
+                                    <form method="POST">
+                                        <button type="submit" class="taskDeleteElement fas fa-times btn bg-transparent btn-sm float-left" name="deleteIssue"></button>
+                                        <?php echo "US$issueNumber"; ?>
+                                        <input type="hidden" name="issueId" value="<?php echo $issueId;?>">
+                                        <input type="hidden" name="taskId" value="<?php echo $taskId;?>">
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php
+                            } 
+                        }
+                    }
+                    ?>
                     </tbody>
                 </table>
             </td>
@@ -318,10 +325,10 @@ $tasks = getAllTasks($conn, $projectId, $sprintId);
                         <div class="form-group">
                             <label for="descriptionTask">Description:</label>
                             <br>
-                            <textarea class="form-control" id="descriptionTask" maxlength="500" name="descriptionTask"><?php echo $row[0];?></textarea>
+                            <textarea class="form-control" id="descriptionTask" maxlength="500" name="descriptionTask" required><?php echo $row[0];?></textarea>
                             <br>
                             <label for="durationTask">Durée:</label> <br>
-                            <input type="number" step="0.5" min="0.5" class="form-control form-control-sm" id="durationTask" name="durationTask" placeholder="<?php echo $row[1];?>">
+                            <input type="number" step="0.5" min="0.5" class="form-control form-control-sm" id="durationTask" name="durationTask" value="<?php echo $row[1];?>" required>
                             <input type="hidden" name="taskId" value="<?php echo $row[3];?>">
                         </div>
                         <button type="submit" name="modifier" class="btn btn-secondary btn-sm">Modifier</button>
