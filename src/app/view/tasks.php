@@ -22,9 +22,8 @@ modifyTask($conn, $projectId, $sprintId);
 addIssueTask($conn, $projectId);
 editTaskEtat($conn, $projectId, $sprintId );
 startDeleteTask($conn,$projectId,$sprintId);
-$result= getTaskWithSpecificState($conn,$projectId, $sprintId);
+$tasks= getTaskWithSpecificState($conn,$projectId, $sprintId);
 $resultSprintDays = getDaysSprint($conn,$projectId,$sprintId);
-$tasks = getAllTasks($conn, $projectId, $sprintId);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -98,19 +97,18 @@ $tasks = getAllTasks($conn, $projectId, $sprintId);
         <form method="POST">
             <div class="form-group">
                 <label for="taskDescription">Description de la tâche:</label>
-                <textarea class="form-control" id="taskDescription" maxlength="500" name="taskDescription"></textarea>
+                <textarea class="form-control" id="taskDescription" maxlength="500" name="taskDescription" required></textarea>
             </div>
 
             <div class="form-row">
                 <div class="col-md-4 mb-3">
                     <label for="taskDuration">Durée de la tâche (en jour/homme) :</label>
-                    <input type="number" step="0.5" min="0.5" class="form-control" id="taskDuration" name="taskDuration">
+                    <input type="number" step="0.5" min="0.5" class="form-control" id="taskDuration" name="taskDuration" required>
                 </div>
                 <div class="col-md-9">
                 <label for="nameState">Etat de la tâche</label>
                     <br>
                 <select class="form-control w-25 d-inline" id="nameState" name="nameState">
-                    <option value="" disabled selected>Default : TO DO</option>
                     <option value="TO DO">TO DO</option>
                     <option value="ON GOING">ON GOING </option>
                     <option value="DONE">DONE</option>
@@ -129,7 +127,6 @@ $tasks = getAllTasks($conn, $projectId, $sprintId);
     <form method="POST">
         <label for="nameState"></label>
         <select class="form-control w-25 d-inline" id="nameState" name="nameState">
-            <option value="" disabled selected>Sélectionnez le type de tâche</option>
             <option value="ALL">ALL</option>
             <option value="TO DO">TO DO</option>
             <option value="ON GOING">ON GOING </option>

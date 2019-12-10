@@ -7,6 +7,7 @@ function startAddTask($conn,$projectId,$sprintId)
     if (isset($_POST['addTask'])) {
         $description = $_POST['taskDescription'];
         $duration = $_POST['taskDuration'];
+        $isDone =  $_POST['nameState'];
         if(taskExist($conn,$projectId,$sprintId,$description)){
             aggregateMessage("Il existe déjà une tâche avec cette description");
             return;
@@ -14,13 +15,7 @@ function startAddTask($conn,$projectId,$sprintId)
         if (empty($description) || empty($duration)) {
             aggregateMessage("Veuillez remplir tous les champs!");
             return;
-        } else {
-            if(empty($isDone)){
-                $isDone="TO DO";
-            }
-            else{
-                $isDone =  $_POST['taskState'];
-            }
+        } else {     
             addTask($conn, $projectId, $sprintId, $description, $duration,$isDone);
         }
     }
@@ -144,14 +139,12 @@ function detachTaskFromIssues($conn, $projectId, $taskId)
 {
     $queryDelete = "DELETE FROM issue WHERE ID_TACHE = '$taskId' and ID_PROJET = '$projectId'";
     mysqli_query($conn,$queryDelete);
-    aggregateMessage("Suppression du lien entre les issues et la tâche".$taskId);
 }
 
 function detachTaskFromMembers($conn, $projectId, $sprintId, $taskId)
 {
     $queryDelete = "DELETE FROM membre WHERE ID_TACHE = '$taskId' and ID_PROJET = '$projectId' and ID_SPRINT='$sprintId'";
     mysqli_query($conn,$queryDelete);
-    aggregateMessage("Suppression du lien entre les membres et la tâche".$taskId);
 }
 
 function startDeleteTask($conn,$projectId,$sprintId){
@@ -172,7 +165,7 @@ function deleteTask($conn, $projectId, $sprintId,$taskId)
 
     $query = "DELETE FROM Tache WHERE ID_TACHE = '$taskId'";
     mysqli_query($conn, $query);
-    aggregateMessage("La suppression de la tâche a été faite!");
+    aggregateMessage("La suppression de la tâche a été faite. ");
 }
 
 function getIssuesTask($conn, $taskId, $projectId){
@@ -248,12 +241,9 @@ function getTaskWithSpecificState($conn, $projectId, $sprintId){
                      WHERE tache.ID_PROJET = '$projectId'
                           AND tache.ID_SPRINT = '$sprintId'
                           AND tache.IS_DONE = '$state'";
-        $result = mysqli_query($conn, $queryGet);
+        return mysqli_query($conn, $queryGet);
     }
-    else{
-        $result = getAllTasks($conn,$projectId,$sprintId);
-    }
-    return $result;
+    return getAllTasks($conn, $projectId,$sprintId);
 }
 
 function getCurrentTasksNumber($conn,$projectId, $sprintId)
