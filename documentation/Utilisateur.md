@@ -4,7 +4,7 @@ __Dernière mise à jour le 10/12/2019__
 
 # Documentation Utilisateur
 
-Cette documentation présente l'application et l'ensemble de ses fonctionnalités.
+Cette documentation présente l'application et ses fonctionnalités.
 
 ## A propos de GoProject
 
@@ -20,16 +20,17 @@ Il existe 2 types d'utilisateurs :
 
 ## Interfaces
 
-L'application est divisée en 8 parties.
+L'application est divisée en 9 parties.
 
 - La page d'acceuil contenant un formulaire d'authentification / d'inscription.
-- La page profil de l'utilisateur contenant la liste de ses projets et de ses tâches.
+- La page profil de l'utilisateur contenant la liste de ses projets et des tâches de l'utilisateur.
 - la page projet qui représente un dashbord regroupant l'ensemble des informations à propos du projet, ses membres, son backlog, ses sprints, ses tests, ses release, ses documentations et son historique de modifications.
 - la page issue qui représente le backlog, elle regroupe la liste des user stories du projets ainsi que les actions permettant de les gérer
 - la page sprints qui contient l'ensemble des sprints du projets, ainsi que les différentes actions permettant de les gérer.
 - la page des tâches qui contient les tâches d'un sprint et les différentes actions permettant de les gérer.
 - la page des tests qui contient les tests d'un projet et les différentes actions permettant de les gérer.
 - la page des releases qui contient les releases d'un projet et les différentes actions permettant de les gérer.
+- la page de la documentation qui contient les documents d'un projet et les différentes actions permettant de les gérer.
 
 ## Fonctionnalités
 ### Fonctionnalités générales
@@ -42,12 +43,13 @@ Un sprint est représenté par un nom mais aussi une date de début et une date 
 
 ### Fonctionnalités particulières
 
-Depuis la page de profil, l'utilisateur pourra consulter la liste des tâches auxquelles il a été assigné. En cliquant sur une de ces tâches, il sera redirigé vers le sprint comprenant cette tâche.
+Depuis la page de profil, l'utilisateur pourra consulter la liste des tâches en cours (Sprint ayant commencé et n'étant pas terminé) auxquelles il a été assigné. En cliquant sur une de ces tâches, il sera redirigé vers le sprint comprenant cette tâche.
 
 Depuis la page principale d'un projet, chaque membre peut consulter l'historique des modifications d'un projet. Cet historique contient les dix dernières modifications apportées au projet (Par exemple, modification d'une issue, suppression d'un membre...etc).
 
 Depuis la page Tasks, comprenant la liste des tâches d'un sprint, les membres pourront consulter la barre de progression qui représente les jours restants avant la fin d'un sprint.
 A noter que si le sprint n'est pas commencé, cette barre indiquera le nombre de jour restant avant le début du sprint.
+
 Sur cette même page il est également possible de choisir les tâches à afficher en choisissant l'êtat des tâches voulu. (Par exemple pour n'afficher que les tâches ayant pour état To Do).
 
 Depuis la page Tests, il est possible de consulter une barre de progression indiquant le pourcentage de tests concluants sur le total de tests renseignés.

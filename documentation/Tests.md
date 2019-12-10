@@ -24,7 +24,7 @@ pip install selenium
 ChromeDriver étant inclu dans le dossier tests_E2E, il n'est pas nécessaire de le télécharger. Le script ira directement chercher celui-ci.
 
 ### Exécution :
-- Si le site n'est pas hébergé en local, vous pouvez modifier l'url de la page dnas le fichier **/tests/tests_E2E/url.txt**
+- Si le site n'est pas hébergé en local, vous pouvez modifier l'url de la page dans le fichier **/tests/tests_E2E/url.txt**
 - Depuis le dossier **/tests/tests_E2E**, lancez la commande suivante :
 ```
 python tests.py
@@ -34,7 +34,7 @@ Le script Python créé un fichier "latest_log.txt" contenant les informations d
 Le résultat des tests E2E est répertorié dans le tableau ci-dessous.
 
 ## Résultats des Tests
-Les tests ont été réalisés en local avec Selenium et avec le script Python pour ceux ne provoquant pas d'erreur de délais.
+Les tests ont été réalisés en local avec le script Python.
 
 |Description du test|Date de la dernière exécution|Résultat|
 |:-----------------:|:---------------------------:|:------:|
